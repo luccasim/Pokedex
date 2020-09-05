@@ -10,6 +10,13 @@ import Foundation
 import CoreData
 import SwiftUI
 
+/// Help to Manage CoreData Entities with basic operations : Fetch, Create, Get, Delete, Save and Clear.
+///
+/// Fetching uses NSPredicate with The String Format.
+///
+/// Each operations (excepting save) **did'nt save the commit change**, you're free to implement them.
+///
+/// If you crash with create, check you entity class module and turn it on *Current Product Module*
 protocol CoreDataHelper {
     
     associatedtype Ent : NSManagedObject
@@ -27,7 +34,8 @@ protocol CoreDataHelper {
 }
 
 extension CoreDataHelper {
-
+    
+    /// Use the app persistentContainer.
     var context : NSManagedObjectContext {
         return (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
