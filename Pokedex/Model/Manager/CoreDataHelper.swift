@@ -12,11 +12,15 @@ import SwiftUI
 
 protocol CoreDataHelper {
     
-    associatedtype Entity : NSManagedObject
+    associatedtype Ent : NSManagedObject
     
-    func create() -> Entity
-    func fetch(Predicate:String?) -> Result<[Entity],Error>
-    func delete(Entity:Entity)
+    var fetchRequest : NSFetchRequest<Ent> {get}
+    
+    func fetch(Predicate:String?) -> Result<[Ent],Error>
+    
+    func create() -> Ent
+    func get(Predicate:String) -> Ent?
+    func delete(Entity:Ent)
     func save()
     func clear()
     
@@ -24,17 +28,16 @@ protocol CoreDataHelper {
 
 extension CoreDataHelper {
 
-    private var context : NSManagedObjectContext {
+    var context : NSManagedObjectContext {
         return (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
     }
     
-    func create() -> Entity {
-        return Entity(context: self.context)
-    }
-    
-    func fetch(Predicate:String?=nil) -> Result<[Entity],Error> {
+    /// Fetch entity with matching predicate as a Result. Without or nil predicate return all Entities.
+    /// - Parameter Predicate: With String Swift format only. Like "id == \(yourModel.id)"
+    /// - Returns: The fetch results
+    func fetch(Predicate:String?=nil) -> Result<[Ent],Error> {
         
-        let request = Entity.fetchRequest()
+        let request = self.fetchRequest
         
         if let predicate = Predicate {
             request.predicate = NSPredicate(format: predicate)
@@ -42,7 +45,7 @@ extension CoreDataHelper {
         
         do {
             
-            let result = try self.context.fetch(request) as? [Entity] ?? []
+            let result = try self.context.fetch(request)
             return .success(result)
             
         } catch let error {
@@ -50,14 +53,30 @@ extension CoreDataHelper {
         }
     }
     
-    func delete(Entity: Entity) {
+    /// Create and return a new empty entity.
+    /// - Returns: Entity insered into default app Context.
+    func create() -> Ent {
+        return Ent.self(context: self.context)
+    }
+    
+    /// Get the first result of predicate
+    /// - Parameter Predicate: With String Swift format only. Like "id == \(yourModel.id)"
+    func get(Predicate:String) -> Ent? {
+        return try? self.fetch(Predicate: Predicate).get().first
+    }
+    
+    /// Delete the entity from its context
+    /// - Parameter Entity: Entity to remove
+    func delete(Entity: Ent) {
         self.context.delete(Entity)
     }
     
+    /// Save the commit change (ignore error)
     func save() {
         try? self.context.save()
     }
     
+    /// Remove all entity
     func clear() {
         
         let allObjects = self.fetch()

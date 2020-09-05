@@ -23,8 +23,7 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     private var manager : DataManagerProtocol
     
     init(Manager:DataManagerProtocol = PokemonManager.shared) {
-//        self.manager = Manager
-        self.manager = FakePokemonManager()
+        self.manager = Manager
         self.pokemons = Manager.fetchToList()
     }
     
@@ -33,7 +32,7 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     }
     
     func fetchPokemon() {
-        self.pokemons = manager.fetchToList()
+        self.pokemons = self.manager.fetchToList()
     }
     
 }

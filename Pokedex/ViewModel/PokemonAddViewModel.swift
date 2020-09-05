@@ -21,7 +21,7 @@ final class PokemonAddViewModel : PokemonAddVMP {
     }
     
     func add(PokemonName: String) {
-        let pokemon = Pokemon(id: 1, name: PokemonName)
+        let pokemon = Pokemon(id: self.manager.fetchToList().count, name: PokemonName)
         self.manager.add(Pokemon: pokemon)
     }
 }

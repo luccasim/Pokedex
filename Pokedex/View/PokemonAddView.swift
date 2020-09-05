@@ -20,8 +20,10 @@ struct PokemonAddView: View {
     
     var validButton : some View {
         Button(action: {
-            self.viewModel.add(PokemonName: "Toto")
-            self.mode.wrappedValue.dismiss()
+            if !self.input.isEmpty {
+                self.viewModel.add(PokemonName: self.input)
+                self.mode.wrappedValue.dismiss()
+            }
         }) {
             Text("Add")
         }

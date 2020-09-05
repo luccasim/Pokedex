@@ -35,6 +35,10 @@ class FakePokemonManager : DataManagerProtocol {
         self.data.append(Pokemon)
     }
     
+    func update(Pokemon: Pokemon) {
+        
+    }
+    
     func save() {
         
     }

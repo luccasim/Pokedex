@@ -173,7 +173,6 @@
 			isa = PBXGroup;
 			children = (
 				8457C4E42501362300F3E37E /* Pokemon.swift */,
-				84FD5A6D2503DC62007D9DE0 /* PokemonMO.swift */,
 				84FD5A6A2503C733007D9DE0 /* Manager */,
 				84FD5A47250181BE007D9DE0 /* Service */,
 				84FD5A692503C6FF007D9DE0 /* Context */,
@@ -227,6 +226,7 @@
 			isa = PBXGroup;
 			children = (
 				8457C4E6250136CA00F3E37E /* PokemonManager.swift */,
+				84FD5A6D2503DC62007D9DE0 /* PokemonMO.swift */,
 				84FD5A6B2503C869007D9DE0 /* CoreDataHelper.swift */,
 			);
 			path = Manager;

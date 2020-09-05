@@ -17,3 +17,18 @@ class PokemonMO : NSManagedObject {
         return Pokemon(id: id, name: name)
     }
 }
+
+class PokemonCoreData: CoreDataHelper {
+    
+    var fetchRequest: NSFetchRequest<PokemonMO> {
+        return PokemonMO.fetchRequest()
+    }
+    
+    typealias Ent = PokemonMO
+    
+    func update(Pokemon:Pokemon) {
+        let mo = self.get(Predicate: "id == \(Pokemon.id)")
+        mo?.name = Pokemon.name
+    }
+    
+}
