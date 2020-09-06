@@ -24,6 +24,18 @@ struct PokemonDetailView: View {
                 .border(Color.green, width: 2)
             Text(self.viewModel.infos)
             Spacer()
+            HStack {
+                Text("Type 1")
+                    .fontWeight(.bold)
+                    .background(Color.green)
+                    .border(Color.black, width: 2)
+                    .cornerRadius(40)
+                Spacer()
+                Text("Type 2")
+                    .padding(.trailing, 50.0)
+                    .background(Color.purple)
+            }
+            .padding(20)
         }
         .padding(10)
         .onAppear {
