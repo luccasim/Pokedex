@@ -15,7 +15,7 @@ class FakePokemonManager : DataManagerProtocol {
     
     init() {
         self.data = [
-            Pokemon(id: 1, name: "Bulbizzare"),
+            Pokemon(id: 1, name: "Bulbazor", sprite: "bulbazor", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
             Pokemon(id: 2, name: "Herbizarre"),
             Pokemon(id: 3, name: "Florizarre"),
             Pokemon(id: 4, name: "Salemeche"),

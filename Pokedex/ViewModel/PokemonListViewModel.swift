@@ -14,6 +14,7 @@ protocol PokemonListViewModelProtocol {
     var title : String {get}
     
     func fetchPokemon()
+    
 }
 
 final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtocol {

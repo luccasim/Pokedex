@@ -5,8 +5,8 @@
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="sprite" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpriteMO" inverseName="pokemon" inverseEntity="SpriteMO"/>
     </entity>
-    <entity name="SpriteMO" representedClassName=".DigimonMO" syncable="YES" codeGenerationType="category">
-        <attribute name="default" optional="YES" attributeType="URI"/>
+    <entity name="SpriteMO" representedClassName=".SpriteMO" syncable="YES" codeGenerationType="category">
+        <attribute name="front" optional="YES" attributeType="URI"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PokemonMO" inverseName="sprite" inverseEntity="PokemonMO"/>
     </entity>

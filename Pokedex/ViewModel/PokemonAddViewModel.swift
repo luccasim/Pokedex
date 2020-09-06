@@ -9,7 +9,9 @@
 import Foundation
 
 protocol PokemonAddVMP {
+    
     func add(PokemonName:String)
+    
 }
 
 final class PokemonAddViewModel : PokemonAddVMP {
