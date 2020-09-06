@@ -10,18 +10,20 @@ import Foundation
 import CoreData
 import SwiftUI
 
-/// Help to Manage CoreData Entities with basic operations : Fetch, Create, Get, Delete, Save and Clear.
+/// Help to Manage CoreData Entities with basic operations :
+/// Fetch, Create, Get, Delete, Save and Clear.
 ///
 /// Fetching uses NSPredicate with The String Format.
 ///
-/// Each operations (excepting save) **did'nt save the commit change**, you're free to implement them.
+/// Each operations (except save) **did'nt save the commit change**,
+/// we recommend to implement them.
 ///
-/// If you crash with create, check you entity class module and turn it on *Current Product Module*
+/// If you crash with create, check you entity class module
+/// and turn it on *Current Product Module*
 protocol CoreDataHelperProtocol {
     
     associatedtype Entity : NSManagedObject
     
-    var containerName : String {get}
     var persistentContainer: NSPersistentCloudKitContainer {get}
         
     func fetch(Predicate:String?,Limit:Int?) -> Result<[Entity],Error>
@@ -34,17 +36,29 @@ protocol CoreDataHelperProtocol {
     
 }
 
-extension CoreDataHelperProtocol {
+/// Generique implementation of CoreDataHelperProtocol,
+/// This generic shared the registed PersistentContaint for
+/// each Entity his support.
+///
+/// To avoid loading delay from the persistentContainer,
+/// we recommend to regist into the SceneDelegate.
+class CoreDataStore<T:NSManagedObject> : CoreDataHelperProtocol {
+        
+    typealias Entity = T
     
-    fileprivate var cloudContainer : NSPersistentCloudKitContainer {
-        let container = NSPersistentCloudKitContainer(name: self.containerName)
-        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
-            if let error = error as NSError? {
-                fatalError("Unresolved error \(error), \(error.userInfo)")
-            }
-        })
-        return container
+    static func register(ContainerName:String) {
+        SharedContainer.shared.setContainer(Name: ContainerName)
     }
+    
+    var persistentContainer: NSPersistentCloudKitContainer {
+        return SharedContainer.shared.persistentContainer
+    }
+
+}
+
+// MARK: - Implementation
+
+extension CoreDataHelperProtocol {
     
     /// Use the app persistentContainer.
     var context : NSManagedObjectContext {
@@ -118,18 +132,24 @@ extension CoreDataHelperProtocol {
     }
 }
 
-class CoreDataStore<T:NSManagedObject> : CoreDataHelperProtocol {
-        
-    typealias Entity = T
+private class SharedContainer {
     
-    var containerName: String
-        
-    lazy var persistentContainer: NSPersistentCloudKitContainer = {
-        return self.cloudContainer
-    }()
+    private init() {}
+    static let shared = SharedContainer()
     
-    init(ContainerName:String) {
-        self.containerName = ContainerName
+    var persistentContainer : NSPersistentCloudKitContainer!
+    
+    func setContainer(Name:String) {
+        
+        let container = NSPersistentCloudKitContainer(name: Name)
+        container.loadPersistentStores(completionHandler: { (storeDescription, error) in
+            if let error = error as NSError? {
+                fatalError("Unresolved error \(error), \(error.userInfo)")
+            } else {
+                print("[CoreStore] : Success to load CoreDataModel \(Name).xcdatamodel.")
+            }
+        })
+        
+        self.persistentContainer = container
     }
-    
 }

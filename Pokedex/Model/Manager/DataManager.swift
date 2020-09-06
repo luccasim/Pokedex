@@ -18,11 +18,11 @@ protocol DataManagerProtocol {
     
 }
 
-class PokemonManager : DataManagerProtocol {
+class DataManager : DataManagerProtocol {
         
-    static var shared = PokemonManager()
+    static var shared = DataManager()
     
-    private var store = PokemonCoreData()
+    private var store = PokemonStore.shared
     
     func fetchToList() -> [Pokemon] {
         

@@ -18,17 +18,12 @@ class PokemonMO : NSManagedObject {
     }
 }
 
-class PokemonCoreData: CoreDataHelper {
+class PokemonStore: CoreDataStore<PokemonMO> {
     
-    var fetchRequest: NSFetchRequest<PokemonMO> {
-        return PokemonMO.fetchRequest()
-    }
-    
-    typealias Ent = PokemonMO
-    
+    static let shared = PokemonStore()
+        
     func update(Pokemon:Pokemon) {
         let mo = self.get(Predicate: "id == \(Pokemon.id)")
         mo?.name = Pokemon.name
     }
-    
 }

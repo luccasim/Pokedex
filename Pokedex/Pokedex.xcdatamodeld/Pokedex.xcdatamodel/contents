@@ -3,8 +3,15 @@
     <entity name="PokemonMO" representedClassName=".PokemonMO" syncable="YES" codeGenerationType="category">
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="sprite" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="SpriteMO" inverseName="pokemon" inverseEntity="SpriteMO"/>
+    </entity>
+    <entity name="SpriteMO" representedClassName=".DigimonMO" syncable="YES" codeGenerationType="category">
+        <attribute name="default" optional="YES" attributeType="URI"/>
+        <attribute name="name" optional="YES" attributeType="String"/>
+        <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PokemonMO" inverseName="sprite" inverseEntity="PokemonMO"/>
     </entity>
     <elements>
-        <element name="PokemonMO" positionX="-63" positionY="-18" width="128" height="73"/>
+        <element name="SpriteMO" positionX="116.84375" positionY="-120.5" width="128" height="88"/>
+        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="88"/>
     </elements>
 </model>
