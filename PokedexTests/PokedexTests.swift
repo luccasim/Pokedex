@@ -14,10 +14,10 @@ import SwiftUI
 class PokedexTests: XCTestCase {
     
     var loader = ImageLoader(session: URLSession.shared)
-    var uri = URL(string:"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/dream-world/1.svg")!
+    var uri = URL(string:"https://wallpaperaccess.com/full/2188727.jpg)")!
     
     struct Item : LoaderItemProtocol {
-        var id: String
+        var fileName: String
         var request: URLRequest
     }
 
@@ -33,7 +33,7 @@ class PokedexTests: XCTestCase {
         
         let exp = expectation(description: "Download Task")
                 
-        let item = Item(id: "1234", request: URLRequest(url: uri))
+        let item = Item(fileName: "1234", request: URLRequest(url: uri))
         
         loader.download(item: item) { (result) in
             switch result {
@@ -54,7 +54,7 @@ class PokedexTests: XCTestCase {
         
         testDownloadTask()
         
-        let item = Item(id: "1234", request: URLRequest(url: uri))
+        let item = Item(fileName: "1234", request: URLRequest(url: uri))
         let result = loader.retrieve(item: item)
         
         switch result {
@@ -67,7 +67,7 @@ class PokedexTests: XCTestCase {
         
         testDownloadTask()
         
-        let item = Item(id: "1234", request: URLRequest(url: uri))
+        let item = Item(fileName: "1234", request: URLRequest(url: uri))
         
         let result = loader.delete(item: item)
         
@@ -84,7 +84,7 @@ class PokedexTests: XCTestCase {
         
         let exp = expectation(description: "Futur")
         
-        let item = Item(id: "1234", request: URLRequest(url: uri))
+        let item = Item(fileName: "1234", request: URLRequest(url: uri))
         
         self.bag = loader.load(item: item)
             .sink(receiveCompletion: { _ in

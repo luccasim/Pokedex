@@ -17,7 +17,7 @@ struct PokemonDetailView: View {
         VStack {
             Text(self.viewModel.name)
                 .font(.largeTitle)
-            Image(self.viewModel.imageName)
+            Image(uiImage: self.viewModel.image)
                 .resizable()
                 .scaledToFit()
                 .frame(width: 350, height: 350)

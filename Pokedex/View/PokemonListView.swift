@@ -29,7 +29,9 @@ struct PokemonListView: View {
             List {
                 
                 ForEach(self.viewModel.pokemons) { (Pokemon) in
+                    NavigationLink(destination: PokemonDetailView(model: Pokemon)) {
                         Text(Pokemon.name)
+                    }
                 }
             }
             .navigationBarTitle(self.viewModel.title)
