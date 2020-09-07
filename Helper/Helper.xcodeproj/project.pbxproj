@@ -7,16 +7,41 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8428B0BC25058CC000B785CE /* DataLoaderHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428B0BB25058CBF00B785CE /* DataLoaderHelper.swift */; };
+		8428B0C425058CEB00B785CE /* HelperTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428B0C325058CEB00B785CE /* HelperTests.swift */; };
+		8428B0C625058CEB00B785CE /* Helper.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84FD5A562502C902007D9DE0 /* Helper.framework */; };
 		84FD5A5B2502C902007D9DE0 /* Helper.h in Headers */ = {isa = PBXBuildFile; fileRef = 84FD5A592502C902007D9DE0 /* Helper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
+/* Begin PBXContainerItemProxy section */
+		8428B0C725058CEB00B785CE /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84FD5A4D2502C902007D9DE0 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84FD5A552502C902007D9DE0;
+			remoteInfo = Helper;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
+		8428B0BB25058CBF00B785CE /* DataLoaderHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoaderHelper.swift; sourceTree = "<group>"; };
+		8428B0C125058CEB00B785CE /* HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HelperTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		8428B0C325058CEB00B785CE /* HelperTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HelperTests.swift; sourceTree = "<group>"; };
+		8428B0C525058CEB00B785CE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		84FD5A562502C902007D9DE0 /* Helper.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Helper.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FD5A592502C902007D9DE0 /* Helper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Helper.h; sourceTree = "<group>"; };
 		84FD5A5A2502C902007D9DE0 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		8428B0BE25058CEB00B785CE /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8428B0C625058CEB00B785CE /* Helper.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84FD5A532502C902007D9DE0 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -27,10 +52,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8428B0C225058CEB00B785CE /* HelperTests */ = {
+			isa = PBXGroup;
+			children = (
+				8428B0C325058CEB00B785CE /* HelperTests.swift */,
+				8428B0C525058CEB00B785CE /* Info.plist */,
+			);
+			path = HelperTests;
+			sourceTree = "<group>";
+		};
 		84FD5A4C2502C902007D9DE0 = {
 			isa = PBXGroup;
 			children = (
 				84FD5A582502C902007D9DE0 /* Helper */,
+				8428B0C225058CEB00B785CE /* HelperTests */,
 				84FD5A572502C902007D9DE0 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -39,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				84FD5A562502C902007D9DE0 /* Helper.framework */,
+				8428B0C125058CEB00B785CE /* HelperTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -48,6 +84,7 @@
 			children = (
 				84FD5A592502C902007D9DE0 /* Helper.h */,
 				84FD5A5A2502C902007D9DE0 /* Info.plist */,
+				8428B0BB25058CBF00B785CE /* DataLoaderHelper.swift */,
 			);
 			path = Helper;
 			sourceTree = "<group>";
@@ -66,6 +103,24 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		8428B0C025058CEB00B785CE /* HelperTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 8428B0C925058CEB00B785CE /* Build configuration list for PBXNativeTarget "HelperTests" */;
+			buildPhases = (
+				8428B0BD25058CEB00B785CE /* Sources */,
+				8428B0BE25058CEB00B785CE /* Frameworks */,
+				8428B0BF25058CEB00B785CE /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				8428B0C825058CEB00B785CE /* PBXTargetDependency */,
+			);
+			name = HelperTests;
+			productName = HelperTests;
+			productReference = 8428B0C125058CEB00B785CE /* HelperTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		84FD5A552502C902007D9DE0 /* Helper */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 84FD5A5E2502C902007D9DE0 /* Build configuration list for PBXNativeTarget "Helper" */;
@@ -90,9 +145,13 @@
 		84FD5A4D2502C902007D9DE0 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
+				LastSwiftUpdateCheck = 1160;
 				LastUpgradeCheck = 1160;
 				ORGANIZATIONNAME = Devios;
 				TargetAttributes = {
+					8428B0C025058CEB00B785CE = {
+						CreatedOnToolsVersion = 11.6;
+					};
 					84FD5A552502C902007D9DE0 = {
 						CreatedOnToolsVersion = 11.6;
 					};
@@ -112,11 +171,19 @@
 			projectRoot = "";
 			targets = (
 				84FD5A552502C902007D9DE0 /* Helper */,
+				8428B0C025058CEB00B785CE /* HelperTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		8428B0BF25058CEB00B785CE /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84FD5A542502C902007D9DE0 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -127,16 +194,69 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		8428B0BD25058CEB00B785CE /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				8428B0C425058CEB00B785CE /* HelperTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		84FD5A522502C902007D9DE0 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8428B0BC25058CC000B785CE /* DataLoaderHelper.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		8428B0C825058CEB00B785CE /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84FD5A552502C902007D9DE0 /* Helper */;
+			targetProxy = 8428B0C725058CEB00B785CE /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		8428B0CA25058CEB00B785CE /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 32DX3M943S;
+				INFOPLIST_FILE = HelperTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.HelperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		8428B0CB25058CEB00B785CE /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 32DX3M943S;
+				INFOPLIST_FILE = HelperTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.HelperTests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		84FD5A5C2502C902007D9DE0 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -308,6 +428,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		8428B0C925058CEB00B785CE /* Build configuration list for PBXNativeTarget "HelperTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				8428B0CA25058CEB00B785CE /* Debug */,
+				8428B0CB25058CEB00B785CE /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		84FD5A502502C902007D9DE0 /* Build configuration list for PBXProject "Helper" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

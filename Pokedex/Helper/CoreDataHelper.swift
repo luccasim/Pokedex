@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import SwiftUI
 
 /// Help to Manage CoreData Entities with basic operations :
 /// Fetch, Create, Get, Delete, Save and Clear.
@@ -41,7 +40,7 @@ protocol CoreDataHelperProtocol {
 /// each Entity his support.
 ///
 /// To avoid loading delay from the persistentContainer,
-/// we recommend to regist into the SceneDelegate.
+/// we recommend to regist the .xcdatamodel under the SceneDelegate.
 class CoreDataStore<T:NSManagedObject> : CoreDataHelperProtocol {
         
     typealias Entity = T

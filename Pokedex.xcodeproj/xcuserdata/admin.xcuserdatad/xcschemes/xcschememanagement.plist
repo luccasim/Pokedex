@@ -6,8 +6,28 @@
 	<dict>
 		<key>Pokedex.xcscheme_^#shared#^_</key>
 		<dict>
+			<key>isShown</key>
+			<true/>
 			<key>orderHint</key>
-			<integer>0</integer>
+			<integer>1</integer>
+		</dict>
+	</dict>
+	<key>SuppressBuildableAutocreation</key>
+	<dict>
+		<key>8457C4AD250135FA00F3E37E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8457C4C6250135FD00F3E37E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
+		</dict>
+		<key>8457C4D1250135FD00F3E37E</key>
+		<dict>
+			<key>primary</key>
+			<true/>
 		</dict>
 	</dict>
 </dict>
