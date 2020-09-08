@@ -16,3 +16,10 @@ struct Pokemon : Identifiable {
     var desc    : String?
     
 }
+
+extension Pokemon {
+    
+    var item : LoaderItem {
+        return LoaderItem(fileName: self.name, request: URLRequest(url: URL(string: self.sprite!)!))
+    }
+}

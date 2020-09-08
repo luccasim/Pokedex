@@ -29,14 +29,11 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     
     func set(Pokemon:Pokemon) {
         self.pokemon = Pokemon
-        self.loadImage()
+        self.loadImage(Pokemon: Pokemon)
     }
     
-    func loadImage() {
-        
-        let request = URL(string: "https://wallpaperaccess.com/download/8k-beach-2053958")!
-        
-        self.cancellable = self.loader.load(Url: request)
+    func loadImage(Pokemon:Pokemon) {
+        self.cancellable = self.loader.load(Item: Pokemon.item)
             .receive(on: RunLoop.main)
             .sink(receiveValue: {[weak self] in self?.image = $0})
     }

@@ -15,15 +15,17 @@ class FakePokemonManager : DataManagerProtocol {
     
     init() {
         self.data = [
-            Pokemon(id: 1, name: "Bulbazor", sprite: "bulbazor", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
-            Pokemon(id: 2, name: "Herbizarre"),
-            Pokemon(id: 3, name: "Florizarre"),
-            Pokemon(id: 4, name: "Salemeche"),
-            Pokemon(id: 5, name: "Reptincel"),
-            Pokemon(id: 6, name: "Dracofeu"),
-            Pokemon(id: 7, name: "Carapuce"),
-            Pokemon(id: 8, name: "Carabaffe"),
-            Pokemon(id: 9, name: "Tortank")
+            Pokemon(id: 1, name: "Bulbazor", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/1.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 2, name: "Herbizar", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/2.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 3, name: "Florizar", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/3.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 4, name: "Salameche", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/4.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 5, name: "Reptincel", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/5.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 6, name: "Dracofeu", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/6.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 7, name: "Carapuce", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/7.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 8, name: "Carabaffe", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/8.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 9, name: "Tortank", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/9.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+            Pokemon(id: 10, name: "Mister10", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/10.png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête."),
+
         ]
     }
     

@@ -66,39 +66,30 @@ class DataLoader<T:AnyObject> : DataLoaderHelperProtocol {
 // MARK: - Implementation
 
 extension DataLoader {
-    
-    func load(Url:URL, Callback:@escaping((T) -> Void)) {
-        let futur = self.load(Url: Url)
-            .sink {Callback($0)}
-        self.cancellable.insert(futur)
-    }
-    
-    func load(Item:LoaderItemProtocol, Callback:@escaping((T) -> Void)) {
-        let futur = self.load(Item: Item)
-            .sink {Callback($0)}
-        self.cancellable.insert(futur)
-    }
-    
-    func load(Url:URL) -> Future<T,Never> {
-        let item = LoaderItem(fileName: Url.lastPathComponent, request: URLRequest(url: Url))
-        return load(Item: item)
-    }
         
+    /// Load a ressource asynchrony. First check if the ressource is cached,
+    /// else try to reload from the local file, else download it.
+    /// - Parameter Item: If you need credentitial use this parameter,
+    ///  see also LoaderItem.
+    /// - Returns: A Futur to work and publish asynchrony.
     func load(Item:LoaderItemProtocol) -> Future<T,Never> {
         
         let futur = Future<T, Never> { (promise) in
             
+            // Check if cached
             if let obj = self.cache.object(forKey: NSString(string: Item.fileName)) {
                 print("[ImageLoader] : Load \(Item.fileName) from Cache")
                 promise(.success(obj))
             }
             
+            // Check if stored
             else if let obj = self.retrieve(item: Item) {
                 self.cache.setObject(obj, forKey: NSString(string: Item.fileName))
                 print("[ImageLoader] : Load \(Item.fileName) from File")
                 promise(.success(obj))
             }
             
+            // Else Download
             else {
                 self.download(item: Item) { (result) in
                     switch result {
@@ -120,10 +111,45 @@ extension DataLoader {
         return futur
     }
     
+    /// Load a ressource asynchrony. First check if the ressource is cached,
+    /// else try to reload from the local file, else download it.
+    /// - Parameter Url: The remote uri, use this only if you have a valid and none credential url.
+    /// - Returns: A Futur to work and publish asynchrony.
+    func load(Url:URL) -> Future<T,Never> {
+        let item = LoaderItem(fileName: Url.lastPathComponent, request: URLRequest(url: Url))
+        return load(Item: item)
+    }
+    
+    
+    /// Load a ressource asynchrony. First check if the ressource is cached,
+    /// else try to reload from the local file, else download it.
+    /// - Parameters:
+    ///   - Url: The remote uri, use this only if you have a valid and none credential url.
+    ///   - Callback:A completion to work when task finish.
+    func load(Url:URL, Callback:@escaping((T) -> Void)) {
+        let futur = self.load(Url: Url)
+            .sink {Callback($0)}
+        self.cancellable.insert(futur)
+    }
+    
+    /// Load a ressource asynchrony. First check if the ressource is cached,
+    /// else try to reload from the local file, else download it.
+    /// - Parameters:
+    ///   - Item: If you need credentitial use this parameter,
+    ///  see also LoaderItem.
+    ///   - Callback: A completion to work when task finish.
+    func load(Item:LoaderItemProtocol, Callback:@escaping((T) -> Void)) {
+        let futur = self.load(Item: Item)
+            .sink {Callback($0)}
+        self.cancellable.insert(futur)
+    }
+    
+    /// Clean the cache
     func cleanCache() {
         self.cache.removeAllObjects()
     }
     
+    /// Remove storage directory.
     func removeAllStorage() {
         
         let manager = FileManager.default

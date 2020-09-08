@@ -48,7 +48,7 @@ struct PokemonDetailView: View {
 struct PokemonDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PokemonDetailView(model: FakePokemonManager().fetchToList()[0])
+            PokemonDetailView(model: FakePokemonManager().fetchToList()[1])
             .navigationBarHidden(true)
             .navigationBarTitle("Bulbazor")
         }
