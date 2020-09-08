@@ -19,15 +19,12 @@ protocol PokemonDetailVMProtocol {
     var image : UIImage {get}
 }
 
-let Cloader = ImageLoader(session: URLSession.shared)
-
 final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     
     @Published private var pokemon : Pokemon?
-    private let loader = Cloader
+    private let loader = ImageLoader.shared
     
     @Published var image: UIImage = UIImage()
-    
     var cancellable : AnyCancellable?
     
     func set(Pokemon:Pokemon) {
@@ -37,12 +34,11 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     
     func loadImage() {
         
-        let request = URLRequest(url: URL(string: "https://wallpaperaccess.com/download/8k-beach-2053958")!)
-        let item = ImageLoader.ImageItem(fileName: "bulbazor", request: request)
+        let request = URL(string: "https://wallpaperaccess.com/download/8k-beach-2053958")!
         
-        self.cancellable = self.loader.load(item: item)
+        self.cancellable = self.loader.load(Url: request)
             .receive(on: RunLoop.main)
-            .sink(receiveValue: {self.image = $0})
+            .sink(receiveValue: {[weak self] in self?.image = $0})
     }
     
     var name : String {

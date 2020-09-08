@@ -8,49 +8,138 @@
 
 import Foundation
 import Combine
-import UIKit
 
+/// Help to Manage Download Data with Cache and
+/// persistence store.
+///
+/// Load a local ressource and cache it.
+/// If it does not exist, download it.
+///
+/// Allows operation for clean the cache,
+/// and remove the local data.
 protocol DataLoaderHelperProtocol {
     
-    func load(ID:String) -> Data
+    associatedtype DataMapped
     
-    func download(request:URLRequest)
+    func load(Url:URL, Callback:@escaping((DataMapped) -> Void))
+    func load(Item:LoaderItemProtocol, Callback:@escaping((DataMapped) -> Void))
     
-    func store()
-    func retrieve()
-    func delete()
+    func load(Url:URL) -> Future<DataMapped,Never>
+    func load(Item:LoaderItemProtocol) -> Future<DataMapped,Never>
     
-    func clear()
-    
+    func cleanCache()
+    func removeAllStorage()
 }
 
-final class ImageLoader {
-    
-    struct ImageItem : LoaderItemProtocol {
-        let fileName: String
-        let request: URLRequest
-    }
-    
-    private var session : URLSession
-    private var cache = NSCache<NSString,UIImage>()
-    private var requests = Set<URLRequest>()
-        
-    init(session:URLSession) {
-        self.session = session
-    }
-    
-    typealias LoaderResult = (Result<URL,Error>) -> Void
-    
-}
-
-// MARK: - Implementation
-
+/// If your source need credential to access,
+/// you should use this protocol for retrieve your data
 protocol LoaderItemProtocol {
     var fileName: String {get}
     var request: URLRequest {get}
 }
 
-extension ImageLoader {
+/// Standart struct for send a specifique request.
+/// You could set the file name to save.
+struct LoaderItem : LoaderItemProtocol {
+    let fileName: String
+    let request: URLRequest
+}
+
+/// This generic implement the DataLoaderHelperProtocol.
+/// For use we recommand to inherit with the appropiate Data.
+/// This class use NSCache and FileManager for manage the data.
+class DataLoader<T:AnyObject> : DataLoaderHelperProtocol {
+    
+    private var session : URLSession
+    private var cache = NSCache<NSString,T>()
+    private var requests = Set<URLRequest>()
+    private var cancellable = Set<AnyCancellable>()
+    
+    var convertData : ((Data) -> T?)
+        
+    init(Session:URLSession, Convert: @escaping((Data)->T?)) {
+        self.session = Session
+        self.convertData = Convert
+    }
+}
+
+// MARK: - Implementation
+
+extension DataLoader {
+    
+    func load(Url:URL, Callback:@escaping((T) -> Void)) {
+        let futur = self.load(Url: Url)
+            .sink {Callback($0)}
+        self.cancellable.insert(futur)
+    }
+    
+    func load(Item:LoaderItemProtocol, Callback:@escaping((T) -> Void)) {
+        let futur = self.load(Item: Item)
+            .sink {Callback($0)}
+        self.cancellable.insert(futur)
+    }
+    
+    func load(Url:URL) -> Future<T,Never> {
+        let item = LoaderItem(fileName: Url.lastPathComponent, request: URLRequest(url: Url))
+        return load(Item: item)
+    }
+        
+    func load(Item:LoaderItemProtocol) -> Future<T,Never> {
+        
+        let futur = Future<T, Never> { (promise) in
+            
+            if let obj = self.cache.object(forKey: NSString(string: Item.fileName)) {
+                print("[ImageLoader] : Load \(Item.fileName) from Cache")
+                promise(.success(obj))
+            }
+            
+            else if let obj = self.retrieve(item: Item) {
+                self.cache.setObject(obj, forKey: NSString(string: Item.fileName))
+                print("[ImageLoader] : Load \(Item.fileName) from File")
+                promise(.success(obj))
+            }
+            
+            else {
+                self.download(item: Item) { (result) in
+                    switch result {
+                    case .failure(let err):
+                        print("[ImageLoader] : Error Download \(Item.fileName) => \(err.localizedDescription)")
+                    case .success(_):
+                        if let obj = self.retrieve(item: Item) {
+                            self.cache.setObject(obj, forKey: NSString(string: Item.fileName))
+                            print("[ImageLoader] : Load \(Item.fileName) from Remote")
+                            promise(.success(obj))
+                        } else {
+                            print("[ImageLoader] : Cant read \(Item.fileName) file format")
+                        }
+                    }
+                }
+            }
+            
+        }
+        return futur
+    }
+    
+    func cleanCache() {
+        self.cache.removeAllObjects()
+    }
+    
+    func removeAllStorage() {
+        
+        let manager = FileManager.default
+        
+        let dir = manager.urls(for: .applicationDirectory, in: .userDomainMask)[0]
+            .appendingPathComponent("Loader")
+        
+        do {
+            try manager.removeItem(at: dir)
+        } catch let err {
+            print(err.localizedDescription)
+        }
+    }
+}
+
+fileprivate extension DataLoader {
     
     enum Errors : Error {
         case missingStorageURL
@@ -59,56 +148,14 @@ extension ImageLoader {
         case isPending
     }
     
-    func load(item:LoaderItemProtocol) -> Future<UIImage,Never> {
-        
-        let futur = Future<UIImage, Never> { (promise) in
-            
-            if let image = self.cache.object(forKey: NSString(string: item.fileName)) {
-                print("[ImageLoader] : Load \(item.fileName) from Cache")
-                promise(.success(image))
-            }
-            
-            else if let image = try? self.retrieve(item: item).map({UIImage(contentsOfFile: $0.path)}).get() {
-                self.cache.setObject(image, forKey: NSString(string: item.fileName))
-                print("[ImageLoader] : Load \(item.fileName) from File")
-                promise(.success(image))
-            }
-            
-            else {
-                self.download(item: item) { (result) in
-                    switch result {
-                    case .failure(let err):
-                        print("[ImageLoader] : Error Download \(item.fileName) => \(err.localizedDescription)")
-                    case .success(let url):
-                        if let image = UIImage(data: try! Data(contentsOf: url)) {
-                            self.cache.setObject(image, forKey: NSString(string: item.fileName))
-                            print("[ImageLoader] : Load \(item.fileName) from Remote")
-                            promise(.success(image))
-                        } else {
-                            print("[ImageLoader] : Cant read \(item.fileName) file format")
-                        }
-                    }
-                }
-            }
-        }
-        
-        return futur
-    }
-    
     func cache(item:LoaderItemProtocol) {
-        
-        let result = self.retrieve(item: item)
-        
-        switch result {
-        case .success(let url):
-            if let image = UIImage(contentsOfFile: url.path) {
-                self.cache.setObject(image, forKey: NSString(string: item.fileName))
-            }
-        default: break
+    
+        if let object = self.retrieve(item: item) {
+            self.cache.setObject(object, forKey: NSString(string: item.fileName))
         }
     }
     
-    private func couldDownload(request:URLRequest) -> Bool {
+    func couldDownload(request:URLRequest) -> Bool {
 
         guard self.requests.contains(request) else {
             self.requests.insert(request)
@@ -118,13 +165,12 @@ extension ImageLoader {
         return false
     }
     
-    func download(item:LoaderItemProtocol, Callback:@escaping LoaderResult) {
+    func download(item:LoaderItemProtocol, Callback:@escaping (Result<URL,Error>) -> Void) {
         
         guard self.couldDownload(request: item.request) else {
             return Callback(.failure(Errors.isPending))
         }
         
-        print("Start download")
         self.session.downloadTask(with: item.request) { (tmp, rep, err) in
             if let error = err {
                 Callback(.failure(error))
@@ -132,11 +178,10 @@ extension ImageLoader {
                 Callback(self.store(item: item, AtUrl: local))
             }
             self.requests.remove(item.request)
-            print("Finish download")
         }.resume()
     }
     
-    func retrieve(item:LoaderItemProtocol) -> Result<URL,Error> {
+    func retrieve(item:LoaderItemProtocol) -> T? {
         
         let manager = FileManager.default
         
@@ -144,10 +189,17 @@ extension ImageLoader {
             .appendingPathComponent("Loader")
             .appendingPathComponent(item.fileName)
         
-        return manager.fileExists(atPath: url.path) ? .success(url) : .failure(Errors.fileIsNotStored)
+        do {
+            
+            let data = try Data(contentsOf: url)
+            return self.convertData(data)
+            
+        } catch {
+            return nil
+        }
     }
     
-    func delete(item:LoaderItemProtocol) -> Result<URL,Never> {
+    func delete(item:LoaderItemProtocol) {
         
         let manager = FileManager.default
         
@@ -158,21 +210,6 @@ extension ImageLoader {
         if manager.fileExists(atPath: file.path) {
             try? manager.removeItem(at: file)
         }
-        
-        return .success(file)
-    }
-    
-    func remove() {
-        
-        let manager = FileManager.default
-        let dir = manager.urls(for: .applicationDirectory, in: .userDomainMask)[0]
-        .appendingPathComponent("Loader")
-        
-        do {
-            try manager.removeItem(at: dir)
-        } catch let err {
-            print(err.localizedDescription)
-        }
     }
     
     func store(item:LoaderItemProtocol, AtUrl:URL) -> Result<URL,Error> {
@@ -180,8 +217,8 @@ extension ImageLoader {
         let manager = FileManager.default
         
         let dir = manager.urls(for: .applicationDirectory, in: .userDomainMask)[0].appendingPathComponent("Loader")
-        let file = dir.appendingPathComponent(item.fileName)
         
+        let file = dir.appendingPathComponent(item.fileName)
         let dirExist = manager.fileExists(atPath: dir.path)
         
         do {
@@ -191,7 +228,6 @@ extension ImageLoader {
             }
             
             try manager.replaceItem(at: file, withItemAt: AtUrl, backupItemName: nil, options: [], resultingItemURL: nil)
-
             return .success(file)
             
         } catch let err {

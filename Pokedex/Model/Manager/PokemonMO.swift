@@ -16,9 +16,10 @@ class PokemonMO : NSManagedObject {
         let name = self.name ?? "unknow"
         return Pokemon(id: id, name: name)
     }
+    
 }
 
-class PokemonStore: CoreDataStore<PokemonMO> {
+final class PokemonStore: CoreDataStore<PokemonMO> {
     
     static let shared = PokemonStore()
         
