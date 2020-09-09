@@ -12,14 +12,6 @@ import SwiftUI
 @testable import Pokedex
 
 class PokedexTests: XCTestCase {
-    
-    var loader = ImageLoader(session: URLSession.shared)
-    var uri = URL(string:"https://wallpaperaccess.com/full/2188727.jpg)")!
-    
-    struct Item : LoaderItemProtocol {
-        var fileName: String
-        var request: URLRequest
-    }
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -29,76 +21,137 @@ class PokedexTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testDownloadTask() {
+    func testTask() {
         
-        let exp = expectation(description: "Download Task")
-                
-        let item = Item(fileName: "1234", request: URLRequest(url: uri))
+        let ws = WebService(Session: URLSession.shared)
         
-        loader.download(item: item) { (result) in
-            switch result {
-            case .failure(let error) : XCTFail("Failed download \(error.localizedDescription)")
-            case .success(let local): print("Saved at \(local)")
+        let requests = (1...20)
+            .compactMap {URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\($0).png")}
+            .map {URLRequest(url: $0)}
+        
+        print(requests)
+        
+        let exp = expectation(description: "test ws")
+        
+        ws.dataTask(Request: requests[0]) { (res) in
+            switch res {
+            case .failure(let error): XCTFail(error.localizedDescription)
+            case .success(let data): print(data)
             }
             exp.fulfill()
         }
         
         waitForExpectations(timeout: 30) { (error) in
-            if let error = error {
-                print(error.localizedDescription)
+        }
+    }
+    
+    func testDownloadListOrder() {
+        
+        let ws = WebService(Session: URLSession.shared)
+        
+        let requests = (1...20)
+            .compactMap {URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\($0).png")}
+            .map {URLRequest(url: $0)}
+        
+        let exp = expectation(description: "Download list")
+        
+        let list = requests + requests
+        
+        ws.listTask(List: list, Completion: { (res) in
+            switch res {
+            case .failure(let error): print(error.localizedDescription)
+            case .success(let tuple): print("[\(tuple.0.url!)] with \(tuple.1)")
             }
+        }) { (Number) in
+            print("Success request \(Number)")
+            exp.fulfill()
         }
-    }
-    
-    func testRetrieve() {
         
-        testDownloadTask()
-        
-        let item = Item(fileName: "1234", request: URLRequest(url: uri))
-        let result = loader.retrieve(item: item)
-        
-        switch result {
-        case .failure(let error): XCTFail("failed with \(error.localizedDescription)")
-        case .success(let url): print("Success : \(try! String(contentsOf: url))")
-        }
-    }
-    
-    func testDelete() throws {
-        
-        testDownloadTask()
-        
-        let item = Item(fileName: "1234", request: URLRequest(url: uri))
-        
-        let result = loader.delete(item: item)
-        
-        switch result {
-        case .success(let url): print("Success Delete the \(url)")
-        default: break
-        }
+        waitForExpectations(timeout: 30, handler: nil)
         
     }
     
-    var bag : AnyCancellable?
-    
-    func testLoad() {
+    func testDownloadListSimultaneous() {
         
-        let exp = expectation(description: "Futur")
+        let ws = WebService(Session: URLSession.shared)
         
-        let item = Item(fileName: "1234", request: URLRequest(url: uri))
+        let requests = (1...20)
+            .compactMap {URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\($0).png")}
+            .map {URLRequest(url: $0)}
         
-        self.bag = loader.load(item: item)
-            .sink(receiveCompletion: { _ in
-                print("Completed")
-                exp.fulfill()
-            }, receiveValue: { (image) in
-                print("Receive image \(image)")
-            })
+        let exp = expectation(description: "Download list")
         
-        waitForExpectations(timeout: 30) { (err) in
-            if let error = err {
-                XCTFail("failed with \(error.localizedDescription)")
+        let list = requests + requests
+        
+        ws.listTask(Option: .Simultaneous, List: list, Completion: { (res) in
+            switch res {
+            case .failure(let error): print(error.localizedDescription)
+            case .success(let tuple): print("[\(tuple.0.url!)] with \(tuple.1)")
             }
+        }) { (Number) in
+            print("Success request \(Number)")
+            exp.fulfill()
         }
+        
+        waitForExpectations(timeout: 30, handler: nil)
+        
+    }
+    
+    func testDownloadListPage() {
+        
+        let ws = WebService(Session: URLSession.shared)
+        
+        let requests = (1...20)
+            .compactMap {URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\($0).png")}
+            .map {URLRequest(url: $0)}
+        
+        let exp = expectation(description: "Download list")
+        
+        let list = requests + requests
+        
+        ws.listTask(Option: .Page(Page: 3), List: list, Completion: { (res) in
+            switch res {
+            case .failure(let error): print(error.localizedDescription)
+            case .success(let tuple): print("[\(tuple.0.url!)] with \(tuple.1)")
+            }
+        }) { (Number) in
+            print("Success request \(Number) !")
+            exp.fulfill()
+        }
+        
+        waitForExpectations(timeout: 30, handler: nil)
+    }
+    
+    func testDownloadListTimer() {
+        
+        let ws = WebService(Session: URLSession.shared)
+        
+        let requests = (1...20)
+            .compactMap {URL(string: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\($0).png")}
+            .map {URLRequest(url: $0)}
+        
+        let exp = expectation(description: "Download list")
+        
+        let list = requests + requests
+        
+        ws.listTask(Option: .Timer(Page: 5, Interval: 10), List: list, Completion: { (res) in
+            switch res {
+            case .failure(let error): print(error.localizedDescription)
+            case .success(let tuple): print("[\(tuple.0.url!)] with \(tuple.1)")
+            }
+        }) { (Number) in
+            print("Success request \(Number) !")
+            exp.fulfill()
+        }
+        
+        waitForExpectations(timeout: 50, handler: nil)
+    }
+}
+
+extension Data {
+    
+    var toString : String {
+        return String(data: self, encoding: .utf8) ?? self.description
     }
     
 }
