@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import LCFramework
 
 final class ImageLoader: DataLoader<UIImage> {
     
