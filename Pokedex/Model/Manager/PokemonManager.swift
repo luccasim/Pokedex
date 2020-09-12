@@ -61,11 +61,10 @@ final class PokemonManager : DataManagerProtocol {
         return Future { (promise) in
             
             if let url = Pokemon.sprite.flatMap({URL(string: $0)}) {
-                let futur = self.loader.load(Url: url)
+                self.loader.load(Url: url) { (img) in
+                    promise(.success(img))
+                }
             }
         }
-
-        
     }
-    
 }

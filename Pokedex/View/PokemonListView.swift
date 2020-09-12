@@ -26,6 +26,7 @@ struct PokemonListView: View {
     var body: some View {
         
         NavigationView {
+            
             List {
                 
                 ForEach(self.viewModel.pokemons) { (Pokemon) in
@@ -47,7 +48,6 @@ struct PokemonListView: View {
         }
     }
 }
-
 
 struct PokemonListView_Previews: PreviewProvider {
     

@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import LCFramework
 
 struct Pokemon : Identifiable {
     
@@ -16,11 +15,4 @@ struct Pokemon : Identifiable {
     var sprite  : String?
     var desc    : String?
     
-}
-
-extension Pokemon {
-    
-    var item : LoaderItem {
-        return LoaderItem(fileName: self.name, request: URLRequest(url: URL(string: self.sprite!)!))
-    }
 }
