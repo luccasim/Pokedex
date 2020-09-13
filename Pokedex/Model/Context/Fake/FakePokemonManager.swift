@@ -19,7 +19,6 @@ class FakePokemonManager : DataManagerProtocol {
         let data = (1...151).map({Pokemon(id: $0, name: "Pokemon \($0)", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\($0).png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête.")})
         
         self.data = data
-        
     }
     
     func fetchToList() -> [Pokemon] {
