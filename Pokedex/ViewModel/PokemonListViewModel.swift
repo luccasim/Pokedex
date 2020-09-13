@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import Combine
 
 protocol PokemonListViewModelProtocol {
     
@@ -22,10 +23,11 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     @Published var pokemons: [Pokemon]
     
     private var manager : DataManagerProtocol
+    var futurs : AnyCancellable?
     
     init(Manager:DataManagerProtocol = PokemonManager.shared) {
-        self.manager = FakePokemonManager()
-        self.pokemons = Manager.fetchToList()
+        self.manager = Manager
+        pokemons = []
     }
     
     var title: String {
@@ -33,7 +35,9 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     }
     
     func fetchPokemon() {
-        self.pokemons = self.manager.fetchToList()
+        self.futurs = manager.fetchToList().receive(on: RunLoop.main).sink(receiveValue: { (pokemons) in
+            self.pokemons = pokemons
+        })
     }
-    
+
 }

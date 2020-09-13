@@ -31,7 +31,7 @@ struct PokemonListView: View {
                 
                 ForEach(self.viewModel.pokemons) { (Pokemon) in
                     NavigationLink(destination: PokemonDetailView(model: Pokemon)) {
-                        Text(Pokemon.name)
+                        Text(Pokemon.name!)
                     }
                 }
             }

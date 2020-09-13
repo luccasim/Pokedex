@@ -11,6 +11,13 @@ import Combine
 import UIKit
 
 class FakePokemonManager : DataManagerProtocol {
+    
+    func fetchToList() -> Future<[Pokemon], Never> {
+        return Future<[Pokemon], Never> { promise in
+            
+        }
+    }
+    
 
     private var data : [Pokemon] = []
     

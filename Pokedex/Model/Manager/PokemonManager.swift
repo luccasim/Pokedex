@@ -13,10 +13,11 @@ import Combine
 
 protocol DataManagerProtocol {
         
-    func fetchToList() -> [Pokemon]
     func add(Pokemon:Pokemon)
     func update(Pokemon:Pokemon)
     func save()
+    
+    func fetchToList() -> Future<[Pokemon],Never>
     func getImage(Pokemon:Pokemon) -> Future<UIImage,Never>
     
 }
@@ -27,14 +28,44 @@ final class PokemonManager : DataManagerProtocol {
     
     private var store = PokemonStore.shared
     private var loader = ImageLoader.shared
+    private var ws = PokeAPI()
     
-    func fetchToList() -> [Pokemon] {
+    func fetchToList() -> Future<[Pokemon],Never> {
         
-        let results = self.store.fetch()
-        switch results {
-        case .success(let ents):
-            return ents.map({$0.toPokemon})
-        default: return []
+        return Future <[Pokemon],Never> { promise in
+            
+            let results = self.store.fetch()
+            
+            switch results {
+            case .success(let mo):
+                
+                if mo.isEmpty {
+                    self.ws.installPokemon(Ids: (1...151).map{$0}, Completion: { (res) in
+                        switch res {
+                        case .success(let reponses):
+                                 
+                            DispatchQueue.main.async {
+                                reponses.0.forEach({self.update(Pokemon:Pokemon(id: $0.id, name: $0.name, sprite: nil, desc: $0.text[16].flavor_text))})
+                                reponses.1.forEach({self.update(Pokemon: Pokemon(id: $0.id, name: $0.name, sprite: $0.sprites.other.official.front_default, desc: nil))})
+                                
+                                self.store.save()
+                                let fetchs = self.store.fetch()
+                                switch fetchs {
+                                case .success(let mos): promise(.success(mos.map({$0.toPokemon}).sorted(by: {$0.id < $1.id})))
+                                default: break
+                                }
+                            }
+                            
+                        default: break
+                        }
+                    })
+                }
+                else {
+                    promise(.success(mo.map({$0.toPokemon}).sorted(by: {$0.id < $1.id})))
+                }
+                
+            default: break
+            }
         }
     }
     

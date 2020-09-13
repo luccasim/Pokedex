@@ -11,12 +11,14 @@ import LCFramework
 
 protocol PokeAPIProtocol {
     
+    func installPokemon(Ids:[Int], Completion:@escaping(Result<([PokeAPI.SpeciesReponse],[PokeAPI.PokemonReponse]),Never>)->Void)
+    
     func taskPokemon(Endpoint:PokeAPI.Endpoint, Completion:@escaping(Result<PokeAPI.PokemonReponse,Error>)->Void)
     func taskSpecies(Endpoint:PokeAPI.Endpoint, Completion:@escaping(Result<PokeAPI.SpeciesReponse,Error>)->Void)
 
 }
 
-final class PokeAPI : WebService {
+final class PokeAPI : WebService, PokeAPIProtocol {
     
     enum APIErrors : Error {
         case invalidRequest
@@ -51,6 +53,36 @@ final class PokeAPI : WebService {
         }
     }
     
+    func installPokemon(Ids: [Int], Completion: @escaping (Result<([SpeciesReponse],[PokemonReponse]), Never>) -> Void) {
+        
+        let requests = Ids.compactMap({Endpoint.Species(Id: $0).request})
+        var species : [SpeciesReponse] = []
+        var pokemons : [PokemonReponse] = []
+        
+        self.listTask(List: requests, Completion: { result in
+            switch result {
+            case .success(let tutle):
+                if let reponse = try? JSONDecoder().decode(SpeciesReponse.self, from: tutle.1) {
+                    species.append(reponse)
+                }
+            default: break
+            }
+        }) { (success) in
+            let pokemonsRequest = Ids.compactMap({Endpoint.Pokemon(Id: $0).request})
+            self.listTask(List: pokemonsRequest, Completion: { (pokemonResult) in
+                switch pokemonResult {
+                case .success(let tuple):
+                    if let reponse = try? JSONDecoder().decode(PokemonReponse.self, from: tuple.1) {
+                        pokemons.append(reponse)
+                    }
+                default:break
+                }
+            }) { (success) in
+                Completion(.success((species, pokemons)))
+            }
+        }
+    }
+    
     func task<Reponse:Codable>(Request:URLRequest, Completion:@escaping (Result<Reponse,Error>) -> Void) {
         
         self.session.dataTask(with: Request) { (Data, Rep, Err) in
@@ -76,17 +108,36 @@ final class PokeAPI : WebService {
     
 }
 
-extension PokeAPI : PokeAPIProtocol {
+extension PokeAPI {
 
     struct PokemonReponse : Codable {
         
         let name : String
-        let base_experience, height, order, weight : Int
+        let id, base_experience, height, order, weight : Int
         let sprites : Sprite
         let species : Specie
         
         struct Sprite : Codable {
-            let back_default : String
+            let back_default, front_default : String
+            let other : Other
+            
+            struct Other : Codable {
+                let dream : Dream
+                let official : Official
+                
+                enum CodingKeys : String, CodingKey {
+                    case dream = "dream_world"
+                    case official = "official-artwork"
+                }
+                
+                struct Dream : Codable {
+                    let front_default, front_female : String?
+                }
+                
+                struct Official : Codable {
+                    let front_default : String
+                }
+            }
         }
         
         struct Specie : Codable {
