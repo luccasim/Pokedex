@@ -41,4 +41,21 @@ class PokeAPITests: XCTestCase {
         }
     }
 
+    func testSpecies() throws {
+        
+        let data = load(FileName: "Species.json")
+        let reponse = try JSONDecoder().decode(PokeAPI.SpeciesReponse.self, from: data)
+        
+        print(reponse)
+    }
+}
+
+extension XCTestCase {
+    
+    func load(FileName:String) -> Data {
+        
+        let url = Bundle.main.url(forResource: FileName, withExtension: nil)!
+        return try! Data(contentsOf: url)
+        
+    }
 }
