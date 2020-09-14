@@ -11,18 +11,19 @@ import UIKit
 import LCFramework
 import Combine
 
-protocol DataManagerProtocol {
+protocol PokemonManagerProtocol {
         
     func add(Pokemon:Pokemon)
     func update(Pokemon:Pokemon)
     func save()
+    func fetchToList() -> [Pokemon]
     
-    func fetchToList() -> Future<[Pokemon],Never>
     func getImage(Pokemon:Pokemon) -> Future<UIImage,Never>
+    func install(PokemonIds:[Int]) -> Future<Bool,Never>
     
 }
 
-final class PokemonManager : DataManagerProtocol {
+final class PokemonManager : PokemonManagerProtocol {
         
     static var shared = PokemonManager()
     
@@ -30,45 +31,38 @@ final class PokemonManager : DataManagerProtocol {
     private var loader = ImageLoader.shared
     private var ws = PokeAPI()
     
-    func fetchToList() -> Future<[Pokemon],Never> {
+    func install(PokemonIds:[Int]) -> Future<Bool, Never> {
         
-        return Future <[Pokemon],Never> { promise in
+        return Future<Bool, Never> { promise in
             
-            let results = self.store.fetch()
-            
-            switch results {
-            case .success(let mo):
+            self.ws.installPokemon(Ids: PokemonIds) { (res) in
                 
-                if mo.isEmpty {
+                switch res {
+                case .success(let reponses):
                     
-                    self.ws.installPokemon(Ids: (1...151).map{$0}, Completion: { (res) in
-                        
-                        switch res {
-                        case .success(let reponses):
-                                 
-                            DispatchQueue.main.async {
-                                
-                                reponses.0.forEach({self.update(Pokemon:Pokemon(id: $0.id, name: $0.name, sprite: nil, desc: $0.text[16].flavor_text))})
-                                reponses.1.forEach({self.update(Pokemon: Pokemon(id: $0.id, name: $0.name, sprite: $0.sprites.other.official.front_default, desc: nil))})
-                                
-                                self.store.save()
-                                let fetchs = self.store.fetch()
-                                switch fetchs {
-                                case .success(let mos): promise(.success(mos.map({$0.toPokemon}).sorted(by: {$0.id < $1.id})))
-                                default: break
-                                }
-                            }
-                            
-                        default: break
-                        }
-                    })
-                }
-                else {
-                    promise(.success(mo.map({$0.toPokemon}).sorted(by: {$0.id < $1.id})))
-                }
+                    DispatchQueue.main.async {
                 
-            default: break
+                        reponses.0.forEach({self.update(Pokemon:Pokemon(id: $0.id, name: $0.name, sprite: nil, desc: $0.text[16].flavor_text))})
+                        reponses.1.forEach({self.update(Pokemon: Pokemon(id: $0.id, name: $0.name, sprite: $0.sprites.other.official.front_default, desc: nil))})
+                        
+                        self.store.save()
+                        promise(.success(true))
+                    }
+                    
+                default: break
+                }
             }
+        }
+    }
+    
+    func fetchToList() -> [Pokemon] {
+                    
+        let results = self.store.fetch()
+        
+        switch results {
+        case .success(let mo): return mo.map({$0.toPokemon}).sorted(by: {$0.id < $1.id})
+        default: return []
+
         }
     }
     

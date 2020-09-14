@@ -22,10 +22,9 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     
     @Published var pokemons: [Pokemon]
     
-    private var manager : DataManagerProtocol
-    var futurs : AnyCancellable?
+    private var manager : PokemonManagerProtocol
     
-    init(Manager:DataManagerProtocol = PokemonManager.shared) {
+    init(Manager:PokemonManagerProtocol = PokemonManager.shared) {
         self.manager = Manager
         pokemons = []
     }
@@ -35,9 +34,7 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     }
     
     func fetchPokemon() {
-        self.futurs = manager.fetchToList().receive(on: RunLoop.main).sink(receiveValue: { (pokemons) in
-            self.pokemons = pokemons
-        })
+        self.pokemons = manager.fetchToList()
     }
 
 }

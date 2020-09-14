@@ -16,9 +16,9 @@ protocol PokemonAddVMP {
 
 final class PokemonAddViewModel : PokemonAddVMP {
     
-    private let manager : DataManagerProtocol
+    private let manager : PokemonManagerProtocol
     
-    init(Manager:DataManagerProtocol = PokemonManager.shared) {
+    init(Manager:PokemonManagerProtocol = PokemonManager.shared) {
         self.manager = Manager
     }
     

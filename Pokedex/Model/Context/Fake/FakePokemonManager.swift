@@ -10,14 +10,13 @@ import Foundation
 import Combine
 import UIKit
 
-class FakePokemonManager : DataManagerProtocol {
+class FakePokemonManager : PokemonManagerProtocol {
     
-    func fetchToList() -> Future<[Pokemon], Never> {
-        return Future<[Pokemon], Never> { promise in
-            
+    func install(PokemonIds: [Int]) -> Future<Bool, Never> {
+        return Future <Bool,Never> { promise in
+            promise(.success(true))
         }
     }
-    
 
     private var data : [Pokemon] = []
     

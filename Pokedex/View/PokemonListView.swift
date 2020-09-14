@@ -25,7 +25,7 @@ struct PokemonListView: View {
         
     var body: some View {
         
-        NavigationView {
+        VStack {
             
             List {
                 
@@ -35,6 +35,7 @@ struct PokemonListView: View {
                     }
                 }
             }
+            .navigationBarBackButtonHidden(true)
             .navigationBarTitle(self.viewModel.title)
             .sheet(isPresented: $isPresented, onDismiss: {
                 self.viewModel.fetchPokemon()
@@ -57,6 +58,8 @@ struct PokemonListView_Previews: PreviewProvider {
     }
     
     static var previews: some View {
-        PokemonListView_Previews.listView
+        NavigationView {
+            PokemonListView_Previews.listView
+        }
     }
 }
