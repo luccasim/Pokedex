@@ -16,6 +16,8 @@ protocol PokemonManagerProtocol {
     func add(Pokemon:Pokemon)
     func update(Pokemon:Pokemon)
     func save()
+    func loadTranslation()
+    
     func fetchToList() -> [Pokemon]
     
     func getImage(Pokemon:Pokemon) -> Future<UIImage,Never>
@@ -35,15 +37,25 @@ final class PokemonManager : PokemonManagerProtocol {
         
         return Future<Bool, Never> { promise in
             
+            guard self.fetchToList().isEmpty else {
+                return promise(.success(true))
+            }
+            
             self.ws.installPokemon(Ids: PokemonIds) { (res) in
                 
                 switch res {
                 case .success(let reponses):
                     
                     DispatchQueue.main.async {
+                        
+                        let mos = PokemonIds.map {_ in self.store.create()}
                 
-                        reponses.0.forEach({self.update(Pokemon:Pokemon(id: $0.id, name: $0.name, sprite: nil, desc: $0.text[16].flavor_text))})
-                        reponses.1.forEach({self.update(Pokemon: Pokemon(id: $0.id, name: $0.name, sprite: $0.sprites.other.official.front_default, desc: nil))})
+                        mos.enumerated().forEach { (i, mo) in
+                            
+                            mo.setSpecies(Reponse: reponses.0[i])
+                            mo.setPokemon(Reponse: reponses.1[i])
+                            
+                        }
                         
                         self.store.save()
                         promise(.success(true))
@@ -64,6 +76,10 @@ final class PokemonManager : PokemonManagerProtocol {
         default: return []
 
         }
+    }
+    
+    func loadTranslation() {
+        self.store.retrieveTranslations()
     }
     
     func add(Pokemon: Pokemon) {

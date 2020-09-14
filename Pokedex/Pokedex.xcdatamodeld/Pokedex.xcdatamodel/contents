@@ -5,8 +5,17 @@
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="sprite" optional="YES" attributeType="URI"/>
+        <relationship name="translations" toMany="YES" deletionRule="Nullify" destinationEntity="TranslationMO" inverseName="pokemon" inverseEntity="TranslationMO"/>
+    </entity>
+    <entity name="TranslationMO" representedClassName=".TranslationMO" syncable="YES" codeGenerationType="category">
+        <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="key" attributeType="String" defaultValueString=""/>
+        <attribute name="lang" attributeType="String" defaultValueString=""/>
+        <attribute name="text" attributeType="String" defaultValueString=""/>
+        <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PokemonMO" inverseName="translations" inverseEntity="PokemonMO"/>
     </entity>
     <elements>
-        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="103"/>
+        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="118"/>
+        <element name="TranslationMO" positionX="-235.51953125" positionY="-31.46484375" width="128" height="118"/>
     </elements>
 </model>

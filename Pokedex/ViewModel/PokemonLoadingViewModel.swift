@@ -23,7 +23,11 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
     private var manager : PokemonManagerProtocol
     
     init(Manager:PokemonManagerProtocol=PokemonManager.shared) {
+        
         self.manager = Manager
+        
+        Translator.shared.set(NewLang: "fr")
+        Translator.shared.select(Lang: "fr")
     }
     
     private var sub : AnyCancellable?
@@ -38,6 +42,7 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
             .sink(receiveValue: { (success) in
                 self.isLoaded = success
                 self.message = "Press screen to Continue"
+                self.manager.loadTranslation()
             })
     }
     

@@ -54,7 +54,7 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     }
     
     var infos : String {
-        return self.pokemon?.desc ?? "404"
+        return self.pokemon?.desc?.translate ?? "404"
     }
     
 }

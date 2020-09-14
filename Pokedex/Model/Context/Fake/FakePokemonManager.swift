@@ -12,6 +12,9 @@ import UIKit
 
 class FakePokemonManager : PokemonManagerProtocol {
     
+    func loadTranslation() {
+    }
+    
     func install(PokemonIds: [Int]) -> Future<Bool, Never> {
         return Future <Bool,Never> { promise in
             promise(.success(true))
