@@ -37,24 +37,26 @@ final class PokemonManager : PokemonManagerProtocol {
         
         return Future<Bool, Never> { promise in
             
-            guard self.fetchToList().isEmpty else {
+            let toInstall = self.fetchUnInstalled(PokemonIds: PokemonIds)
+            
+            guard !toInstall.isEmpty else {
                 return promise(.success(true))
             }
             
-            self.ws.installPokemon(Ids: PokemonIds) { (res) in
+            self.ws.installPokemon(Ids: toInstall) { (res) in
                 
                 switch res {
                 case .success(let reponses):
                     
                     DispatchQueue.main.async {
                         
-                        let mos = PokemonIds.map {_ in self.store.create()}
+                        let mos = toInstall.map {_ in self.store.create()}
                 
                         mos.enumerated().forEach { (i, mo) in
                             
                             mo.setSpecies(Reponse: reponses.0[i])
                             mo.setPokemon(Reponse: reponses.1[i])
-                            
+                            mo.isInstalled = true
                         }
                         
                         self.store.save()
@@ -64,6 +66,32 @@ final class PokemonManager : PokemonManagerProtocol {
                 default: break
                 }
             }
+        }
+    }
+    
+    private func fetchUnInstalled(PokemonIds:[Int]) -> [Int] {
+        
+        let result = self.store.fetch()
+        
+        switch result {
+        case .success(let mo):
+            
+            // None installed
+            if mo.isEmpty {
+                return PokemonIds
+            }
+            
+            // New Pokemon added
+            if mo.count != PokemonIds.count {
+                let news = PokemonIds.filter({id in
+                    !mo.contains(where: {$0.id == id})
+                })
+                return news
+            }
+            
+            // Stored but uninstalled
+            return mo.filter{$0.isInstalled == false}.compactMap{Int($0.id)}
+        default: return []
         }
     }
     

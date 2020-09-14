@@ -22,6 +22,8 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
     
     private var manager : PokemonManagerProtocol
     
+    let rang = (1...30)
+    
     init(Manager:PokemonManagerProtocol=PokemonManager.shared) {
         
         self.manager = Manager
@@ -37,7 +39,7 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
     func loadPokemonData() {
         
         self.message = "Loading Data"
-        self.sub = self.manager.install(PokemonIds: (1...15).map({$0}))
+        self.sub = self.manager.install(PokemonIds: self.rang.map({$0}))
             .receive(on: RunLoop.main)
             .sink(receiveValue: { (success) in
                 self.isLoaded = success

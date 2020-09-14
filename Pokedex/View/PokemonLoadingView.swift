@@ -23,14 +23,19 @@ struct PokemonLoadingView: View {
         NavigationView {
             
             VStack {
-                
-                NavigationLink(destination: PokemonListView(), isActive: $isLoaded) {
-                    Text("Continue")
-                }
+
                 Spacer()
-                
-                Text(self.viewModel.message)
-                    .padding(.bottom, 10)
+
+                if self.viewModel.isLoaded {
+                    NavigationLink(destination: PokemonListView()) {
+                        Text(self.viewModel.message)
+                    }.padding(.bottom, 10)
+                }
+                    
+                else {
+                    Text(self.viewModel.message)
+                        .padding(.bottom, 10)
+                }
             }
         }
     }
