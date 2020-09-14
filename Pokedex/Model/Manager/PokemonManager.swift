@@ -40,11 +40,14 @@ final class PokemonManager : DataManagerProtocol {
             case .success(let mo):
                 
                 if mo.isEmpty {
+                    
                     self.ws.installPokemon(Ids: (1...151).map{$0}, Completion: { (res) in
+                        
                         switch res {
                         case .success(let reponses):
                                  
                             DispatchQueue.main.async {
+                                
                                 reponses.0.forEach({self.update(Pokemon:Pokemon(id: $0.id, name: $0.name, sprite: nil, desc: $0.text[16].flavor_text))})
                                 reponses.1.forEach({self.update(Pokemon: Pokemon(id: $0.id, name: $0.name, sprite: $0.sprites.other.official.front_default, desc: nil))})
                                 

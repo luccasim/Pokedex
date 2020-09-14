@@ -60,6 +60,7 @@ final class PokeAPI : WebService, PokeAPIProtocol {
         var pokemons : [PokemonReponse] = []
         
         self.listTask(List: requests, Completion: { result in
+            
             switch result {
             case .success(let tutle):
                 if let reponse = try? JSONDecoder().decode(SpeciesReponse.self, from: tutle.1) {
@@ -67,7 +68,9 @@ final class PokeAPI : WebService, PokeAPIProtocol {
                 }
             default: break
             }
+            
         }) { (success) in
+            
             let pokemonsRequest = Ids.compactMap({Endpoint.Pokemon(Id: $0).request})
             self.listTask(List: pokemonsRequest, Completion: { (pokemonResult) in
                 switch pokemonResult {
@@ -80,30 +83,8 @@ final class PokeAPI : WebService, PokeAPIProtocol {
             }) { (success) in
                 Completion(.success((species, pokemons)))
             }
+            
         }
-    }
-    
-    func task<Reponse:Codable>(Request:URLRequest, Completion:@escaping (Result<Reponse,Error>) -> Void) {
-        
-        self.session.dataTask(with: Request) { (Data, Rep, Err) in
-            
-            if let error = Err {
-                return Completion(.failure(error))
-            }
-            
-            else if let data = Data {
-                
-                do {
-                    
-                    let reponse = try JSONDecoder().decode(Reponse.self, from: data)
-                    Completion(.success(reponse))
-                    
-                } catch let error  {
-                    Completion(.failure(error))
-                }
-            }
-            
-        }.resume()
     }
     
 }
@@ -118,6 +99,7 @@ extension PokeAPI {
         let species : Specie
         
         struct Sprite : Codable {
+            
             let back_default, front_default : String
             let other : Other
             
@@ -133,13 +115,11 @@ extension PokeAPI {
                 struct Dream : Codable {
                     let front_default, front_female : String?
                 }
-                
                 struct Official : Codable {
                     let front_default : String
                 }
             }
         }
-        
         struct Specie : Codable {
             let url : String
         }

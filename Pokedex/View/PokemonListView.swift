@@ -31,12 +31,11 @@ struct PokemonListView: View {
                 
                 ForEach(self.viewModel.pokemons) { (Pokemon) in
                     NavigationLink(destination: PokemonDetailView(model: Pokemon)) {
-                        Text(Pokemon.name!)
+                        Text(Pokemon.name!).frame(height: 30)
                     }
                 }
             }
             .navigationBarTitle(self.viewModel.title)
-            .navigationBarItems(trailing: self.addPokemonButton)
             .sheet(isPresented: $isPresented, onDismiss: {
                 self.viewModel.fetchPokemon()
             }, content: {
