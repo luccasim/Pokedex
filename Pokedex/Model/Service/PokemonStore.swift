@@ -10,14 +10,19 @@ import Foundation
 import CoreData
 import LCFramework
 
+public class TranslationMO : NSManagedObject {
+    
+}
+
 public class PokemonMO : NSManagedObject {
     
-    var toPokemon : Pokemon {
+    var toPokemon : Pokemon? {
         let id = Int(self.id)
-        let name = self.name ?? "unknow"
-        let desc = self.desc
-        let url = self.sprite?.absoluteString
-        return Pokemon(id: id, name: name, sprite: url, desc: desc)
+        guard let name = self.name else {return nil}
+        guard let desc = self.desc else {return nil}
+        guard let url = self.sprite else {return nil}
+        guard let icon = self.icon else {return nil}
+        return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc)
     }
     
     func setSpecies(Reponse:PokeAPI.SpeciesReponse) {
@@ -28,7 +33,8 @@ public class PokemonMO : NSManagedObject {
     
     func setPokemon(Reponse:PokeAPI.PokemonReponse) {
         self.id = Int16(Reponse.id)
-        self.sprite = URL(string: Reponse.sprites.front_default)
+        self.icon = URL(string: Reponse.sprites.front_default)
+        self.sprite = URL(string: Reponse.sprites.other.official.front_default)
     }
     
     func setNames(Reponse:PokeAPI.SpeciesReponse) {
@@ -59,10 +65,6 @@ public class PokemonMO : NSManagedObject {
     
 }
 
-public class TranslationMO : NSManagedObject {
-    
-}
-
 final class PokemonStore: CoreDataStore<PokemonMO> {
     
     static let shared = PokemonStore()
@@ -81,25 +83,6 @@ final class PokemonStore: CoreDataStore<PokemonMO> {
                     }
                 }
             }
-        }
-    }
-        
-    func update(Pokemon:Pokemon) {
-        
-        let mo = self.get(Predicate: "id == \(Pokemon.id)") ?? self.create()
-        
-        mo.id = Int16(Pokemon.id)
-
-        if let name = Pokemon.name {
-            mo.name = name
-        }
-
-        if let desc = Pokemon.desc {
-            mo.desc = desc
-        }
-        
-        if let url = Pokemon.sprite.flatMap({URL(string: $0)}) {
-            mo.sprite = url
         }
     }
 }

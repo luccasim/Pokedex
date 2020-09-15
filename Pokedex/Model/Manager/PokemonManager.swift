@@ -14,7 +14,6 @@ import Combine
 protocol PokemonManagerProtocol {
         
     func add(Pokemon:Pokemon)
-    func update(Pokemon:Pokemon)
     func save()
     func loadTranslation()
     
@@ -100,7 +99,7 @@ final class PokemonManager : PokemonManagerProtocol {
         let results = self.store.fetch()
         
         switch results {
-        case .success(let mo): return mo.map({$0.toPokemon}).sorted(by: {$0.id < $1.id})
+        case .success(let mo): return mo.compactMap({$0.toPokemon}).sorted(by: {$0.id < $1.id})
         default: return []
 
         }
@@ -120,10 +119,6 @@ final class PokemonManager : PokemonManagerProtocol {
         self.save()
     }
     
-    func update(Pokemon: Pokemon) {
-        self.store.update(Pokemon: Pokemon)
-    }
-    
     func save() {
         self.store.save()
     }
@@ -132,11 +127,10 @@ final class PokemonManager : PokemonManagerProtocol {
         
         return Future { (promise) in
             
-            if let url = Pokemon.sprite.flatMap({URL(string: $0)}) {
-                self.loader.load(Url: url) { (img) in
-                    promise(.success(img))
-                }
+            self.loader.load(Url: Pokemon.sprite) { (img) in
+                promise(.success(img))
             }
         }
     }
+    
 }

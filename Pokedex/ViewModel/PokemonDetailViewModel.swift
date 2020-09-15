@@ -13,10 +13,8 @@ import Combine
 protocol PokemonDetailVMProtocol {
     
     var name: String {get}
-    var imageName : String {get}
-    var infos : String {get}
-        
-    var image : UIImage {get}
+    var infos: String {get}
+    var image: UIImage {get}
     
 }
 
@@ -46,15 +44,11 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     }
     
     var name : String {
-        return self.pokemon?.name?.translate ?? "404"
-    }
-    
-    var imageName: String {
-        return self.pokemon?.sprite ?? "404"
+        return self.pokemon?.name.translate ?? "404"
     }
     
     var infos : String {
-        return self.pokemon?.desc?.translate ?? "404"
+        return self.pokemon?.desc.translate ?? "404"
     }
     
 }

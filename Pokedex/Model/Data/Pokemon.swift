@@ -10,9 +10,22 @@ import Foundation
 
 struct Pokemon : Identifiable {
     
-    var id      : Int
-    var name    : String?
-    var sprite  : String?
-    var desc    : String?
+    let id      : Int
+    let name    : String
+    let icon    : URL
+    let sprite  : URL
+    let desc    : String
+    
+}
+
+extension Pokemon {
+    
+    static var Fake : Pokemon {
+        return Pokemon(id: 0,
+                       name: "Bulbizarre",
+                       icon: URL(fileURLWithPath: "bulbazor"),
+                       sprite: URL(fileURLWithPath: "bulbazor"),
+                       desc: "He love Senzu")
+    }
     
 }

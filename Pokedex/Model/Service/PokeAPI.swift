@@ -48,7 +48,6 @@ final class PokeAPI : WebService, PokeAPIProtocol {
                 var request = URLRequest(url: url)
                 request.httpMethod = "GET"
                 return request
-                
             }
         }
     }
@@ -83,7 +82,6 @@ final class PokeAPI : WebService, PokeAPIProtocol {
             }) { (success) in
                 Completion(.success((species, pokemons)))
             }
-            
         }
     }
     

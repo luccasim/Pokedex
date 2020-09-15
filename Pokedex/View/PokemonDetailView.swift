@@ -27,12 +27,14 @@ struct PokemonDetailView: View {
                 Text(self.viewModel.name)
                     .font(.largeTitle)
                     .padding(.top, 25)
+                
                 Image(uiImage: self.viewModel.image)
                     .resizable()
                     .scaledToFit()
                     .frame(width: 320, height: 320)
                     .border(Color.green, width: 2)
                     .padding(.bottom, 15)
+                
                 HStack {
                     TypeText(text: "Type 1", color: .green)
                     Spacer()

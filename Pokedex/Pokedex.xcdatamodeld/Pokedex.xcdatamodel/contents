@@ -2,6 +2,7 @@
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="16119" systemVersion="19G2021" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
     <entity name="PokemonMO" representedClassName=".PokemonMO" syncable="YES" codeGenerationType="category">
         <attribute name="desc" optional="YES" attributeType="String"/>
+        <attribute name="icon" optional="YES" attributeType="URI"/>
         <attribute name="id" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="isInstalled" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
@@ -16,7 +17,7 @@
         <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PokemonMO" inverseName="translations" inverseEntity="PokemonMO"/>
     </entity>
     <elements>
-        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="133"/>
+        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="148"/>
         <element name="TranslationMO" positionX="-235.51953125" positionY="-31.46484375" width="128" height="118"/>
     </elements>
 </model>

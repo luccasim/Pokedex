@@ -22,7 +22,7 @@ struct PokemonListView: View {
                 
                 ForEach(self.viewModel.pokemons) { (Pokemon) in
                     NavigationLink(destination: PokemonDetailView(model: Pokemon)) {
-                        Text(Pokemon.name!.translate).frame(height: 30)
+                        PokemonListCell(Pokemon: Pokemon)
                     }
                 }
             }
@@ -36,27 +36,33 @@ struct PokemonListView: View {
 }
 
 struct PokemonListCell : View {
+    
+    @ObservedObject var viewModel : PokemonListCellViewModel
+    
+    init(Pokemon:Pokemon) {
+        self.viewModel = PokemonListCellViewModel(Pokemon: Pokemon)
+        self.viewModel.loadImage()
+    }
+    
     var body: some View {
         HStack {
-            Image("circle")
+            Image(uiImage: viewModel.image)
                 .resizable()
-                .frame(width: 25, height: 25, alignment: .center)
-            Text("No. \(1)")
+                .frame(width: 40, height: 40, alignment: .center)
+                .cornerRadius(10)
+            Text("No.\(self.viewModel.id) \(self.viewModel.name)")
+            Spacer()
         }
+        .padding([.trailing, .leading], 10)
     }
 }
 
 struct PokemonListView_Previews: PreviewProvider {
     
-    static var listView : PokemonListView {
-        var view = PokemonListView()
-        view.viewModel = PokemonListViewModel(Manager:FakePokemonManager())
-        return view
-    }
-    
     static var previews: some View {
-        NavigationView {
-            PokemonListView_Previews.listView
+        Group {
+            PokemonListCell(Pokemon: Pokemon.Fake).previewLayout(.fixed(width: 350, height: 45))
+            PokemonListView()
         }
     }
 }
