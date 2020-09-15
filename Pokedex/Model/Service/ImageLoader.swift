@@ -9,6 +9,11 @@
 import Foundation
 import UIKit
 import LCFramework
+import Combine
+
+protocol LoaderProtocol {
+    func loadImage(Path:String) -> Future<UIImage, Never>
+}
 
 final class ImageLoader: DataLoader<UIImage> {
     

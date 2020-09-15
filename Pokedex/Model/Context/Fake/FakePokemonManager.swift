@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import UIKit
 
-class FakePokemonManager : PokemonManagerProtocol {
+class FakePokemonManager  {
     
     func loadTranslation() {
     }
@@ -23,12 +23,7 @@ class FakePokemonManager : PokemonManagerProtocol {
 
     private var data : [Pokemon] = []
     
-    init() {
-        
-        let data = (1...151).map({Pokemon(id: $0, name: "Pokemon \($0)", sprite: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/\($0).png", desc: "Il aime les cacahouettes.\nVous devriez lui en donner pour éviter de prendre une attaque lance soleil dans la tête.")})
-        
-        self.data = data
-    }
+    init() {}
     
     func fetchToList() -> [Pokemon] {
         self.data
@@ -44,15 +39,6 @@ class FakePokemonManager : PokemonManagerProtocol {
     
     func save() {
         
-    }
-    
-    func getImage(Pokemon: Pokemon) -> Future<UIImage, Never> {
-        
-        return Future { promise in
-            ImageLoader.shared.load(Url: Pokemon.sprite.flatMap({URL(string: $0)})!) { (img) in
-                promise(.success(img))
-            }
-        }
     }
     
 }
