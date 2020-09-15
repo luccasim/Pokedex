@@ -46,7 +46,7 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     }
     
     var name : String {
-        return self.pokemon?.name ?? "404"
+        return self.pokemon?.name?.translate ?? "404"
     }
     
     var imageName: String {

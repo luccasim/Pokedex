@@ -224,8 +224,8 @@
 			children = (
 				8457C4E82501392B00F3E37E /* PokemonListViewModel.swift */,
 				8428B0B52505480D00B785CE /* PokemonDetailViewModel.swift */,
-				8457C4F225014E7000F3E37E /* PokemonAddViewModel.swift */,
 				844682FE250EF402007C413E /* PokemonLoadingViewModel.swift */,
+				8457C4F225014E7000F3E37E /* PokemonAddViewModel.swift */,
 			);
 			path = ViewModel;
 			sourceTree = "<group>";
@@ -235,8 +235,8 @@
 			children = (
 				8457C4ED250148BA00F3E37E /* PokemonListView.swift */,
 				84468300250EFC39007C413E /* PokemonLoadingView.swift */,
-				8457C4F42501502E00F3E37E /* PokemonAddView.swift */,
 				8428B0B72505488300B785CE /* PokemonDetailView.swift */,
+				8457C4F42501502E00F3E37E /* PokemonAddView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";

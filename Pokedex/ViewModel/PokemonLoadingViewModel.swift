@@ -34,8 +34,6 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
     
     private var sub : AnyCancellable?
     
-    
-    
     func loadPokemonData() {
         
         self.message = "Loading Data"

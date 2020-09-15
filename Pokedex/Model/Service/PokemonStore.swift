@@ -23,12 +23,25 @@ public class PokemonMO : NSManagedObject {
     func setSpecies(Reponse:PokeAPI.SpeciesReponse) {
         self.id = Int16(Reponse.id)
         self.setTranslations(Reponse: Reponse)
+        self.setNames(Reponse: Reponse)
     }
     
     func setPokemon(Reponse:PokeAPI.PokemonReponse) {
         self.id = Int16(Reponse.id)
-        self.name = Reponse.name
         self.sprite = URL(string: Reponse.sprites.front_default)
+    }
+    
+    func setNames(Reponse:PokeAPI.SpeciesReponse) {
+        let names = Reponse.names
+        self.name = "name_\(Reponse.id)"
+        names.forEach { (name) in
+            let mo = TranslationMO(context: self.managedObjectContext!)
+            mo.id = self.id
+            mo.key = "name_\(Reponse.id)"
+            mo.text = name.name
+            mo.lang = name.language.name
+            self.addToTranslations(mo)
+        }
     }
     
     func setTranslations(Reponse:PokeAPI.SpeciesReponse) {
@@ -43,6 +56,7 @@ public class PokemonMO : NSManagedObject {
             self.addToTranslations(mo)
         }
     }
+    
 }
 
 public class TranslationMO : NSManagedObject {

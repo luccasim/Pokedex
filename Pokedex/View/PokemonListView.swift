@@ -13,15 +13,6 @@ struct PokemonListView: View {
     @ObservedObject var viewModel = PokemonListViewModel()
     
     @State var isPresented = false
-    
-    var addPokemonButton : some View {
-        Button(action: {
-            //action
-            self.isPresented.toggle()
-        }) {
-            Text("+")
-        }
-    }
         
     var body: some View {
         
@@ -31,20 +22,26 @@ struct PokemonListView: View {
                 
                 ForEach(self.viewModel.pokemons) { (Pokemon) in
                     NavigationLink(destination: PokemonDetailView(model: Pokemon)) {
-                        Text(Pokemon.name!).frame(height: 30)
+                        Text(Pokemon.name!.translate).frame(height: 30)
                     }
                 }
             }
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle(self.viewModel.title)
-            .sheet(isPresented: $isPresented, onDismiss: {
-                self.viewModel.fetchPokemon()
-            }, content: {
-                PokemonAddView()
-                })
             .onAppear() {
                 self.viewModel.fetchPokemon()
             }
+        }
+    }
+}
+
+struct PokemonListCell : View {
+    var body: some View {
+        HStack {
+            Image("circle")
+                .resizable()
+                .frame(width: 25, height: 25, alignment: .center)
+            Text("No. \(1)")
         }
     }
 }
