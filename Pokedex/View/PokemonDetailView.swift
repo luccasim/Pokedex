@@ -36,9 +36,9 @@ struct PokemonDetailView: View {
                     .padding(.bottom, 15)
                 
                 HStack {
-                    TypeText(text: "Type 1", color: .green)
+                    TypeText(type: self.model.type1)
                     Spacer()
-                    TypeText(text: "Type 2", color: .purple)
+                    TypeText(type: self.model.type2)
                 }
                 .padding([.leading, .trailing], 30)
                 
@@ -55,17 +55,16 @@ struct PokemonDetailView: View {
 
 struct TypeText : View {
     
-    let text : String
-    let color : Color
+    let type : Type
     
     var body: some View {
-        Text(self.text)
-            .frame(width: 100, height: 30, alignment: .center)
-            .background(self.color)
-            .font(.body)
-            .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 2))
+        ZStack {
+            RoundedRectangle(cornerRadius: 10).fill(self.type.color)
+            RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 1)
+            Text(self.type.text)
+        }
+        .frame(width: 100, height: 30, alignment: .center)
+        .foregroundColor(Color.black)
     }
 }
 

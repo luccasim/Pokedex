@@ -22,7 +22,7 @@ public class PokemonMO : NSManagedObject {
         guard let desc = self.desc else {return nil}
         guard let url = self.sprite else {return nil}
         guard let icon = self.icon else {return nil}
-        return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc)
+        return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc, type1: .none)
     }
     
     func setSpecies(Reponse:PokeAPI.SpeciesReponse) {

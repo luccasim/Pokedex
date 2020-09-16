@@ -21,7 +21,7 @@ class FakePokemonManager  {
         }
     }
 
-    private var data : [Pokemon] = []
+    private var data : [Pokemon] = (0...15).map{_ in Pokemon.Fake}
     
     init() {}
     
