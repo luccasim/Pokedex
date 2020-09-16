@@ -15,7 +15,8 @@ protocol PokeAPIProtocol {
     
     func taskPokemon(Endpoint:PokeAPI.Endpoint, Completion:@escaping(Result<PokeAPI.PokemonReponse,Error>)->Void)
     func taskSpecies(Endpoint:PokeAPI.Endpoint, Completion:@escaping(Result<PokeAPI.SpeciesReponse,Error>)->Void)
-
+    func taskType(Endpoint:PokeAPI.Endpoint, Completion:@escaping(Result<PokeAPI.TypeReponse,Error>)->Void)
+    
 }
 
 final class PokeAPI : WebService, PokeAPIProtocol {
@@ -28,6 +29,7 @@ final class PokeAPI : WebService, PokeAPIProtocol {
         
         case Pokemon(Id:Int)
         case Species(Id:Int)
+        case Type(Id:Int)
         
         fileprivate var request : URLRequest? {
             
@@ -48,6 +50,15 @@ final class PokeAPI : WebService, PokeAPIProtocol {
                 var request = URLRequest(url: url)
                 request.httpMethod = "GET"
                 return request
+                
+            case .Type(Id: let id):
+                
+                let path = "https://pokeapi.co/api/v2/type/\(id)/"
+                guard let url = URLComponents(string: path)?.url else { return nil}
+                var request = URLRequest(url: url)
+                request.httpMethod = "GET"
+                return request
+                
             }
         }
     }
@@ -79,6 +90,7 @@ final class PokeAPI : WebService, PokeAPIProtocol {
                     }
                 default:break
                 }
+                
             }) { (success) in
                 Completion(.success((species, pokemons)))
             }
@@ -179,6 +191,32 @@ extension PokeAPI {
             return Completion(.failure(APIErrors.invalidRequest))
         }
         
+        self.task(Request: request, Completion: Completion)
+    }
+}
+
+extension PokeAPI {
+    
+    struct TypeReponse : Codable {
+        let id : Int
+        let name : String
+        let names : [Name]
+        
+        struct Name : Codable {
+            let name : String
+            let language : Language
+            
+            struct Language : Codable {
+                let name, url : String
+            }
+        }
+    }
+    
+    func taskType(Endpoint: Endpoint, Completion: @escaping (Result<TypeReponse, Error>) -> Void) {
+        
+        guard let request = Endpoint.request else {
+            return Completion(.failure(APIErrors.invalidRequest))
+        }
         self.task(Request: request, Completion: Completion)
     }
 }

@@ -17,12 +17,18 @@ public class TranslationMO : NSManagedObject {
 public class PokemonMO : NSManagedObject {
     
     var toPokemon : Pokemon? {
+        
         let id = Int(self.id)
+        
         guard let name = self.name else {return nil}
         guard let desc = self.desc else {return nil}
         guard let url = self.sprite else {return nil}
         guard let icon = self.icon else {return nil}
-        return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc, type1: .none)
+        
+        guard let type1 = self.type1.flatMap({Type(rawValue: $0)}) else {return nil}
+        let type2 = self.type2.flatMap({Type(rawValue: $0)}) ?? .none
+        
+        return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc, type1: type1, type2:type2)
     }
     
     func setSpecies(Reponse:PokeAPI.SpeciesReponse) {
@@ -59,6 +65,18 @@ public class PokemonMO : NSManagedObject {
             mo.key = "desc_\(Reponse.id)"
             mo.text = text.flavor_text.replacingOccurrences(of: "\n", with: " ")
             mo.lang = text.language.name
+            self.addToTranslations(mo)
+        }
+    }
+    
+    func setType(Reponse:PokeAPI.TypeReponse) {
+        let names = Reponse.names
+        names.forEach { (name) in
+            let mo = TranslationMO(context: self.managedObjectContext!)
+            mo.id = self.id
+            mo.key = "type_\(1)"
+            mo.text = name.name
+            mo.lang = name.language.name
             self.addToTranslations(mo)
         }
     }

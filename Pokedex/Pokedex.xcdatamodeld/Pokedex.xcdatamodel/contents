@@ -7,6 +7,8 @@
         <attribute name="isInstalled" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
         <attribute name="name" optional="YES" attributeType="String"/>
         <attribute name="sprite" optional="YES" attributeType="URI"/>
+        <attribute name="type1" attributeType="String" defaultValueString=""/>
+        <attribute name="type2" optional="YES" attributeType="String"/>
         <relationship name="translations" toMany="YES" deletionRule="Nullify" destinationEntity="TranslationMO" inverseName="pokemon" inverseEntity="TranslationMO"/>
     </entity>
     <entity name="TranslationMO" representedClassName=".TranslationMO" syncable="YES" codeGenerationType="category">
@@ -17,7 +19,7 @@
         <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PokemonMO" inverseName="translations" inverseEntity="PokemonMO"/>
     </entity>
     <elements>
-        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="148"/>
+        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="178"/>
         <element name="TranslationMO" positionX="-235.51953125" positionY="-31.46484375" width="128" height="118"/>
     </elements>
 </model>

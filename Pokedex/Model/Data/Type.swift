@@ -9,9 +9,9 @@
 import Foundation
 import SwiftUI
 
-enum Type : Int {
+enum Type : String {
     
-    case none = 0
+    case none = ""
     case grass, poison
     
 }

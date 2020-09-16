@@ -48,6 +48,13 @@ class PokeAPITests: XCTestCase {
         
         print(reponse)
     }
+    
+    func testTypes() throws {
+        let data = load(FileName: "Types.json")
+        let reponse = try JSONDecoder().decode(PokeAPI.TypeReponse.self, from: data)
+        
+        print(reponse)
+    }
 }
 
 extension XCTestCase {
