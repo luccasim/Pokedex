@@ -22,7 +22,7 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
     
     private var manager : PokemonManagerProtocol
     
-    let rang = (1...151)
+    let rang = (1...30)
     
     init(Manager:PokemonManagerProtocol=PokemonManager.shared) {
         
@@ -30,6 +30,8 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
         
         Translator.shared.set(NewLang: "fr")
         Translator.shared.select(Lang: "fr")
+        
+        self.manager.resetData()
     }
     
     private var sub : AnyCancellable?

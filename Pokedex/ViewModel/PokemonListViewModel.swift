@@ -11,6 +11,7 @@ import Combine
 import UIKit
 
 protocol PokemonListViewModelProtocol {
+    
     var pokemons : [Pokemon] {get}
     var title : String {get}
     
@@ -18,10 +19,12 @@ protocol PokemonListViewModelProtocol {
 }
 
 protocol PokemonListCellViewModelProtocol {
+    
     var pokemon : Pokemon {get}
     var id : String {get}
     var name : String {get}
     var image : UIImage {get}
+    
 }
 
 final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtocol {

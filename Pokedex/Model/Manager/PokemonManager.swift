@@ -15,6 +15,7 @@ protocol PokemonManagerProtocol {
         
     func add(Pokemon:Pokemon)
     func save()
+    func resetData()
     func loadTranslation()
     
     func fetchToList() -> [Pokemon]
@@ -32,6 +33,8 @@ final class PokemonManager : PokemonManagerProtocol {
     private var loader = ImageLoader.shared
     private var ws = PokeAPI()
     
+    private var cancelInstall = Set<AnyCancellable>()
+    
     func install(PokemonIds:[Int]) -> Future<Bool, Never> {
         
         return Future<Bool, Never> { promise in
@@ -42,29 +45,21 @@ final class PokemonManager : PokemonManagerProtocol {
                 return promise(.success(true))
             }
             
-            self.ws.installPokemon(Ids: toInstall) { (res) in
-                
-                switch res {
-                case .success(let reponses):
-                    
-                    DispatchQueue.main.async {
-                        
-                        let mos = toInstall.map {_ in self.store.create()}
-                
-                        mos.enumerated().forEach { (i, mo) in
-                            
-                            mo.setSpecies(Reponse: reponses.0[i])
-                            mo.setPokemon(Reponse: reponses.1[i])
-                            mo.isInstalled = true
-                        }
-                        
-                        self.store.save()
-                        promise(.success(true))
-                    }
-                    
-                default: break
-                }
+            let mos : [PokemonMO] = toInstall.map { id in
+                let mo = self.store.create()
+                mo.id = Int16(id)
+                return mo
             }
+            
+            self.ws.installPokemon(Models: mos)
+                .receive(on: RunLoop.main)
+                .sink { (succed) in
+                    
+                //To set installed here
+                self.store.save()
+                promise(.success(true))
+                }
+                .store(in: &self.cancelInstall)
         }
     }
     
@@ -121,6 +116,10 @@ final class PokemonManager : PokemonManagerProtocol {
     
     func save() {
         self.store.save()
+    }
+    
+    func resetData() {
+        self.store.clear()
     }
     
     func getImage(Pokemon: Pokemon) -> Future<UIImage,Never> {

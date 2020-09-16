@@ -8,14 +8,21 @@
 
 import Foundation
 import LCFramework
+import Combine
 
 protocol PokeAPIProtocol {
     
     func installPokemon(Ids:[Int], Completion:@escaping(Result<([PokeAPI.SpeciesReponse],[PokeAPI.PokemonReponse]),Never>)->Void)
+    func installPokemon(Models:[PokeAPIModel]) -> Future<[PokeAPIModel],Never>
+}
+
+protocol PokeAPIModel {
     
-    func taskPokemon(Endpoint:PokeAPI.Endpoint, Completion:@escaping(Result<PokeAPI.PokemonReponse,Error>)->Void)
-    func taskSpecies(Endpoint:PokeAPI.Endpoint, Completion:@escaping(Result<PokeAPI.SpeciesReponse,Error>)->Void)
-    func taskType(Endpoint:PokeAPI.Endpoint, Completion:@escaping(Result<PokeAPI.TypeReponse,Error>)->Void)
+    var pokemonID : Int {get}
+    
+    func setPokemon(Reponse:PokeAPI.PokemonReponse)
+    func setSpecies(Reponse:PokeAPI.SpeciesReponse)
+    func setTypes(Reponse:PokeAPI.TypeReponse)
     
 }
 
@@ -61,6 +68,28 @@ final class PokeAPI : WebService, PokeAPIProtocol {
                 
             }
         }
+    }
+    
+    var cancel = Set<AnyCancellable>()
+    
+    func installPokemon(Models: [PokeAPIModel]) -> Future<[PokeAPIModel],Never> {
+        return Future<[PokeAPIModel],Never> { promise in
+
+        Models.publisher
+            .print()
+            .map({self.modelTasks(Model: $0)})
+            .flatMap(maxPublishers: .max(1)){$0}
+            .sink(receiveCompletion: { (finish) in
+                promise(.success(Models))
+            }) { (model) in
+                print("Start \(model.pokemonID)")
+            }
+            .store(in: &self.cancel)
+        }
+    }
+    
+    func modelTasks(Model:PokeAPIModel) -> AnyPublisher<PokeAPIModel,Never> {
+        return self.pokemonFuture(Model: Model).eraseToAnyPublisher()
     }
     
     func installPokemon(Ids: [Int], Completion: @escaping (Result<([SpeciesReponse],[PokemonReponse]), Never>) -> Void) {
@@ -135,13 +164,32 @@ extension PokeAPI {
         }
     }
     
-    func taskPokemon(Endpoint:Endpoint, Completion:@escaping(Result<PokemonReponse,Error>) -> Void) {
+    func pokemonFuture(Model:PokeAPIModel) -> Future<PokeAPIModel,Never> {
         
-        guard let request = Endpoint.request else {
-            return Completion(.failure(APIErrors.invalidRequest))
+        return Future<PokeAPIModel,Never> { promise in
+            
+            promise(.success(Model))
+//            guard let request = Endpoint.Pokemon(Id: Model.id).request else {promise(.success(MO))}
+//
+//                self.session.dataTask(with: request) { (Data, Rep, Err) in
+//
+//                    if let error = Err {
+//                        promise(.failure(error))
+//                    }
+//
+//                    else if let data = Data {
+//                        do {
+//                            let rep = try JSONDecoder().decode(PokemonReponse.self, from: data)
+//                            Model.setPokemon(Reponse: rep)
+//                            promise(.success(Model))
+//                        } catch let err {
+//                            promise(.failure(err))
+//                        }
+//                    }
+//
+//                }.resume()
+//            }
         }
-        
-        self.task(Request: request, Completion: Completion)
     }
 }
 
