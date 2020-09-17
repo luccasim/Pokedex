@@ -24,7 +24,7 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
     
     private var manager : PokemonManagerProtocol
     
-    let rang = (1...151)
+    let rang = (1...251)
     
     init(Manager:PokemonManagerProtocol=PokemonManager.shared) {
         
@@ -46,6 +46,7 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
                 self.isLoaded = success
                 self.message = "Press screen to Continue"
                 self.manager.loadTranslation()
+                self.sub = nil
             })
     }
     

@@ -12,7 +12,7 @@
 		8428B0B82505488300B785CE /* PokemonDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8428B0B72505488300B785CE /* PokemonDetailView.swift */; };
 		843C25AC25070D83005E79F2 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 843C25AB25070D83005E79F2 /* ImageLoader.swift */; };
 		844682FF250EF402007C413E /* PokemonLoadingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844682FE250EF402007C413E /* PokemonLoadingViewModel.swift */; };
-		84468301250EFC39007C413E /* PokemonLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468300250EFC39007C413E /* PokemonLoadingView.swift */; };
+		84468301250EFC39007C413E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468300250EFC39007C413E /* LoadingView.swift */; };
 		84468303250FAC02007C413E /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468302250FAC02007C413E /* Translator.swift */; };
 		84468307250FB910007C413E /* TranslatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468306250FB910007C413E /* TranslatorTests.swift */; };
 		8457C4B2250135FA00F3E37E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C4B1250135FA00F3E37E /* AppDelegate.swift */; };
@@ -76,7 +76,7 @@
 		8428B0B72505488300B785CE /* PokemonDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonDetailView.swift; sourceTree = "<group>"; };
 		843C25AB25070D83005E79F2 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		844682FE250EF402007C413E /* PokemonLoadingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonLoadingViewModel.swift; sourceTree = "<group>"; };
-		84468300250EFC39007C413E /* PokemonLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonLoadingView.swift; sourceTree = "<group>"; };
+		84468300250EFC39007C413E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		84468302250FAC02007C413E /* Translator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translator.swift; sourceTree = "<group>"; };
 		84468306250FB910007C413E /* TranslatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorTests.swift; sourceTree = "<group>"; };
 		8457C4AE250135FA00F3E37E /* Pokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -235,7 +235,7 @@
 			isa = PBXGroup;
 			children = (
 				8457C4ED250148BA00F3E37E /* PokemonListView.swift */,
-				84468300250EFC39007C413E /* PokemonLoadingView.swift */,
+				84468300250EFC39007C413E /* LoadingView.swift */,
 				8428B0B72505488300B785CE /* PokemonDetailView.swift */,
 			);
 			path = View;
@@ -365,7 +365,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1160;
-				LastUpgradeCheck = 1160;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Devios;
 				TargetAttributes = {
 					8457C4AD250135FA00F3E37E = {
@@ -443,7 +443,7 @@
 				8457C4E7250136CA00F3E37E /* PokemonManager.swift in Sources */,
 				8457C4B2250135FA00F3E37E /* AppDelegate.swift in Sources */,
 				8457C4B7250135FA00F3E37E /* Pokedex.xcdatamodeld in Sources */,
-				84468301250EFC39007C413E /* PokemonLoadingView.swift in Sources */,
+				84468301250EFC39007C413E /* LoadingView.swift in Sources */,
 				84468303250FAC02007C413E /* Translator.swift in Sources */,
 				84FD5A492501823B007D9DE0 /* KeyboardResponder.swift in Sources */,
 				8457C4E92501392B00F3E37E /* PokemonListViewModel.swift in Sources */,
@@ -530,6 +530,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -590,6 +591,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;

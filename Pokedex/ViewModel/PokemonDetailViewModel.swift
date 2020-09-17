@@ -32,14 +32,15 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     }
     
     @Published var image: UIImage = UIImage()
-    private var cancelLoad : AnyCancellable?
+    private var cancel = Set<AnyCancellable>()
     
     func loadImage() {
-        self.cancelLoad = self.pokemonManager.getImage(Pokemon: self.pokemon)
+        self.pokemonManager.getImage(Pokemon: self.pokemon)
             .receive(on: RunLoop.main)
             .sink { (img) in
                 self.image = img
-        }
+                self.cancel.removeAll()
+        }.store(in: &self.cancel)
     }
     
     var name : String {

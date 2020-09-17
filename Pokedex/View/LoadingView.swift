@@ -1,5 +1,5 @@
 //
-//  PokemonLoadingView.swift
+//  LoadingView.swift
 //  Pokedex
 //
 //  Created by owee on 14/09/2020.
@@ -8,7 +8,7 @@
 
 import SwiftUI
 
-struct PokemonLoadingView: View {
+struct LoadingView: View {
     
     @ObservedObject var viewModel = PokemonLoadingViewModel()
     
@@ -43,6 +43,6 @@ struct PokemonLoadingView: View {
 
 struct PokemonLoadingView_Previews: PreviewProvider {
     static var previews: some View {
-        PokemonLoadingView()
+        LoadingView()
     }
 }
