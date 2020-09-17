@@ -12,13 +12,15 @@ import Combine
 
 protocol PokeAPIProtocol {
     
-    func installPokemon(Ids:[Int], Completion:@escaping(Result<([PokeAPI.SpeciesReponse],[PokeAPI.PokemonReponse]),Never>)->Void)
     func installPokemon(Models:[PokeAPIModel]) -> Future<[PokeAPIModel],Never>
+    
 }
 
 protocol PokeAPIModel {
     
     var pokemonID : Int {get}
+    var typeId1 : String? {get set}
+    var typeId2 : String? {get set}
     
     func setPokemon(Reponse:PokeAPI.PokemonReponse)
     func setSpecies(Reponse:PokeAPI.SpeciesReponse)
@@ -36,7 +38,7 @@ final class PokeAPI : WebService, PokeAPIProtocol {
         
         case Pokemon(Id:Int)
         case Species(Id:Int)
-        case Type(Id:Int)
+        case Types(Id:Int)
         
         fileprivate var request : URLRequest? {
             
@@ -58,7 +60,7 @@ final class PokeAPI : WebService, PokeAPIProtocol {
                 request.httpMethod = "GET"
                 return request
                 
-            case .Type(Id: let id):
+            case .Types(Id: let id):
                 
                 let path = "https://pokeapi.co/api/v2/type/\(id)/"
                 guard let url = URLComponents(string: path)?.url else { return nil}
@@ -76,56 +78,27 @@ final class PokeAPI : WebService, PokeAPIProtocol {
         return Future<[PokeAPIModel],Never> { promise in
 
         Models.publisher
-            .print()
             .map({self.modelTasks(Model: $0)})
             .flatMap(maxPublishers: .max(1)){$0}
             .sink(receiveCompletion: { (finish) in
                 promise(.success(Models))
             }) { (model) in
-                print("Start \(model.pokemonID)")
+                print("Finish \(model)")
             }
             .store(in: &self.cancel)
         }
     }
     
     func modelTasks(Model:PokeAPIModel) -> AnyPublisher<PokeAPIModel,Never> {
-        return self.pokemonFuture(Model: Model).eraseToAnyPublisher()
+        return self.pokemonFuture(Model: Model)
+            .flatMap { model in
+                self.speciesFuture(Model: model)
+            }.flatMap { model in
+                self.typeFuture(Model: model)
+            }.catch { Error in
+                Just(Model)
+            }.eraseToAnyPublisher()
     }
-    
-    func installPokemon(Ids: [Int], Completion: @escaping (Result<([SpeciesReponse],[PokemonReponse]), Never>) -> Void) {
-        
-        let requests = Ids.compactMap({Endpoint.Species(Id: $0).request})
-        var species : [SpeciesReponse] = []
-        var pokemons : [PokemonReponse] = []
-        
-        self.listTask(List: requests, Completion: { result in
-            
-            switch result {
-            case .success(let tutle):
-                if let reponse = try? JSONDecoder().decode(SpeciesReponse.self, from: tutle.1) {
-                    species.append(reponse)
-                }
-            default: break
-            }
-            
-        }) { (success) in
-            
-            let pokemonsRequest = Ids.compactMap({Endpoint.Pokemon(Id: $0).request})
-            self.listTask(List: pokemonsRequest, Completion: { (pokemonResult) in
-                switch pokemonResult {
-                case .success(let tuple):
-                    if let reponse = try? JSONDecoder().decode(PokemonReponse.self, from: tuple.1) {
-                        pokemons.append(reponse)
-                    }
-                default:break
-                }
-                
-            }) { (success) in
-                Completion(.success((species, pokemons)))
-            }
-        }
-    }
-    
 }
 
 extension PokeAPI {
@@ -136,6 +109,7 @@ extension PokeAPI {
         let id, base_experience, height, order, weight : Int
         let sprites : Sprite
         let species : Specie
+        let types : [Types]
         
         struct Sprite : Codable {
             
@@ -162,33 +136,35 @@ extension PokeAPI {
         struct Specie : Codable {
             let url : String
         }
+        struct Types : Codable {
+            let slot : Int
+            let type : Typee
+            struct Typee : Codable {
+                let url : String
+            }
+        }
     }
     
-    func pokemonFuture(Model:PokeAPIModel) -> Future<PokeAPIModel,Never> {
-        
-        return Future<PokeAPIModel,Never> { promise in
+    func pokemonFuture(Model:PokeAPIModel) -> Future<PokeAPIModel,Error> {
+        return Future<PokeAPIModel,Error> { promise in
             
-            promise(.success(Model))
-//            guard let request = Endpoint.Pokemon(Id: Model.id).request else {promise(.success(MO))}
-//
-//                self.session.dataTask(with: request) { (Data, Rep, Err) in
-//
-//                    if let error = Err {
-//                        promise(.failure(error))
-//                    }
-//
-//                    else if let data = Data {
-//                        do {
-//                            let rep = try JSONDecoder().decode(PokemonReponse.self, from: data)
-//                            Model.setPokemon(Reponse: rep)
-//                            promise(.success(Model))
-//                        } catch let err {
-//                            promise(.failure(err))
-//                        }
-//                    }
-//
-//                }.resume()
-//            }
+            guard let request = Endpoint.Pokemon(Id: Model.pokemonID).request else {
+                return promise(.failure(APIErrors.invalidRequest))
+            }
+            
+            URLSession.shared.dataTaskPublisher(for: request)
+                .map({$0.data})
+                .decode(type: PokemonReponse.self, decoder: JSONDecoder())
+                .sink(receiveCompletion: { (comp) in
+                    switch comp {
+                    case .failure(let error): promise(.failure(error))
+                    default: break
+                    }
+                }) { (reponse) in
+                    Model.setPokemon(Reponse: reponse)
+                    print("Success set PokemonReponse to \(reponse.name)")
+                    promise(.success(Model))
+            }.store(in: &self.cancel)
         }
     }
 }
@@ -233,13 +209,28 @@ extension PokeAPI {
         }
     }
     
-    func taskSpecies(Endpoint:Endpoint, Completion:@escaping(Result<SpeciesReponse,Error>) -> Void) {
-        
-        guard let request = Endpoint.request else {
-            return Completion(.failure(APIErrors.invalidRequest))
+    func speciesFuture(Model:PokeAPIModel) -> Future<PokeAPIModel,Error> {
+        return Future<PokeAPIModel,Error> { promise in
+            
+            guard let request = Endpoint.Species(Id: Model.pokemonID).request else {
+                return promise(.failure(APIErrors.invalidRequest))
+            }
+            
+            URLSession.shared.dataTaskPublisher(for: request)
+                .map({$0.data})
+                .decode(type: SpeciesReponse.self, decoder: JSONDecoder())
+                .receive(on: RunLoop.main)
+                .sink(receiveCompletion: { (comp) in
+                    switch comp {
+                    case .failure(let error): promise(.failure(error))
+                    default: break
+                    }
+                }) { (reponse) in
+                    Model.setSpecies(Reponse: reponse)
+                    print("Success set Species to \(reponse.name)")
+                    promise(.success(Model))
+            }.store(in: &self.cancel)
         }
-        
-        self.task(Request: request, Completion: Completion)
     }
 }
 
@@ -260,11 +251,44 @@ extension PokeAPI {
         }
     }
     
-    func taskType(Endpoint: Endpoint, Completion: @escaping (Result<TypeReponse, Error>) -> Void) {
-        
-        guard let request = Endpoint.request else {
-            return Completion(.failure(APIErrors.invalidRequest))
+    private func typeTask(Model:PokeAPIModel, Request:URL?) -> Future<TypeReponse, Error> {
+        return Future<TypeReponse,Error> { promise in
+            
+            guard let request = Request else {
+                return promise(.failure(APIErrors.invalidRequest))
+            }
+            
+            URLSession.shared.dataTaskPublisher(for: request)
+                .map{$0.data}
+                .decode(type: TypeReponse.self, decoder: JSONDecoder())
+                .sink(receiveCompletion: {compl in
+                    switch compl {
+                    case .failure(let error): promise(.failure(error))
+                    default: break
+                    }
+                }) { (reponse) in
+                    Model.setTypes(Reponse: reponse)
+                    promise(.success(reponse))
+            }.store(in: &self.cancel)
         }
-        self.task(Request: request, Completion: Completion)
+    }
+    
+    func typeFuture(Model:PokeAPIModel) -> Future<PokeAPIModel,Error> {
+        return Future<PokeAPIModel,Error> { promise in
+            
+            let request1 = Model.typeId1.flatMap({URL(string: $0)})
+            let request2 = Model.typeId2.flatMap({URL(string: $0)})
+            
+            let p1 = self.typeTask(Model: Model, Request: request1)
+            let p2 = self.typeTask(Model: Model, Request: request2)
+            
+            Publishers.Zip(p1, p2)
+                .receive(on: RunLoop.main)
+                .sink(receiveCompletion: { (compl) in
+                    promise(.success(Model))
+                }) { (reponses) in
+                    print("Success set Type to \(Model.pokemonID)")
+            }.store(in: &self.cancel)
+        }
     }
 }

@@ -55,11 +55,11 @@ final class PokemonManager : PokemonManagerProtocol {
                 .receive(on: RunLoop.main)
                 .sink { (succed) in
                     
-                //To set installed here
-                self.store.save()
-                promise(.success(true))
-                }
-                .store(in: &self.cancelInstall)
+                    mos.forEach({$0.checkIfInstalled()})
+                    self.store.save()
+                    promise(.success(true))
+            }
+            .store(in: &self.cancelInstall)
         }
     }
     
@@ -94,7 +94,8 @@ final class PokemonManager : PokemonManagerProtocol {
         let results = self.store.fetch()
         
         switch results {
-        case .success(let mo): return mo.compactMap({$0.toPokemon}).sorted(by: {$0.id < $1.id})
+        case .success(let mo):
+            return mo.compactMap({$0.toPokemon}).sorted(by: {$0.id < $1.id})
         default: return []
 
         }

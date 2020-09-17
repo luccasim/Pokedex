@@ -15,28 +15,27 @@ protocol PokemonDetailVMProtocol {
     var name: String {get}
     var infos: String {get}
     var image: UIImage {get}
+    var border: Color {get}
+    
+    func loadImage()
     
 }
 
 final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     
-    @Published private var pokemon : Pokemon?
+    @Published private var pokemon : Pokemon
     private var pokemonManager : PokemonManagerProtocol
     
-    init(Manager:PokemonManagerProtocol=PokemonManager.shared) {
+    init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=PokemonManager.shared) {
         self.pokemonManager = Manager
+        self.pokemon = Pokemon
     }
     
     @Published var image: UIImage = UIImage()
     private var cancelLoad : AnyCancellable?
     
-    func set(Pokemon:Pokemon) {
-        self.pokemon = Pokemon
-        self.loadImage(Pokemon: Pokemon)
-    }
-    
-    func loadImage(Pokemon:Pokemon) {
-        self.cancelLoad = self.pokemonManager.getImage(Pokemon: Pokemon)
+    func loadImage() {
+        self.cancelLoad = self.pokemonManager.getImage(Pokemon: self.pokemon)
             .receive(on: RunLoop.main)
             .sink { (img) in
                 self.image = img
@@ -44,11 +43,14 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     }
     
     var name : String {
-        return self.pokemon?.name.translate ?? "404"
+        return self.pokemon.name.translate
     }
     
     var infos : String {
-        return self.pokemon?.desc.translate ?? "404"
+        return self.pokemon.desc.translate
     }
     
+    var border: Color {
+        return pokemon.type1.color
+    }
 }

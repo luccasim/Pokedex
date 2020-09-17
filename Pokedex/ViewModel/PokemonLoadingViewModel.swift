@@ -10,8 +10,10 @@ import Foundation
 import Combine
 
 protocol PokemonLoadingViewModelProtocol {
+    
     var isLoaded : Bool {get}
     var message : String {get}
+    
     func loadPokemonData()
 }
 
@@ -22,7 +24,7 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
     
     private var manager : PokemonManagerProtocol
     
-    let rang = (1...30)
+    let rang = (1...151)
     
     init(Manager:PokemonManagerProtocol=PokemonManager.shared) {
         
@@ -31,7 +33,6 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
         Translator.shared.set(NewLang: "fr")
         Translator.shared.select(Lang: "fr")
         
-        self.manager.resetData()
     }
     
     private var sub : AnyCancellable?

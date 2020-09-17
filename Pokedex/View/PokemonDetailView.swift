@@ -10,12 +10,12 @@ import SwiftUI
 
 struct PokemonDetailView: View {
     
-    @ObservedObject var viewModel = PokemonDetailViewModel()
+    @ObservedObject var viewModel : PokemonDetailViewModel
     var model : Pokemon
     
     init(model:Pokemon) {
         self.model = model
-        self.viewModel.set(Pokemon: model)
+        self.viewModel = PokemonDetailViewModel(Pokemon: model)
     }
     
     var body: some View {
@@ -32,7 +32,7 @@ struct PokemonDetailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 320, height: 320)
-                    .border(Color.green, width: 2)
+                    .border(self.viewModel.border, width: 2)
                     .padding(.bottom, 15)
                 
                 HStack {
@@ -49,6 +49,9 @@ struct PokemonDetailView: View {
             }
             .navigationBarHidden(true)
             .edgesIgnoringSafeArea(.top)
+            .onAppear() {
+                self.viewModel.loadImage()
+            }
         }
     }
 }
@@ -64,7 +67,7 @@ struct TypeText : View {
             Text(self.type.text)
         }
         .frame(width: 100, height: 30, alignment: .center)
-        .foregroundColor(Color.black)
+        .foregroundColor(type.isSet)
     }
 }
 
@@ -72,7 +75,7 @@ struct TypeText : View {
 struct PokemonDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PokemonDetailView(model: FakePokemonManager().fetchToList()[1])
+            PokemonDetailView(model: Pokemon.Fake)
             .navigationBarHidden(true)
             .navigationBarTitle("Bulbazor")
         }
