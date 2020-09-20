@@ -1,0 +1,14 @@
+//
+//  Prod.xcconfig
+//  Pokedex
+//
+//  Created by owee on 20/09/2020.
+//  Copyright © 2020 Devios. All rights reserved.
+//
+
+// Configuration settings file format documentation can be found at:
+// https://help.apple.com/xcode/#/dev745c5c974
+
+// Generations
+Pokemon_Low_Rang = 1
+Pokemon_High_Rang = 150

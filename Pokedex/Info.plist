@@ -56,5 +56,10 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+	<key>PokemonRang</key>
+	<array>
+		<string>$(Pokemon_Low_Rang)</string>
+		<string>$(Pokemon_High_Rang)</string>
+	</array>
 </dict>
 </plist>
