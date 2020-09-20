@@ -35,8 +35,8 @@ enum Type : Int {
 
 extension Type {
     
-    var isSet : Color {
-        return self == .none ? Color.white : Color.black
+    var isSet : Bool {
+        return self != .none
     }
     
     var text:String {

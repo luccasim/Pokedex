@@ -27,7 +27,7 @@ struct LoadingView: View {
                 Spacer()
 
                 if self.viewModel.isLoaded {
-                    NavigationLink(destination: PokemonListView()) {
+                    NavigationLink(destination: ListView()) {
                         Text(self.viewModel.message)
                     }.padding(.bottom, 10)
                 }
