@@ -17,4 +17,8 @@ final class PersistanceStore {
     let pokemonStore = CoreDataStore<PokemonMO>()
     let translationStore = CoreDataStore<TranslationMO>()
     
+    func removeData() {
+        self.pokemonStore.removeAll()
+        self.translationStore.removeAll()
+    }
 }

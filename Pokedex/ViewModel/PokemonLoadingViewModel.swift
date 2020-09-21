@@ -8,6 +8,7 @@
 
 import Foundation
 import Combine
+import LCFramework
 
 protocol PokemonLoadingViewModelProtocol {
     
@@ -33,6 +34,7 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
         Translator.shared.set(NewLang: "fr")
         Translator.shared.select(Lang: "fr")
         
+//        PersistanceStore.shared.removeData()
     }
     
     private var sub : AnyCancellable?

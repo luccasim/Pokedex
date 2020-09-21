@@ -23,13 +23,15 @@ protocol PokemonManagerProtocol {
     func getImage(Pokemon:Pokemon) -> Future<UIImage,Never>
     func install(PokemonIds:[Int]) -> Future<Bool,Never>
     
+    func fetchTranslation() -> [TranslationMO]
+    
 }
 
 final class PokemonManager : PokemonManagerProtocol {
         
     static var shared = PokemonManager()
     
-    private var store = PokemonStore.shared
+    private var store = PersistanceStore.shared.pokemonStore
     private var loader = ImageLoader.shared
     private var ws = PokeAPI()
     
@@ -60,6 +62,18 @@ final class PokemonManager : PokemonManagerProtocol {
                     promise(.success(true))
             }
             .store(in: &self.cancelInstall)
+        }
+    }
+        
+    func fetchTranslation() -> [TranslationMO] {
+        
+        let res = PersistanceStore.shared.translationStore.fetch()
+        
+        do {
+            let translation = try res.get()
+            return translation
+        } catch _ {
+            return []
         }
     }
     
@@ -102,7 +116,23 @@ final class PokemonManager : PokemonManagerProtocol {
     }
     
     func loadTranslation() {
-        self.store.retrieveTranslations()
+        
+        do {
+            
+            let translator = Translator.shared
+            let predicate = NSPredicate(format: "lang == %@", "fr")
+            let mos = try PersistanceStore.shared.translationStore.fetch(Predicate: predicate).get()
+            
+            mos.forEach { (tmo) in
+                
+                if let key = tmo.key, let text = tmo.text, let lang = tmo.lang {
+                    translator.set(Key: key, NewText: text, ForLang: lang)
+                }
+            }
+            
+        } catch _ {
+            
+        }
     }
     
     func add(Pokemon: Pokemon) {
@@ -120,7 +150,7 @@ final class PokemonManager : PokemonManagerProtocol {
     }
     
     func resetData() {
-        self.store.clear()
+        self.store.removeAll()
     }
     
     func getImage(Pokemon: Pokemon) -> Future<UIImage,Never> {
