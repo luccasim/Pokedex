@@ -27,7 +27,7 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     
     let rang = ConfigManager.pokemonRang
     
-    init(Manager:PokemonManagerProtocol=PokemonManager.shared) {
+    init(Manager:PokemonManagerProtocol=DataManager.shared) {
         
         self.manager = Manager
         

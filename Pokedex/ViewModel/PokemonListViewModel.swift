@@ -33,7 +33,7 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     
     private var manager : PokemonManagerProtocol
     
-    init(Manager:PokemonManagerProtocol = PokemonManager.shared) {
+    init(Manager:PokemonManagerProtocol = DataManager.shared) {
         self.manager = Manager
         self.pokemons = []
     }

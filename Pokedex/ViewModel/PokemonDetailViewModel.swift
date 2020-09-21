@@ -26,7 +26,7 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     @Published private var pokemon : Pokemon
     private var pokemonManager : PokemonManagerProtocol
     
-    init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=PokemonManager.shared) {
+    init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=DataManager.shared) {
         self.pokemonManager = Manager
         self.pokemon = Pokemon
     }
