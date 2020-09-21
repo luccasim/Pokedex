@@ -24,5 +24,4 @@ final class ConfigManager {
         print("[Configuration] : \(low)...\(high) Pokemon(s)")
         return (low...high).map{$0}
     }
-    
 }

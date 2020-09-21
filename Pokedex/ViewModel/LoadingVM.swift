@@ -18,7 +18,7 @@ protocol PokemonLoadingViewModelProtocol {
     func loadPokemonData()
 }
 
-final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelProtocol {
+final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     
     @Published var isLoaded = false
     @Published var message: String = ""
@@ -34,7 +34,7 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
         Translator.shared.set(NewLang: "fr")
         Translator.shared.select(Lang: "fr")
         
-//        PersistanceStore.shared.removeData()
+        PersistanceStore.shared.removeData()
     }
     
     private var sub : AnyCancellable?
@@ -51,5 +51,4 @@ final class PokemonLoadingViewModel : ObservableObject, PokemonLoadingViewModelP
                 self.sub = nil
             })
     }
-    
 }

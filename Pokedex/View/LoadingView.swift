@@ -10,7 +10,7 @@ import SwiftUI
 
 struct LoadingView: View {
     
-    @ObservedObject var viewModel = PokemonLoadingViewModel()
+    @ObservedObject var viewModel = LoadingVM()
     
     init() {
         self.viewModel.loadPokemonData()
