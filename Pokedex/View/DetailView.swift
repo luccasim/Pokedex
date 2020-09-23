@@ -42,6 +42,7 @@ struct DetailView: View {
                 Text(self.viewModel.infos)
                     .frame(width: geo.size.width * 0.9 , alignment: .center)
                     .padding(.top, 20)
+                
                 Spacer()
             }
             .navigationBarHidden(false)

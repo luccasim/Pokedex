@@ -21,7 +21,7 @@ protocol PokemonLoadingViewModelProtocol {
 final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     
     @Published var isLoaded = false
-    @Published var message: String = ""
+    @Published var message: String = "Loading..."
     
     private var manager : PokemonManagerProtocol
     
@@ -34,21 +34,25 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
         Translator.shared.set(NewLang: "fr")
         Translator.shared.select(Lang: "fr")
         
-        PersistanceStore.shared.removeData()
     }
     
     private var sub : AnyCancellable?
     
     func loadPokemonData() {
         
-        self.message = "Loading Data"
-        self.sub = self.manager.install(PokemonIds: self.rang.map({$0}))
-            .receive(on: RunLoop.main)
-            .sink(receiveValue: { (success) in
-                self.isLoaded = success
-                self.message = "Press screen to Continue"
-                self.manager.loadTranslation()
-                self.sub = nil
-            })
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            self.isLoaded = true
+            self.message = "Press to show"
+        }
+        
+//        self.message = "Loading Data"
+//        self.sub = self.manager.install(PokemonIds: self.rang.map({$0}))
+//            .receive(on: RunLoop.main)
+//            .sink(receiveValue: { (success) in
+//                self.isLoaded = success
+//                self.message = "Press screen to Continue"
+//                self.manager.loadTranslation()
+//                self.sub = nil
+//            })
     }
 }
