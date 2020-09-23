@@ -18,8 +18,6 @@ final class PersistanceStore {
     let translationStore = CoreDataStore<TranslationMO>()
     
     func removeData() {
-        self.translationStore.trace.toggle()
-        self.pokemonStore.trace.toggle()
         self.pokemonStore.removeAll()
         self.translationStore.removeAll()
 

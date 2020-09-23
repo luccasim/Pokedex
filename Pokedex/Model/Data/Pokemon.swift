@@ -16,7 +16,9 @@ struct Pokemon : Identifiable {
     let sprite  : URL
     let desc    : String
     let type1   : Type
+    
     var type2   : Type = .none
+    var isInstalled = false
     
 }
 
@@ -29,7 +31,8 @@ extension Pokemon {
                        sprite: URL(fileURLWithPath: "bulbazor"),
                        desc: "He love Senzu",
                        type1: .plante,
-                       type2: .none
+                       type2: .none,
+                       isInstalled: true
         )
     }
 }

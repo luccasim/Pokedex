@@ -16,6 +16,7 @@ struct LoadingView: View {
     var body: some View {
         
         NavigationView {
+            
         VStack {
             
             NavigationLink(
@@ -37,7 +38,7 @@ struct LoadingView: View {
                     isLoaded: viewModel.isLoaded,
                     message: viewModel.message
                 )
-                .padding(.bottom, 20)
+                .padding(.bottom, 50)
             })
             
             Spacer()
@@ -45,6 +46,7 @@ struct LoadingView: View {
         }.onAppear() {
             viewModel.loadPokemonData()
         }
+        .navigationBarHidden(true)
     }
     }
 }
@@ -58,7 +60,7 @@ struct PokeBall : View {
     @State private var rotation = false
     
     var loadAnimation : Animation {
-        Animation.easeIn(duration: 0.3).repeatForever(autoreverses: true)
+        Animation.easeIn(duration: 0.7).repeatForever(autoreverses: true)
     }
     
     var loadedAnimation :Animation {

@@ -153,6 +153,7 @@ extension PokeAPI {
             }
             
             URLSession.shared.dataTaskPublisher(for: request)
+                .receive(on: RunLoop.main)
                 .map({$0.data})
                 .decode(type: PokemonReponse.self, decoder: JSONDecoder())
                 .sink(receiveCompletion: { (comp) in
@@ -259,6 +260,7 @@ extension PokeAPI {
             }
             
             URLSession.shared.dataTaskPublisher(for: request)
+                .receive(on: RunLoop.main)
                 .map{$0.data}
                 .decode(type: TypeReponse.self, decoder: JSONDecoder())
                 .sink(receiveCompletion: {compl in

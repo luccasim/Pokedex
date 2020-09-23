@@ -11,20 +11,6 @@ import CoreData
 
 public class PokemonMO : NSManagedObject {
     
-    var t1 : Int {
-        return Int(self.type1?.replacingOccurrences(of: "https://pokeapi.co/api/v2/type/", with: "").replacingOccurrences(of: "/", with: "") ?? "-1") ?? -1
-    }
-    
-    var t2 : Int {
-        return Int(self.type2?.replacingOccurrences(of: "https://pokeapi.co/api/v2/type/", with: "").replacingOccurrences(of: "/", with: "") ?? "-1") ?? -1
-    }
-    
-    func checkIfInstalled() {
-        if self.toPokemon != nil {
-            self.isInstalled = true
-        }
-    }
-    
     var toPokemon : Pokemon? {
         
         let id = Int(self.id)
@@ -38,6 +24,20 @@ public class PokemonMO : NSManagedObject {
         let type2 = Type(rawValue: t2) ?? .none
         
         return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc, type1: type1, type2:type2)
+    }
+    
+    var t1 : Int {
+        return Int(self.type1?.replacingOccurrences(of: "https://pokeapi.co/api/v2/type/", with: "").replacingOccurrences(of: "/", with: "") ?? "-1") ?? -1
+    }
+    
+    var t2 : Int {
+        return Int(self.type2?.replacingOccurrences(of: "https://pokeapi.co/api/v2/type/", with: "").replacingOccurrences(of: "/", with: "") ?? "-1") ?? -1
+    }
+    
+    func checkIfInstalled() {
+        if self.toPokemon != nil {
+            self.isInstalled = true
+        }
     }
     
     func setSpecies(Reponse:PokeAPI.SpeciesReponse) {
