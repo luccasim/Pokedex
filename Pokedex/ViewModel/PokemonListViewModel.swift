@@ -65,9 +65,13 @@ final class PokemonListCellViewModel : ObservableObject, PokemonListCellViewMode
     }
     
     func loadImage() {
-        self.loader.load(Url: self.pokemon.icon) { (img) in
+        self.loader.load(Url: self.pokemon.icon) { [weak self] (res) in
+            
             DispatchQueue.main.async {
-                self.image = img
+                switch res {
+                case .success(let img): self?.image = img
+                default : break
+                }
             }
         }
     }

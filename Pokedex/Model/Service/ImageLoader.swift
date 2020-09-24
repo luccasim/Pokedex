@@ -17,6 +17,5 @@ protocol LoaderProtocol {
 
 final class ImageLoader: DataLoader<UIImage> {
     
-    static let shared = ImageLoader(Session: URLSession.shared, Convert: {UIImage(data: $0)})
-    
+    static let shared = ImageLoader(Session: URLSession.shared,Tracable: true, Convert: {UIImage(data: $0)})
 }

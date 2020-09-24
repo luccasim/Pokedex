@@ -33,10 +33,11 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
         
         self.manager = Manager
         Translator.shared.set(NewLang: "fr")
+        PersistanceStore.shared.removeData()
     }
     
     private func finish() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 1) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
             self.isLoaded = true
             self.message = "Press to Continue"
             Translator.shared.select(Lang: "fr")
@@ -78,10 +79,8 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
                 .flatMap({_ in self.speciesFuture(Model: Model)})
                 .flatMap({_ in self.typeFuture(Model: Model, ID: Model.idType1)})
                 .flatMap({_ in self.typeFuture(Model: Model, ID: Model.idType2)})
+                .flatMap({_ in self.iconFuture(Model: Model)})
                 .catch {_ in Just(Model)}
-                .flatMap({_ in
-                    ImageLoader.shared.load(Url: Model.icon!).map({_ in Just(Model)})
-                })
                 .sink(receiveValue: { (mo) in
                     promise(.success(Model))
                 })
@@ -122,6 +121,7 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     
     enum VMError : Error {
         case noTypeId
+        case iconURLnotSet
     }
     
     private func typeFuture(Model:PokemonMO, ID:Int?) -> Future<PokemonMO, Error> {
@@ -140,6 +140,24 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
                 default: break
                 }
                 promise(.success(Model))
+            }
+        }
+    }
+    
+    private func iconFuture(Model:PokemonMO) -> Future<PokemonMO, Error> {
+        return Future<PokemonMO, Error> { promise in
+            
+            guard let url = Model.icon else {
+                return promise(.failure(VMError.iconURLnotSet))
+            }
+            
+            ImageLoader.shared.load(Url: url) { (res) in
+                DispatchQueue.main.async {
+                    switch res {
+                    case .success(_): promise(.success(Model))
+                    case .failure(let error): promise(.failure(error))
+                    }
+                }
             }
         }
     }

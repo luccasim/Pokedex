@@ -32,15 +32,16 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     }
     
     @Published var image: UIImage = UIImage()
-    private var cancel = Set<AnyCancellable>()
     
     func loadImage() {
-        self.pokemonManager.getImage(Pokemon: self.pokemon)
-            .receive(on: RunLoop.main)
-            .sink { (img) in
-                self.image = img
-                self.cancel.removeAll()
-        }.store(in: &self.cancel)
+        ImageLoader.shared.load(Url: self.pokemon.sprite) { [weak self] (res) in
+            switch res {
+            case .success(let img) : DispatchQueue.main.async {
+                self?.image = img
+            }
+            default: break
+            }
+        }
     }
     
     var name : String {

@@ -21,17 +21,13 @@ protocol PokemonManagerProtocol {
     func retrievePokemon(Rang:[Int]) -> [PokemonMO]
     
     func fetchToList() -> [Pokemon]
-    
-    func getImage(Pokemon:Pokemon) -> Future<UIImage,Never>
-    
+        
 }
 
 final class DataManager : PokemonManagerProtocol {
         
     static var shared = DataManager()
-    
     private var store = PersistanceStore.shared.pokemonStore
-    private var loader = ImageLoader.shared
         
     func fetchToList() -> [Pokemon] {
                     
@@ -94,16 +90,6 @@ final class DataManager : PokemonManagerProtocol {
     
     func resetData() {
         self.store.removeAll()
-    }
-    
-    func getImage(Pokemon: Pokemon) -> Future<UIImage,Never> {
-        
-        return Future { (promise) in
-            
-            self.loader.load(Url: Pokemon.sprite) { (img) in
-                promise(.success(img))
-            }
-        }
     }
     
 }

@@ -27,6 +27,7 @@ struct ListView: View {
                 }
                 
             }
+            .animation(nil)
             .navigationBarBackButtonHidden(true)
             .navigationBarTitle(self.viewModel.title)
             .onAppear() {
