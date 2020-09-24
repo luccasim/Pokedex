@@ -43,20 +43,6 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
             self.manager.loadTranslation()
         }
     }
-    
-    private func toFuture(Model:PokemonMO) -> Future<PokemonMO, Never> {
-        return Future<PokemonMO,Never> { promise in
-            
-            self.pokeapiWS.modelTasks(Model: Model)
-                .flatMap({_ in
-                    ImageLoader.shared.load(Url: Model.icon!).map({_ in Just(Model)})
-                })
-                .sink(receiveValue: { (mo) in
-                    promise(.success(Model))
-                })
-                .store(in: &self.cancellable)
-        }
-    }
             
     func loadPokemonData() {
         
@@ -79,8 +65,83 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
                 default: break
                 }
             } receiveValue: { (mo) in
-                self.message = "Get \(mo.name ?? "")"
                 mo.checkIfInstalled()
-            }.store(in: &cancellable)
+            }
+            .store(in: &cancellable)
     }
+    
+    private func toFuture(Model:PokemonMO) -> Future<PokemonMO, Never> {
+        return Future<PokemonMO,Never> { promise in
+            
+            self.pokemonFuture(Model: Model)
+                .receive(on: RunLoop.main)
+                .flatMap({_ in self.speciesFuture(Model: Model)})
+                .flatMap({_ in self.typeFuture(Model: Model, ID: Model.idType1)})
+                .flatMap({_ in self.typeFuture(Model: Model, ID: Model.idType2)})
+                .catch {_ in Just(Model)}
+                .flatMap({_ in
+                    ImageLoader.shared.load(Url: Model.icon!).map({_ in Just(Model)})
+                })
+                .sink(receiveValue: { (mo) in
+                    promise(.success(Model))
+                })
+                .store(in: &self.cancellable)
+        }
+    }
+    
+    private func pokemonFuture(Model:PokemonMO) -> Future<PokemonMO, Error> {
+        return Future<PokemonMO,Error> { promise in
+            
+            self.pokeapiWS.pokemonGetTask(Id: Int(Model.id), Callback: { (result) in
+                switch result {
+                case .success(let reponse):
+                    DispatchQueue.main.async {Model.setPokemon(Reponse: reponse)}
+                default: break
+                }
+                promise(.success(Model))
+            })
+        }
+    }
+    
+    private func speciesFuture(Model:PokemonMO) -> Future<PokemonMO, Error> {
+        return Future<PokemonMO, Error> { promise in
+            
+            let id = Int(Model.id)
+            self.pokeapiWS.speciesGetTask(Id: id) { (result) in
+                switch result {
+                case .success(let reponse):
+                    DispatchQueue.main.async {
+                        Model.setSpecies(Reponse: reponse)
+                    }
+                default: break
+                }
+                promise(.success(Model))
+            }
+        }
+    }
+    
+    enum VMError : Error {
+        case noTypeId
+    }
+    
+    private func typeFuture(Model:PokemonMO, ID:Int?) -> Future<PokemonMO, Error> {
+        return Future<PokemonMO, Error> { promise in
+            
+            guard let id = ID else {
+                return promise(.failure(VMError.noTypeId))
+            }
+            
+            self.pokeapiWS.typeGetTask(Id: id) { (result) in
+                switch result {
+                case .success(let reponse):
+                    DispatchQueue.main.async {
+                        Model.setTypes(Reponse: reponse)
+                    }
+                default: break
+                }
+                promise(.success(Model))
+            }
+        }
+    }
+    
 }

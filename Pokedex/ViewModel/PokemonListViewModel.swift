@@ -45,6 +45,7 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     func fetchPokemon() {
         self.pokemons = manager.fetchToList()
     }
+    
 }
 
 final class PokemonListCellViewModel : ObservableObject, PokemonListCellViewModelProtocol {

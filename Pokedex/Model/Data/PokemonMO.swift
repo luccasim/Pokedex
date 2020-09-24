@@ -20,18 +20,20 @@ public class PokemonMO : NSManagedObject {
         guard let url = self.sprite else {return nil}
         guard let icon = self.icon else {return nil}
         
+        let t1 = self.idType1 ?? -1
+        let t2 = self.idType2 ?? -1
         let type1 = Type(rawValue: t1) ?? .none
         let type2 = Type(rawValue: t2) ?? .none
         
         return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc, type1: type1, type2:type2)
     }
     
-    var t1 : Int {
-        return Int(self.type1?.replacingOccurrences(of: "https://pokeapi.co/api/v2/type/", with: "").replacingOccurrences(of: "/", with: "") ?? "-1") ?? -1
+    var idType1 : Int? {
+        return Int(self.type1?.replacingOccurrences(of: "https://pokeapi.co/api/v2/type/", with: "").replacingOccurrences(of: "/", with: "") ?? "-1")
     }
     
-    var t2 : Int {
-        return Int(self.type2?.replacingOccurrences(of: "https://pokeapi.co/api/v2/type/", with: "").replacingOccurrences(of: "/", with: "") ?? "-1") ?? -1
+    var idType2 : Int? {
+        return Int(self.type2?.replacingOccurrences(of: "https://pokeapi.co/api/v2/type/", with: "").replacingOccurrences(of: "/", with: "") ?? "-1")
     }
     
     func checkIfInstalled() {
@@ -80,26 +82,9 @@ public class PokemonMO : NSManagedObject {
         }
     }
 }
-extension PokemonMO : PokeAPIModel {
-    
-    var typeId1: String? {
-        get {
-            self.type1
-        }
-        set {
-            self.type1 = newValue
-        }
-    }
-    
-    var typeId2: String? {
-        get {
-            self.type2
-        }
-        set {
-            self.type2 = newValue
-        }
-    }
-    
+
+extension PokemonMO {
+
     var pokemonID: Int {
         return Int(self.id)
     }

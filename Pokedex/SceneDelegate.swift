@@ -21,7 +21,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Get the managed object context from the shared persistent container.
-//        let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
         CoreDataStore.register(ContainerName: "Pokedex")
 
         // Create the SwiftUI view and set the context as the value for the managedObjectContext environment keyPath.
@@ -67,7 +66,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // to restore the scene back to its current state.
 
         // Save changes in the application's managed object context when the application transitions to the background.
-//        (UIApplication.shared.delegate as? AppDelegate)?.saveContext()
     }
 
 

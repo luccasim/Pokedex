@@ -171,7 +171,7 @@
 				8457C4B1250135FA00F3E37E /* AppDelegate.swift */,
 				84DB8F87250DCACB00B1E8BD /* Reponses */,
 				8457C4B3250135FA00F3E37E /* SceneDelegate.swift */,
-				8474CD432516EFA500553655 /* Prod.xcconfig */,
+				847091F6251C87EC00DF6164 /* Configurations */,
 				8457C4BA250135FD00F3E37E /* Assets.xcassets */,
 				8457C4BF250135FD00F3E37E /* LaunchScreen.storyboard */,
 				8457C4C2250135FD00F3E37E /* Info.plist */,
@@ -243,9 +243,9 @@
 		8457C4F125014CFA00F3E37E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				847091F5251C87BA00DF6164 /* Supporting View */,
 				84468300250EFC39007C413E /* LoadingView.swift */,
 				8457C4ED250148BA00F3E37E /* ListView.swift */,
-				842DC09125195B8D006A90FE /* Test.swift */,
 				8428B0B72505488300B785CE /* DetailView.swift */,
 			);
 			path = View;
@@ -260,6 +260,22 @@
 				84CCB74C25119F8700F3EB9F /* Type.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		847091F5251C87BA00DF6164 /* Supporting View */ = {
+			isa = PBXGroup;
+			children = (
+				842DC09125195B8D006A90FE /* Test.swift */,
+			);
+			path = "Supporting View";
+			sourceTree = "<group>";
+		};
+		847091F6251C87EC00DF6164 /* Configurations */ = {
+			isa = PBXGroup;
+			children = (
+				8474CD432516EFA500553655 /* Prod.xcconfig */,
+			);
+			path = Configurations;
 			sourceTree = "<group>";
 		};
 		84DB8F87250DCACB00B1E8BD /* Reponses */ = {
