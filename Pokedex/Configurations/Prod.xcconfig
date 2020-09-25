@@ -12,3 +12,5 @@
 // Generations
 Pokemon_Low_Rang = 1
 Pokemon_High_Rang = 150
+
+Loading_Time_Animation = 4

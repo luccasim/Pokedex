@@ -26,9 +26,10 @@ final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
     @Published private var pokemon : Pokemon
     private var pokemonManager : PokemonManagerProtocol
     
-    init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=DataManager.shared) {
+    init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=DataManager.shared, Image:UIImage?=nil) {
         self.pokemonManager = Manager
         self.pokemon = Pokemon
+        self.image = Image ?? UIImage()
     }
     
     @Published var image: UIImage = UIImage()

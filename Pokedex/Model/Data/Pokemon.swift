@@ -31,7 +31,7 @@ extension Pokemon {
                        sprite: URL(fileURLWithPath: "bulbazor"),
                        desc: "He love Senzu",
                        type1: .plante,
-                       type2: .none,
+                       type2: .poison,
                        isInstalled: true
         )
     }

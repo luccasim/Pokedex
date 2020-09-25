@@ -27,19 +27,21 @@ struct LoadingView: View {
                     }).hidden()
                 
                 Spacer()
-                PokeBall(
-                    finishDuration: 2,
-                    isLoaded: viewModel.isLoaded,
-                    message: viewModel.message
-                )
-                Button(action: {
-                    if viewModel.isLoaded {
-                        self.pushToListView = true
-                    }
-                }, label: {
-                    Text(self.viewModel.message)
-                        .animation(nil)
-                })
+                VStack {
+                    PokeBall(
+                        finishDuration: 2,
+                        isLoaded: viewModel.isLoaded,
+                        message: viewModel.message
+                    )
+                    Button(action: {
+                        if viewModel.isLoaded {
+                            self.pushToListView = true
+                        }
+                    }, label: {
+                        Text(self.viewModel.message)
+                    })
+                }
+                .padding(.bottom, 80)
                 
                 Spacer()
                 
@@ -47,7 +49,7 @@ struct LoadingView: View {
                 viewModel.loadPokemonData()
             }
         }
-        .navigationBarHidden(pushToListView ? false : true)
+        .navigationBarHidden(true)
     }
 }
 

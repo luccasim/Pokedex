@@ -24,7 +24,7 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     @Published var message: String = "Loading..."
     
     private var manager : PokemonManagerProtocol
-    private let rang = ConfigManager.pokemonRang
+    private let configM = ConfigManager.self
     private let pokeapiWS = PokeAPI()
     
     private var cancellable = Set<AnyCancellable>()
@@ -33,11 +33,10 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
         
         self.manager = Manager
         Translator.shared.set(NewLang: "fr")
-        PersistanceStore.shared.removeData()
     }
     
     private func finish() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + configM.loadingTime) {
             self.isLoaded = true
             self.message = "Press to Continue"
             Translator.shared.select(Lang: "fr")
@@ -47,7 +46,7 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
             
     func loadPokemonData() {
         
-        let mosToInstall = self.manager.retrievePokemon(Rang: self.rang).filter({!$0.isInstalled}).sorted(by: {$0.id < $1.id})
+        let mosToInstall = self.manager.retrievePokemon(Rang: self.configM.pokemonRang).filter({!$0.isInstalled}).sorted(by: {$0.id < $1.id})
         
         guard !mosToInstall.isEmpty else {
                 self.finish()

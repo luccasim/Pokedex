@@ -29,6 +29,8 @@
 		<string>$(Pokemon_Low_Rang)</string>
 		<string>$(Pokemon_High_Rang)</string>
 	</array>
+	<key>LoadingTimeAnimation</key>
+	<string>$(Loading_Time_Animation)</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
 		<key>UIApplicationSupportsMultipleScenes</key>

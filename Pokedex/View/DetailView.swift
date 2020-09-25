@@ -11,11 +11,22 @@ import SwiftUI
 struct DetailView: View {
     
     @ObservedObject var viewModel : PokemonDetailViewModel
+    @Environment(\.presentationMode) var presentationMode : Binding<PresentationMode>
+    
     var model : Pokemon
     
-    init(model:Pokemon) {
+    init(model:Pokemon, VM:PokemonDetailViewModel?=nil) {
         self.model = model
-        self.viewModel = PokemonDetailViewModel(Pokemon: model)
+        self.viewModel = VM ?? PokemonDetailViewModel(Pokemon: model)
+    }
+    
+    var swipe : some Gesture {
+        DragGesture(minimumDistance: 0)
+            .onEnded({ value in
+                if value.translation.width < 0 {
+                    self.presentationMode.wrappedValue.dismiss()
+                }
+            })
     }
     
     var body: some View {
@@ -24,28 +35,43 @@ struct DetailView: View {
             
             VStack {
                 
-                Text(self.viewModel.name)
-                    .font(.largeTitle)
-                    .padding(.top, 25)
+                ZStack {
+                    
+                    Rectangle()
+                        .foregroundColor(self.viewModel.border)
+                    
+                    Image(uiImage: self.viewModel.image)
+                        .resizable()
+                        .scaledToFit()
+                        .frame(width: geo.size.height * 0.47, height: geo.size.height * 0.47)
+                        .padding(.top, geo.size.height * 0.1)
+                    
+                    VStack {
+                        Text(self.viewModel.name)
+                            .font(.largeTitle)
+                            .foregroundColor(.black)
+                            .padding(.top, 30)
+                            .animation(.spring(response: 0.0, dampingFraction:0.2))
+                        Spacer()
+                    }
+                    
+                    VStack {
+                        Spacer()
+                        TypeGroup(pokemon: model)                .padding([.leading, .trailing], 30)
+                            .padding(.bottom, -10)
+                    }
+                }
+                .frame(width: geo.size.width, height: geo.size.height * 0.7)
                 
-                Image(uiImage: self.viewModel.image)
-                    .resizable()
-                    .scaledToFit()
-                    .frame(width: 320, height: 320)
-                    .border(self.viewModel.border, width: 2)
-                    .padding(.bottom, 15)
-                
-                TypeGroup(pokemon: model)
-
-                .padding([.leading, .trailing], 30)
-                
-                Text(self.viewModel.infos)
-                    .frame(width: geo.size.width * 0.9 , alignment: .center)
-                    .padding(.top, 20)
-                
-                Spacer()
+                Group {
+                    Text(self.viewModel.infos)
+                        .frame(width: geo.size.width * 0.9 , alignment: .center)
+                        .padding(.top, 30)
+                    
+                    Spacer()
+                }.gesture(swipe)
             }
-            .navigationBarHidden(false)
+            .navigationBarHidden(true)
             .edgesIgnoringSafeArea(.top)
             .onAppear() {
                 self.viewModel.loadImage()
@@ -83,7 +109,8 @@ struct TypeGroup : View {
 struct PokemonDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            DetailView(model: Pokemon.Fake)
+            let vm = PokemonDetailViewModel(Pokemon: Pokemon.Fake, Image: UIImage(named: "bulbazor"))
+            DetailView(model: Pokemon.Fake,VM: vm)
             .navigationBarHidden(true)
             .navigationBarTitle("Bulbazor")
         }

@@ -28,7 +28,11 @@ final class DataManager : PokemonManagerProtocol {
         
     static var shared = DataManager()
     private var store = PersistanceStore.shared.pokemonStore
-        
+    
+    init() {
+        store.trace = true
+    }
+    
     func fetchToList() -> [Pokemon] {
                     
         let results = self.store.fetch()

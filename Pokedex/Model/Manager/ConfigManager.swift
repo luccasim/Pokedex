@@ -8,6 +8,10 @@
 
 import Foundation
 
+private func trace(_ str:String) {
+    print("[Configuration] : \(str)")
+}
+
 final class ConfigManager {
     
     static func infoPlist(Key: String) -> String? {
@@ -21,7 +25,13 @@ final class ConfigManager {
         
         let low = Int(rang[0]) ?? 0
         let high = Int(rang[1]) ?? 0
-        print("[Configuration] : \(low)...\(high) Pokemon(s)")
+        trace("\(low)...\(high) Pokemon(s)")
         return (low...high).map{$0}
+    }
+    
+    static var loadingTime : Double {
+        let loadingTime = Double(infoPlist(Key: "LoadingTimeAnimation") ?? "2") ?? 2.0
+        trace("Loading Time Animation \(loadingTime) second(s)")
+        return loadingTime
     }
 }
