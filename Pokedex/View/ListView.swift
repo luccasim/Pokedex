@@ -11,7 +11,7 @@ import SwiftUI
 
 struct ListView: View {
     
-    @ObservedObject var viewModel = PokemonListViewModel()
+    @ObservedObject var viewModel = PokemonList()
     @State var isPresented = false
         
     var body: some View {
@@ -22,7 +22,7 @@ struct ListView: View {
                 
                 ForEach(self.viewModel.pokemons) { (Pokemon) in
                     NavigationLink(destination: DetailView(model: Pokemon)) {
-                        PokemonListCell(Pokemon: Pokemon)
+                        PokemonListCellView(Pokemon: Pokemon)
                     }
                 }
                 
@@ -37,12 +37,12 @@ struct ListView: View {
     }
 }
 
-struct PokemonListCell : View {
+struct PokemonListCellView : View {
     
-    @ObservedObject var viewModel : PokemonListCellViewModel
+    @ObservedObject var viewModel : PokemonListCell
     
     init(Pokemon:Pokemon) {
-        self.viewModel = PokemonListCellViewModel(Pokemon: Pokemon)
+        self.viewModel = PokemonListCell(Pokemon: Pokemon)
         self.viewModel.loadImage()
     }
     
@@ -63,7 +63,7 @@ struct PokemonListView_Previews: PreviewProvider {
     
     static var previews: some View {
         Group {
-            PokemonListCell(Pokemon: Pokemon.Fake)
+            PokemonListCellView(Pokemon: Pokemon.Fake)
                 .previewLayout(.fixed(width: 350, height: 45))
             ListView()
         }

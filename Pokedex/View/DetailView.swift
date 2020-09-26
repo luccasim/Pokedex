@@ -10,20 +10,20 @@ import SwiftUI
 
 struct DetailView: View {
     
-    @ObservedObject var viewModel : PokemonDetailViewModel
+    @ObservedObject var viewModel : PokemonDetail
     @Environment(\.presentationMode) var presentationMode : Binding<PresentationMode>
     
     var model : Pokemon
     
-    init(model:Pokemon, VM:PokemonDetailViewModel?=nil) {
+    init(model:Pokemon, VM:PokemonDetail?=nil) {
         self.model = model
-        self.viewModel = VM ?? PokemonDetailViewModel(Pokemon: model)
+        self.viewModel = VM ?? PokemonDetail(Pokemon: model)
     }
     
     var swipe : some Gesture {
-        DragGesture(minimumDistance: 0)
+        DragGesture(minimumDistance: 10)
             .onEnded({ value in
-                if value.translation.width < 0 {
+                if value.translation.width > 0 {
                     self.presentationMode.wrappedValue.dismiss()
                 }
             })
@@ -33,46 +33,43 @@ struct DetailView: View {
         
         GeometryReader { geo in
             
-            VStack {
-                
+            ZStack {
+
+                self.viewModel.border
+
                 ZStack {
-                    
-                    Rectangle()
-                        .foregroundColor(self.viewModel.border)
-                    
-                    Image(uiImage: self.viewModel.image)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: geo.size.height * 0.47, height: geo.size.height * 0.47)
-                        .padding(.top, geo.size.height * 0.1)
-                    
-                    VStack {
-                        Text(self.viewModel.name)
-                            .font(.largeTitle)
+                    RoundedRectangle(cornerRadius: 40)
+                        .foregroundColor(.white)
+                        .frame(width: geo.size.width, height: geo.size.height)
+                        .overlay(
+                            Group {
+                                ZStack {
+                                    Circle()
+                                        .opacity(0.2)
+                                        .blur(radius: 3.0)
+                                        .foregroundColor(.white)
+                                        .scaleEffect(1.1)
+                                    Image(uiImage: self.viewModel.image)
+                                        .resizable()
+                                        .scaledToFit()
+                                }
+                                .frame(width: 250, height: 250)
+                                Text(self.viewModel.name)
+                                    .font(.largeTitle)
+                                    .padding(.top, -10)
+                                TypeGroup(pokemon: model).padding()
+                                Text(self.viewModel.infos).padding()
+                                Spacer()
+                            }
                             .foregroundColor(.black)
-                            .padding(.top, 30)
-                            .animation(.spring(response: 0.0, dampingFraction:0.2))
-                        Spacer()
-                    }
-                    
-                    VStack {
-                        Spacer()
-                        TypeGroup(pokemon: model)                .padding([.leading, .trailing], 30)
-                            .padding(.bottom, -10)
-                    }
+                            .padding(.top, -150)
+                        )
+                        .offset(CGSize(width: 0, height: geo.size.width * 0.5))
+                        .gesture(swipe)
                 }
-                .frame(width: geo.size.width, height: geo.size.height * 0.7)
-                
-                Group {
-                    Text(self.viewModel.infos)
-                        .frame(width: geo.size.width * 0.9 , alignment: .center)
-                        .padding(.top, 30)
-                    
-                    Spacer()
-                }.gesture(swipe)
             }
             .navigationBarHidden(true)
-            .edgesIgnoringSafeArea(.top)
+            .edgesIgnoringSafeArea([.top, .horizontal])
             .onAppear() {
                 self.viewModel.loadImage()
             }
@@ -85,10 +82,11 @@ struct TypeGroup : View {
     var pokemon : Pokemon
     
     var body: some View {
-        HStack {
+        HStack(spacing: 50) {
             self.body(withType: pokemon.type1)
-            Spacer()
-            self.body(withType: pokemon.type2)
+            if self.pokemon.typeCount == 2 {
+                self.body(withType: pokemon.type2)
+            }
         }
     }
     
@@ -108,11 +106,18 @@ struct TypeGroup : View {
 
 struct PokemonDetailView_Previews: PreviewProvider {
     static var previews: some View {
-        NavigationView {
-            let vm = PokemonDetailViewModel(Pokemon: Pokemon.Fake, Image: UIImage(named: "bulbazor"))
-            DetailView(model: Pokemon.Fake,VM: vm)
-            .navigationBarHidden(true)
-            .navigationBarTitle("Bulbazor")
+        Group {
+            NavigationView {
+                let vm = PokemonDetail(Pokemon: Pokemon.Fake, Image: UIImage(named: "bulbazor"))
+                    DetailView(model: Pokemon.Fake,VM: vm)
+                        .environment(\.colorScheme, .dark)
+            }
+            
+            NavigationView {
+                let vm = PokemonDetail(Pokemon: Pokemon.Fake, Image: UIImage(named: "bulbazor"))
+                    DetailView(model: Pokemon.Fake,VM: vm)
+                        .environment(\.colorScheme, .light)
+            }
         }
     }
 }

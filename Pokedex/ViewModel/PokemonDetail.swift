@@ -18,7 +18,6 @@ protocol PokemonDetailProtocol {
     var border: Color {get}
     
     func loadImage()
-    
 }
 
 final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
@@ -55,5 +54,12 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     
     var border: Color {
         return pokemon.type1.color
+    }
+    
+}
+
+extension Pokemon {
+    var typeCount : Int {
+        return self.type2 == .none ? 1 : 2
     }
 }

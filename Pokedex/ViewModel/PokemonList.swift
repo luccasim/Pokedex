@@ -10,7 +10,7 @@ import Foundation
 import Combine
 import UIKit
 
-protocol PokemonListViewModelProtocol {
+protocol PokemonListProtocol {
     
     var pokemons : [Pokemon] {get}
     var title : String {get}
@@ -18,7 +18,7 @@ protocol PokemonListViewModelProtocol {
     func fetchPokemon()
 }
 
-protocol PokemonListCellViewModelProtocol {
+protocol PokemonListCellProtocol {
     
     var pokemon : Pokemon {get}
     var id : String {get}
@@ -27,7 +27,7 @@ protocol PokemonListCellViewModelProtocol {
     
 }
 
-final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtocol {
+final class PokemonList : ObservableObject, PokemonListProtocol {
     
     @Published var pokemons: [Pokemon]
     
@@ -48,7 +48,7 @@ final class PokemonListViewModel : ObservableObject, PokemonListViewModelProtoco
     
 }
 
-final class PokemonListCellViewModel : ObservableObject, PokemonListCellViewModelProtocol {
+final class PokemonListCell : ObservableObject, PokemonListCellProtocol {
     
     @Published var image: UIImage
     
@@ -65,6 +65,7 @@ final class PokemonListCellViewModel : ObservableObject, PokemonListCellViewMode
     }
     
     func loadImage() {
+        
         self.loader.load(Url: self.pokemon.icon) { [weak self] (res) in
             
             DispatchQueue.main.async {
