@@ -76,5 +76,4 @@ final class PokemonListCell : ObservableObject, PokemonListCellProtocol {
             }
         }
     }
-    
 }

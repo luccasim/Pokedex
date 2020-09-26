@@ -21,11 +21,16 @@ struct DetailView: View {
     }
     
     var swipe : some Gesture {
-        DragGesture(minimumDistance: 10)
+        DragGesture(minimumDistance: 100)
             .onEnded({ value in
-                if value.translation.width > 0 {
+                if value.translation.width > 100 {
                     self.presentationMode.wrappedValue.dismiss()
                 }
+                if value.translation.height > 100 {
+                    self.viewModel.swipePrevious()
+                }
+                if value.translation.height < 100 {
+                    self.viewModel.swipeNext()                }
             })
     }
     
@@ -48,7 +53,8 @@ struct DetailView: View {
                                         .opacity(0.2)
                                         .blur(radius: 3.0)
                                         .foregroundColor(.white)
-                                        .scaleEffect(1.1)
+                                        .scaleEffect(self.viewModel.isLoaded ? 1.1 : 0)
+                                        .animation(.easeIn(duration:0.7))
                                     Image(uiImage: self.viewModel.image)
                                         .resizable()
                                         .scaledToFit()
@@ -57,7 +63,7 @@ struct DetailView: View {
                                 Text(self.viewModel.name)
                                     .font(.largeTitle)
                                     .padding(.top, -10)
-                                TypeGroup(pokemon: model).padding()
+                                TypeGroup(pokemon: self.viewModel.pokemon).padding()
                                 Text(self.viewModel.infos).padding()
                                 Spacer()
                             }
@@ -69,6 +75,7 @@ struct DetailView: View {
                 }
             }
             .navigationBarHidden(true)
+            .navigationBarBackButtonHidden(true)
             .edgesIgnoringSafeArea([.top, .horizontal])
             .onAppear() {
                 self.viewModel.loadImage()

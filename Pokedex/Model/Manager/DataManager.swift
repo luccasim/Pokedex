@@ -21,7 +21,8 @@ protocol PokemonManagerProtocol {
     func retrievePokemon(Rang:[Int]) -> [PokemonMO]
     
     func fetchToList() -> [Pokemon]
-        
+    func contain(Id:Int) -> Bool
+    func first(Id:Int) -> Pokemon?
 }
 
 final class DataManager : PokemonManagerProtocol {
@@ -56,6 +57,17 @@ final class DataManager : PokemonManagerProtocol {
             return mo
         }
         return mo
+    }
+    
+    func contain(Id: Int) -> Bool {
+        return ConfigManager.pokemonRang.contains(Id)
+    }
+    
+    func first(Id: Int) -> Pokemon? {
+        guard self.contain(Id: Id) else {
+            return nil
+        }
+        return self.store.first(Predicate: NSPredicate(format: "id == \(Id)")).flatMap({$0.toPokemon})
     }
     
     func loadTranslation() {

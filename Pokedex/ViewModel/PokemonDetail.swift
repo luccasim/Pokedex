@@ -16,13 +16,17 @@ protocol PokemonDetailProtocol {
     var infos: String {get}
     var image: UIImage {get}
     var border: Color {get}
+    var isLoaded : Bool {get}
     
     func loadImage()
+    func swipePrevious()
+    func swipeNext()
+    
 }
 
 final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     
-    @Published private var pokemon : Pokemon
+    @Published private(set) var pokemon : Pokemon
     private var pokemonManager : PokemonManagerProtocol
     
     init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=DataManager.shared, Image:UIImage?=nil) {
@@ -31,12 +35,15 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
         self.image = Image ?? UIImage()
     }
     
+    @Published var isLoaded: Bool = false
     @Published var image: UIImage = UIImage()
     
     func loadImage() {
+        self.isLoaded = false
         ImageLoader.shared.load(Url: self.pokemon.sprite) { [weak self] (res) in
             switch res {
             case .success(let img) : DispatchQueue.main.async {
+                self?.isLoaded = true
                 self?.image = img
             }
             default: break
@@ -56,6 +63,21 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
         return pokemon.type1.color
     }
     
+
+    
+    func swipePrevious() {
+        if let previous = self.pokemonManager.first(Id: pokemon.id - 1) {
+            self.pokemon = previous
+            self.loadImage()
+        }
+    }
+    
+    func swipeNext() {
+        if let next = self.pokemonManager.first(Id: pokemon.id + 1) {
+            self.pokemon = next
+            self.loadImage()
+        }
+    }
 }
 
 extension Pokemon {
