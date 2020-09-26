@@ -17,6 +17,8 @@ protocol PokemonDetailProtocol {
     var image: UIImage {get}
     var border: Color {get}
     var isLoaded : Bool {get}
+    var couldSwap :Bool {get}
+    var pokemonAppearAnimationDuration : TimeInterval {get}
     
     func loadImage()
     func swipePrevious()
@@ -27,6 +29,9 @@ protocol PokemonDetailProtocol {
 final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     
     @Published private(set) var pokemon : Pokemon
+    @Published var isLoaded: Bool = false
+    @Published var image: UIImage = UIImage()
+    
     private var pokemonManager : PokemonManagerProtocol
     
     init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=DataManager.shared, Image:UIImage?=nil) {
@@ -35,20 +40,33 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
         self.image = Image ?? UIImage()
     }
     
-    @Published var isLoaded: Bool = false
-    @Published var image: UIImage = UIImage()
+    var couldSwap : Bool = true
     
     func loadImage() {
+        
         self.isLoaded = false
-        ImageLoader.shared.load(Url: self.pokemon.sprite) { [weak self] (res) in
-            switch res {
-            case .success(let img) : DispatchQueue.main.async {
-                self?.isLoaded = true
-                self?.image = img
+        self.image = UIImage()
+        self.couldSwap = false
+        
+        let animationDuration = self.pokemonAppearAnimationDuration
+
+            ImageLoader.shared.load(Url: self.pokemon.sprite) { [weak self] (res) in
+                switch res {
+                case .success(let img) :
+                    DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                        self?.isLoaded = true
+                        DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
+                            self?.image = img
+                            self?.couldSwap = true
+                        }
+                    }
+                default: break
+                }
             }
-            default: break
-            }
-        }
+    }
+    
+    var pokemonAppearAnimationDuration: TimeInterval {
+        return 0.5
     }
     
     var name : String {
@@ -62,8 +80,6 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     var border: Color {
         return pokemon.type1.color
     }
-    
-
     
     func swipePrevious() {
         if let previous = self.pokemonManager.first(Id: pokemon.id - 1) {

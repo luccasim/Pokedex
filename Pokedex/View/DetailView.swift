@@ -26,11 +26,12 @@ struct DetailView: View {
                 if value.translation.width > 100 {
                     self.presentationMode.wrappedValue.dismiss()
                 }
-                if value.translation.height > 100 {
+                if value.translation.height > 100 && self.viewModel.couldSwap {
                     self.viewModel.swipePrevious()
                 }
-                if value.translation.height < 100 {
-                    self.viewModel.swipeNext()                }
+                if value.translation.height < 100 && self.viewModel.couldSwap {
+                    self.viewModel.swipeNext()
+                }
             })
     }
     
@@ -49,22 +50,33 @@ struct DetailView: View {
                         .overlay(
                             Group {
                                 ZStack {
+                                    
                                     Circle()
                                         .opacity(0.2)
                                         .blur(radius: 3.0)
                                         .foregroundColor(.white)
                                         .scaleEffect(self.viewModel.isLoaded ? 1.1 : 0)
-                                        .animation(.easeIn(duration:0.7))
+                                        .animation(.easeOut(duration:self.viewModel.pokemonAppearAnimationDuration))
+                                    
                                     Image(uiImage: self.viewModel.image)
                                         .resizable()
                                         .scaledToFit()
+                                        .scaleEffect(self.viewModel.couldSwap ? 1 : 0.5)
+                                        .animation(.spring(dampingFraction: 0.5, blendDuration: 3))
+
                                 }
                                 .frame(width: 250, height: 250)
+                                
                                 Text(self.viewModel.name)
                                     .font(.largeTitle)
                                     .padding(.top, -10)
-                                TypeGroup(pokemon: self.viewModel.pokemon).padding()
-                                Text(self.viewModel.infos).padding()
+                                
+                                TypeGroup(pokemon: self.viewModel.pokemon)
+                                    .padding()
+                                
+                                Text(self.viewModel.couldSwap ? self.viewModel.infos : "")
+                                    .padding()
+                                
                                 Spacer()
                             }
                             .foregroundColor(.black)
