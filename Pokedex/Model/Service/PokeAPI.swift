@@ -71,6 +71,17 @@ extension PokeAPI {
         let sprites : Sprite
         let species : Specie
         let types : [Types]
+        let stats : [Stats]
+        
+        struct Stats : Codable {
+            
+            let base_stat, effort : Int
+            let stat : Stat
+            
+            struct Stat : Codable {
+                let name, url : String
+            }
+        }
         
         struct Sprite : Codable {
             

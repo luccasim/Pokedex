@@ -11,6 +11,7 @@ import CoreData
 
 public class PokemonMO : NSManagedObject {
     
+    
     var toPokemon : Pokemon? {
         
         let id = Int(self.id)
@@ -25,7 +26,16 @@ public class PokemonMO : NSManagedObject {
         let type1 = Type(rawValue: t1) ?? .none
         let type2 = Type(rawValue: t2) ?? .none
         
-        return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc, type1: type1, type2:type2)
+        let stat = Pokemon.Stats(
+            hp: Int(self.hp),
+            atk: Int(self.attack),
+            def: Int(self.defense),
+            atkS: Int(self.attSpe),
+            defS: Int(self.defSpe),
+            speed: Int(self.speed)
+        )
+        
+        return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc, type1: type1, type2:type2, stats: stat)
     }
     
     var idType1 : Int? {
@@ -49,11 +59,21 @@ public class PokemonMO : NSManagedObject {
     }
     
     func setPokemon(Reponse:PokeAPI.PokemonReponse) {
+        
         self.id = Int16(Reponse.id)
         self.icon = URL(string: Reponse.sprites.front_default)
         self.sprite = URL(string: Reponse.sprites.other.official.front_default)
+        
         self.type1 = (Reponse.types.count > 0) ? Reponse.types[0].type.url : nil
         self.type2 = (Reponse.types.count > 1) ? Reponse.types[1].type.url : nil
+        
+        self.hp = Int16(Reponse.stats[0].base_stat)
+        self.attack = Int16(Reponse.stats[1].base_stat)
+        self.defense = Int16(Reponse.stats[2].base_stat)
+        self.attSpe = Int16(Reponse.stats[3].base_stat)
+        self.defSpe = Int16(Reponse.stats[4].base_stat)
+        self.speed = Int16(Reponse.stats[5].base_stat)
+        
     }
     
     func setNames(Reponse:PokeAPI.SpeciesReponse) {
@@ -101,5 +121,4 @@ extension PokemonMO {
             self.addToTranslations(mo)
         }
     }
-    
 }

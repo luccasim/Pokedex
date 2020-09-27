@@ -11,34 +11,11 @@ import XCTest
 
 class PokeAPITests: XCTestCase {
     
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-    
-    func testPokemonAPICall() throws {
+    func testPokemon() throws {
+        let data = load(FileName: "Pokemon.json")
+        let reponse = try JSONDecoder().decode(PokeAPI.PokemonReponse.self, from: data)
         
-        let ws = PokeAPI()
-        
-        let exp = expectation(description: "Call API")
-        var reponse : PokeAPI.PokemonReponse?
-        
-        ws.taskPokemon(Endpoint: .Pokemon(Id: 120)) { (res) in
-            switch res {
-            case .failure(let err) : XCTFail(err.localizedDescription)
-            case .success(let rep) : reponse = rep
-            }
-            exp.fulfill()
-        }
-        
-        waitForExpectations(timeout: 30, handler: nil)
-        
-        if let rep = reponse {
-            print(rep)
-        }
+        print(reponse)
     }
 
     func testSpecies() throws {

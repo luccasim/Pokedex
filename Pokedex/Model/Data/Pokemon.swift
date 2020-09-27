@@ -20,6 +20,12 @@ struct Pokemon : Identifiable {
     var type2   : Type = .none
     var isInstalled = false
     
+    let stats : Stats
+    
+    struct Stats  {
+        let hp, atk, def, atkS, defS, speed : Int
+    }
+    
 }
 
 extension Pokemon {
@@ -32,7 +38,8 @@ extension Pokemon {
                        desc: "He love Senzu",
                        type1: .plante,
                        type2: .vol,
-                       isInstalled: true
+                       isInstalled: true,
+                       stats: Stats(hp: 45, atk: 49, def: 49, atkS: 65, defS: 65, speed: 45)
         )
     }
 }
