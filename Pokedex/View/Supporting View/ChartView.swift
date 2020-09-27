@@ -11,6 +11,7 @@ import SwiftUI
 struct ChartView: View {
     
     struct ChartData {
+        
         let key : String
         let value : Int
         let maxValue : Double
@@ -22,12 +23,17 @@ struct ChartView: View {
     
     @State var isAnimate = false
     
+    let title : String
     var data : [ChartData]
     var color : Color
     
     var body: some View {
         
         VStack {
+            
+            Text(self.title)
+                .font(.title)
+                .padding()
             
             ForEach(self.data, id:\.key) {
                 ChartCell(data: $0, color: color, height: 20, Animate: $isAnimate)
@@ -98,6 +104,6 @@ struct ChartView_Previews: PreviewProvider {
             ChartView.ChartData(key: "SDEF", value: 229, maxValue: 255),
             ChartView.ChartData(key: "SP", value: 90, maxValue: 180),
         ]
-        ChartView(data: data, color:.orange)
+        ChartView(title: "Stats", data: data, color:.orange)
     }
 }

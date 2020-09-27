@@ -15,9 +15,12 @@ protocol PokemonDetailProtocol {
     var name: String {get}
     var infos: String {get}
     var image: UIImage {get}
-    var border: Color {get}
+    var color: Color {get}
     var isLoaded : Bool {get}
     var couldSwap :Bool {get}
+    
+    var chartStats: [ChartView.ChartData] {get}
+    
     var pokemonAppearAnimationDuration : TimeInterval {get}
     
     func loadImage()
@@ -31,6 +34,7 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     @Published private(set) var pokemon : Pokemon
     @Published var isLoaded: Bool = false
     @Published var image: UIImage = UIImage()
+    @Published var chartStats: [ChartView.ChartData] = []
     
     private var pokemonManager : PokemonManagerProtocol
     
@@ -38,6 +42,7 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
         self.pokemonManager = Manager
         self.pokemon = Pokemon
         self.image = Image ?? UIImage()
+        self.chartStats = self.pokemonStats
     }
     
     var couldSwap : Bool = true
@@ -57,12 +62,24 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
                         self?.isLoaded = true
                         DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
                             self?.image = img
+                            self?.chartStats = self?.pokemonStats ?? []
                             self?.couldSwap = true
                         }
                     }
                 default: break
                 }
             }
+    }
+    
+    var pokemonStats: [ChartView.ChartData] {
+        return [
+            ChartView.ChartData(key: "HP", value: self.pokemon.stats.hp, maxValue: 255),
+            ChartView.ChartData(key: "ATK", value: self.pokemon.stats.atk, maxValue: 255),
+            ChartView.ChartData(key: "DEF", value: self.pokemon.stats.def, maxValue: 255),
+            ChartView.ChartData(key: "SATK", value: self.pokemon.stats.atkS, maxValue: 255),
+            ChartView.ChartData(key: "SDEF", value: self.pokemon.stats.defS, maxValue: 255),
+            ChartView.ChartData(key: "SPD", value: self.pokemon.stats.speed, maxValue: 180),
+        ]
     }
     
     var pokemonAppearAnimationDuration: TimeInterval {
@@ -77,7 +94,7 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
         return self.pokemon.desc.translate
     }
     
-    var border: Color {
+    var color: Color {
         return pokemon.type1.color
     }
     

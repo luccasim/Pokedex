@@ -41,47 +41,14 @@ struct DetailView: View {
             
             ZStack {
 
-                self.viewModel.border
+                self.viewModel.color
 
                 ZStack {
+                    
                     RoundedRectangle(cornerRadius: 40)
                         .foregroundColor(.white)
                         .frame(width: geo.size.width, height: geo.size.height)
-                        .overlay(
-                            Group {
-                                ZStack {
-                                    
-                                    Circle()
-                                        .opacity(0.2)
-                                        .blur(radius: 3.0)
-                                        .foregroundColor(.white)
-                                        .scaleEffect(self.viewModel.isLoaded ? 1.1 : 0)
-                                        .animation(.easeOut(duration:self.viewModel.pokemonAppearAnimationDuration))
-                                    
-                                    Image(uiImage: self.viewModel.image)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .scaleEffect(self.viewModel.couldSwap ? 1 : 0.5)
-                                        .animation(.spring(dampingFraction: 0.5, blendDuration: 3))
-
-                                }
-                                .frame(width: 250, height: 250)
-                                
-                                Text(self.viewModel.name)
-                                    .font(.largeTitle)
-                                    .padding(.top, -10)
-                                
-                                TypeGroup(pokemon: self.viewModel.pokemon)
-                                    .padding()
-                                
-                                Text(self.viewModel.couldSwap ? self.viewModel.infos : "")
-                                    .padding()
-                                
-                                Spacer()
-                            }
-                            .foregroundColor(.black)
-                            .padding(.top, -150)
-                        )
+                        .overlay(DisplayView(details: self.viewModel, size: geo.size))
                         .offset(CGSize(width: 0, height: geo.size.width * 0.5))
                         .gesture(swipe)
                 }
@@ -93,6 +60,89 @@ struct DetailView: View {
                 self.viewModel.loadImage()
             }
         }
+    }
+}
+
+struct DisplayView : View {
+    
+    @ObservedObject var details : PokemonDetail
+    let size : CGSize
+    
+    @State private var showStats = false
+    
+    var body: some View {
+        
+        Group {
+            
+            ZStack {
+                
+                Circle()
+                    .opacity(0.2)
+                    .blur(radius: 3.0)
+                    .foregroundColor(.white)
+                    .scaleEffect(self.details.isLoaded ? 1.1 : 0)
+                    .animation(.easeOut(duration:self.details.pokemonAppearAnimationDuration))
+                
+                Image(uiImage: self.details.image)
+                    .resizable()
+                    .scaledToFit()
+                    .scaleEffect(self.details.couldSwap ? 1 : 0.5)
+                    .animation(.spring(dampingFraction: 0.5, blendDuration: 3))
+                
+            }
+            .frame(width: 250, height: 250)
+            
+            Text(self.details.name)
+                .font(.largeTitle)
+                .padding(.top, -20)
+            
+            TypeGroup(pokemon: self.details.pokemon)
+            
+            if size.height > 647 {
+
+                InfoGroup(title: "Infos", info: self.details.infos)                    .frame(width: size.width * 0.9, height: 180, alignment: .center)
+                    .padding(.top, -10)
+
+                ChartView(title: "Stats", data: self.details.chartStats, color: self.details.color)
+                    .padding(.horizontal, 20)
+                    .padding(.top, -10)
+
+            } else {
+
+                ZStack {
+
+                    InfoGroup(title: "Infos", info: self.details.infos)
+                    .padding(.top, -90)
+                    .opacity(self.showStats ? 0 : 1)
+
+                    ChartView(title: "Stats", data: self.details.chartStats, color: self.details.color)
+                        .padding([.leading,.trailing], 20)
+                        .opacity(self.showStats ? 1 : 0)
+
+                }.onTapGesture(perform: {
+                    self.showStats.toggle()
+                })
+            }
+            
+            Spacer()
+        }
+        .foregroundColor(.black)
+        .padding(.top, -150)
+    }
+}
+
+struct InfoGroup : View {
+    
+    let title : String
+    let info : String
+    
+    var body: some View {
+        VStack {
+            Text(title)
+                .font(.title)
+                .padding()
+            Text(info)
+        }            
     }
 }
 
@@ -124,12 +174,24 @@ struct TypeGroup : View {
 }
 
 struct PokemonDetailView_Previews: PreviewProvider {
+    
     static var previews: some View {
+        
         Group {
+            
             NavigationView {
                 let vm = PokemonDetail(Pokemon: Pokemon.Fake, Image: UIImage(named: "bulbazor"))
                     DetailView(model: Pokemon.Fake,VM: vm)
                         .environment(\.colorScheme, .dark)
+                        .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+                        .previewDisplayName("iPhone 8")
+            }
+            NavigationView {
+                let vm = PokemonDetail(Pokemon: Pokemon.Fake, Image: UIImage(named: "bulbazor"))
+                DetailView(model: Pokemon.Fake,VM: vm)
+                    .environment(\.colorScheme, .dark)
+                    .previewDevice(PreviewDevice(rawValue: "iPhone 8"))
+                    .previewDisplayName("iPhone 8")
             }
             
             NavigationView {
