@@ -8,9 +8,6 @@
 
 import Foundation
 
-private func trace(_ str:String) {
-    print("[Configuration] : \(str)")
-}
 
 final class ConfigManager {
     
@@ -34,4 +31,8 @@ final class ConfigManager {
         trace("Loading Time Animation \(loadingTime) second(s)")
         return loadingTime
     }
+}
+
+private func trace(_ str:String) {
+    print("[Configuration] : \(str)")
 }

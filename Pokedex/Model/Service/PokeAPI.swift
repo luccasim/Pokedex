@@ -7,7 +7,6 @@
 //
 
 import Foundation
-import LCFramework
 
 protocol PokeAPIProtocol {
         
@@ -17,7 +16,7 @@ protocol PokeAPIProtocol {
     
 }
 
-final class PokeAPI : WebService, PokeAPIProtocol {
+final class PokeAPI : PokeAPIProtocol {
     
     enum APIErrors : Error {
         case invalidRequest
@@ -56,9 +55,31 @@ final class PokeAPI : WebService, PokeAPIProtocol {
                 var request = URLRequest(url: url)
                 request.httpMethod = "GET"
                 return request
-                
             }
         }
+    }
+    
+    func task<Reponse:Codable>(Request:URLRequest, Completion:@escaping (Result<Reponse,Error>) -> Void) {
+        
+        URLSession.shared.dataTask(with: Request) { (Data, Rep, Err) in
+            
+            if let error = Err {
+                return Completion(.failure(error))
+            }
+            
+            else if let data = Data {
+                
+                do {
+                    
+                    let reponse = try JSONDecoder().decode(Reponse.self, from: data)
+                    Completion(.success(reponse))
+                    
+                } catch let error  {
+                    Completion(.failure(error))
+                }
+            }
+            
+        }.resume()
     }
 }
 
