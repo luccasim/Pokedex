@@ -23,14 +23,20 @@ struct DetailView: View {
     var swipe : some Gesture {
         DragGesture(minimumDistance: 100)
             .onEnded({ value in
-                if value.translation.width > 100 {
-                    self.presentationMode.wrappedValue.dismiss()
+                
+                let distX = abs(value.location.x - value.startLocation.x)
+                let distY = abs(value.location.y - value.startLocation.y)
+                                
+                if value.location.x - value.startLocation.x < 0 && distX > 100 && self.viewModel.couldSwap {
+                    self.viewModel.swipeNext()
                 }
-                if value.translation.height > 100 && self.viewModel.couldSwap {
+                
+                if value.location.x - value.startLocation.x > 0 && distX > 100 && self.viewModel.couldSwap {
                     self.viewModel.swipePrevious()
                 }
-                if value.translation.height < 100 && self.viewModel.couldSwap {
-                    self.viewModel.swipeNext()
+
+                if value.location.y - value.startLocation.y < 0 && distY > 100 {
+                    self.presentationMode.wrappedValue.dismiss()
                 }
             })
     }
@@ -42,7 +48,6 @@ struct DetailView: View {
             ZStack {
 
                 self.viewModel.color
-
                 ZStack {
                     
                     RoundedRectangle(cornerRadius: 40)
@@ -98,28 +103,34 @@ struct DisplayView : View {
             
             TypeGroup(pokemon: self.details.pokemon)
             
+                
             if size.height > 647 {
 
-                InfoGroup(title: "Infos", info: self.details.infos)                    .frame(width: size.width * 0.9, height: 180, alignment: .center)
+                InfoGroup(title: "Infos", info: self.details.infos, height: 80)
+                    .frame(width: size.width * 0.9, height: 180, alignment: .center)
                     .padding(.top, -10)
-
-                ChartView(title: "Stats", data: self.details.chartStats, color: self.details.color)
+                
+                ChartView(title: "Stats", data: self.details.chartStats, color: self.details.color, height: 20)
                     .padding(.horizontal, 20)
                     .padding(.top, -10)
-
+                
             } else {
-
+                
                 ZStack {
-
-                    InfoGroup(title: "Infos", info: self.details.infos)
-                    .padding(.top, -90)
-                    .opacity(self.showStats ? 0 : 1)
-
-                    ChartView(title: "Stats", data: self.details.chartStats, color: self.details.color)
+                    
+                    Group {
+                        InfoGroup(title: "Infos", info: self.details.infos, height: 100)
+                            .opacity(self.showStats ? 0 : 1)
+                            .padding(.horizontal, 10)
+                    }
+                    
+                    ChartView(title: "Stats", data: self.details.chartStats, color: self.details.color, height: 20)
                         .padding([.leading,.trailing], 20)
                         .opacity(self.showStats ? 1 : 0)
-
-                }.onTapGesture(perform: {
+                    
+                }
+                .frame(height: 256, alignment: .top)
+                .onTapGesture(perform: {
                     self.showStats.toggle()
                 })
             }
@@ -135,6 +146,7 @@ struct InfoGroup : View {
     
     let title : String
     let info : String
+    let height : CGFloat
     
     var body: some View {
         VStack {
@@ -142,7 +154,9 @@ struct InfoGroup : View {
                 .font(.title)
                 .padding()
             Text(info)
-        }            
+                .fixedSize(horizontal: false, vertical: true)
+            Spacer()
+        }
     }
 }
 
@@ -156,7 +170,7 @@ struct TypeGroup : View {
             if self.pokemon.typeCount == 2 {
                 self.body(withType: pokemon.type2)
             }
-        }
+        }.animation(.easeIn)
     }
     
     func body(withType type: Type) -> some View {

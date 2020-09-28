@@ -24,8 +24,9 @@ struct ChartView: View {
     @State var isAnimate = false
     
     let title : String
-    var data : [ChartData]
-    var color : Color
+    let data : [ChartData]
+    let color : Color
+    let height : CGFloat
     
     var body: some View {
         
@@ -82,7 +83,7 @@ struct ChartCell: View {
                             .fill(color)
                             .frame(width: Animate ? geo.size.width * CGFloat(data.percent) : 0)
                             .cornerRadius(10)
-                            .animation(.easeIn(duration: 2))
+                            .animation(.easeIn(duration: 1))
                         Spacer()
                     }
                 }
@@ -104,6 +105,6 @@ struct ChartView_Previews: PreviewProvider {
             ChartView.ChartData(key: "SDEF", value: 229, maxValue: 255),
             ChartView.ChartData(key: "SP", value: 90, maxValue: 180),
         ]
-        ChartView(title: "Stats", data: data, color:.orange)
+        ChartView(title: "Stats", data: data, color:.orange, height:20)
     }
 }
