@@ -1,16 +1,15 @@
 //
-//  PokeAPITests.swift
-//  PokedexTests
+//  LCPokeAPITests.swift
+//  LCPokeAPITests
 //
-//  Created by owee on 13/09/2020.
-//  Copyright © 2020 Devios. All rights reserved.
+//  Created by owee on 01/10/2020.
 //
 
 import XCTest
-@testable import Pokedex
+@testable import LCPokeAPI
 
-class PokeAPITests: XCTestCase {
-    
+class LCPokeAPITests: XCTestCase {
+
     func testPokemon() throws {
         let data = load(FileName: "Pokemon.json")
         let reponse = try JSONDecoder().decode(PokeAPI.PokemonReponse.self, from: data)

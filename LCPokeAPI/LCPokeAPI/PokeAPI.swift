@@ -16,7 +16,13 @@ protocol PokeAPIProtocol {
     
 }
 
-final class PokeAPI : PokeAPIProtocol {
+public final class PokeAPI : PokeAPIProtocol {
+    
+    let session : URLSession
+    
+    public init(Session:URLSession=URLSession.shared) {
+        self.session = Session
+    }
     
     enum APIErrors : Error {
         case invalidRequest
@@ -61,7 +67,7 @@ final class PokeAPI : PokeAPIProtocol {
     
     func task<Reponse:Codable>(Request:URLRequest, Completion:@escaping (Result<Reponse,Error>) -> Void) {
         
-        URLSession.shared.dataTask(with: Request) { (Data, Rep, Err) in
+        self.session.dataTask(with: Request) { (Data, Rep, Err) in
             
             if let error = Err {
                 return Completion(.failure(error))
@@ -83,57 +89,57 @@ final class PokeAPI : PokeAPIProtocol {
     }
 }
 
-extension PokeAPI {
+public extension PokeAPI {
 
     struct PokemonReponse : Codable {
         
-        let name : String
-        let id, base_experience, height, order, weight : Int
-        let sprites : Sprite
-        let species : Specie
-        let types : [Types]
-        let stats : [Stats]
+        public let name : String
+        public let id, base_experience, height, order, weight : Int
+        public let sprites : Sprite
+        public let species : Specie
+        public let types : [Types]
+        public let stats : [Stats]
         
-        struct Stats : Codable {
+        public struct Stats : Codable {
             
-            let base_stat, effort : Int
-            let stat : Stat
+            public let base_stat, effort : Int
+            public let stat : Stat
             
-            struct Stat : Codable {
-                let name, url : String
+            public struct Stat : Codable {
+                public let name, url : String
             }
         }
         
-        struct Sprite : Codable {
+        public struct Sprite : Codable {
             
-            let back_default, front_default : String
-            let other : Other
+            public let back_default, front_default : String
+            public let other : Other
             
-            struct Other : Codable {
-                let dream : Dream
-                let official : Official
+            public struct Other : Codable {
+                public let dream : Dream
+                public let official : Official
                 
                 enum CodingKeys : String, CodingKey {
                     case dream = "dream_world"
                     case official = "official-artwork"
                 }
                 
-                struct Dream : Codable {
-                    let front_default, front_female : String?
+                public struct Dream : Codable {
+                    public let front_default, front_female : String?
                 }
-                struct Official : Codable {
-                    let front_default : String
+                public struct Official : Codable {
+                    public let front_default : String
                 }
             }
         }
-        struct Specie : Codable {
-            let url : String
+        public struct Specie : Codable {
+            public let url : String
         }
-        struct Types : Codable {
-            let slot : Int
-            let type : Typee
-            struct Typee : Codable {
-                let url : String
+        public struct Types : Codable {
+            public let slot : Int
+            public let type : Typee
+            public struct Typee : Codable {
+                public let url : String
             }
         }
     }
@@ -146,16 +152,13 @@ extension PokeAPI {
         
         self.task(Request: request, Completion: Callback)
     }
-}
-
-extension PokeAPI {
     
     struct SpeciesReponse : Codable {
         
-        let id, order, happiness, captureRate : Int
-        let name : String
-        let text : [Text]
-        let names : [Name]
+        public let id, order, happiness, captureRate : Int
+        public let name : String
+        public let text : [Text]
+        public let names : [Name]
         
         enum CodingKeys : String, CodingKey {
             case id, order, name, names
@@ -164,26 +167,27 @@ extension PokeAPI {
             case text = "flavor_text_entries"
         }
         
-        struct Text : Codable {
+        public struct Text : Codable {
             
-            let flavor_text : String
-            let language : Language
-            let version : Version
+            public let flavor_text : String
+            public let language : Language
+            public let version : Version
             
-            struct Language : Codable {
-                let name, url : String
+            public struct Language : Codable {
+                public let name, url : String
             }
             
-            struct Version : Codable {
-                let name, url : String
+            public struct Version : Codable {
+                public let name, url : String
             }
         }
-        struct Name : Codable {
-            let name : String
-            let language : Language
+        
+        public struct Name : Codable {
+            public let name : String
+            public let language : Language
             
-            struct Language : Codable {
-                let name, url : String
+            public struct Language : Codable {
+                public let name, url : String
             }
         }
     }
@@ -198,21 +202,19 @@ extension PokeAPI {
         
         self.task(Request: request, Completion: Callback)
     }
-}
-
-extension PokeAPI {
     
     struct TypeReponse : Codable {
-        let id : Int
-        let name : String
-        let names : [Name]
         
-        struct Name : Codable {
-            let name : String
-            let language : Language
+        public let id : Int
+        public let name : String
+        public let names : [Name]
+        
+        public struct Name : Codable {
+            public let name : String
+            public let language : Language
             
-            struct Language : Codable {
-                let name, url : String
+            public struct Language : Codable {
+                public let name, url : String
             }
         }
     }

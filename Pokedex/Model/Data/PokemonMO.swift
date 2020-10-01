@@ -8,6 +8,7 @@
 
 import Foundation
 import CoreData
+import LCPokeAPI
 
 public class PokemonMO : NSManagedObject {
     

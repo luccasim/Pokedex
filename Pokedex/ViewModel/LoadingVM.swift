@@ -9,6 +9,7 @@
 import Foundation
 import Combine
 import LCFramework
+import LCPokeAPI
 
 protocol PokemonLoadingViewModelProtocol {
     
