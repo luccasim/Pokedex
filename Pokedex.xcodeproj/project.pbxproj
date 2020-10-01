@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -32,14 +32,13 @@
 		8474CD442516EFA500553655 /* Prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8474CD432516EFA500553655 /* Prod.xcconfig */; };
 		8474CD712516F93800553655 /* ConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CD702516F93800553655 /* ConfigManager.swift */; };
 		8474CD7F2518441800553655 /* TranslationMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CD7E2518441800553655 /* TranslationMO.swift */; };
-		84A01A09250C38C700C1D7F1 /* LCFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84A01A08250C38C700C1D7F1 /* LCFramework.framework */; };
-		84A01A0A250C38C700C1D7F1 /* LCFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84A01A08250C38C700C1D7F1 /* LCFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		84CCB74D25119F8700F3EB9F /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCB74C25119F8700F3EB9F /* Type.swift */; };
 		84CCB74F2511ABEE00F3EB9F /* Types.json in Resources */ = {isa = PBXBuildFile; fileRef = 84CCB74E2511ABEE00F3EB9F /* Types.json */; };
 		84DB8F84250D9F3300B1E8BD /* PokeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB8F83250D9F3300B1E8BD /* PokeAPI.swift */; };
 		84DB8F86250DACE600B1E8BD /* PokeAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84DB8F85250DACE600B1E8BD /* PokeAPITests.swift */; };
 		84DB8F89250DCAE900B1E8BD /* Pokemon.json in Resources */ = {isa = PBXBuildFile; fileRef = 84DB8F88250DCAE900B1E8BD /* Pokemon.json */; };
 		84DB8F8B250DCCB600B1E8BD /* Species.json in Resources */ = {isa = PBXBuildFile; fileRef = 84DB8F8A250DCCB600B1E8BD /* Species.json */; };
+		84EA36762525831400E04180 /* LCLib in Frameworks */ = {isa = PBXBuildFile; productRef = 84EA36752525831400E04180 /* LCLib */; };
 		84FD5A492501823B007D9DE0 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD5A482501823B007D9DE0 /* KeyboardResponder.swift */; };
 		84FD5A6E2503DC62007D9DE0 /* PersistanceStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD5A6D2503DC62007D9DE0 /* PersistanceStore.swift */; };
 /* End PBXBuildFile section */
@@ -60,20 +59,6 @@
 			remoteInfo = Pokedex;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		84A01A0B250C38C800C1D7F1 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				84A01A0A250C38C700C1D7F1 /* LCFramework.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		8418DBE12512D212003FFFE8 /* PokemonMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonMO.swift; sourceTree = "<group>"; };
@@ -104,12 +89,9 @@
 		8457C4E82501392B00F3E37E /* PokemonList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonList.swift; sourceTree = "<group>"; };
 		8457C4EB2501475E00F3E37E /* FakePokemonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePokemonManager.swift; sourceTree = "<group>"; };
 		8457C4ED250148BA00F3E37E /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		846A7F78250BDD79007EED25 /* LCFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		8474CD432516EFA500553655 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		8474CD702516F93800553655 /* ConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigManager.swift; sourceTree = "<group>"; };
 		8474CD7E2518441800553655 /* TranslationMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationMO.swift; sourceTree = "<group>"; };
-		848A4FB8250C365D005249C5 /* LCFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		84A01A08250C38C700C1D7F1 /* LCFramework.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCFramework.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84CCB74C25119F8700F3EB9F /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		84CCB74E2511ABEE00F3EB9F /* Types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Types.json; sourceTree = "<group>"; };
 		84DB8F83250D9F3300B1E8BD /* PokeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPI.swift; sourceTree = "<group>"; };
@@ -125,7 +107,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84A01A09250C38C700C1D7F1 /* LCFramework.framework in Frameworks */,
+				84EA36762525831400E04180 /* LCLib in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,7 +209,7 @@
 				846BCB4D250C3D9400EA32BE /* Data */,
 				84FD5A6A2503C733007D9DE0 /* Manager */,
 				84FD5A47250181BE007D9DE0 /* Service */,
-				84FD5A692503C6FF007D9DE0 /* Context */,
+				84FD5A692503C6FF007D9DE0 /* Stub */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -306,19 +288,16 @@
 		84FD5A612502E9B1007D9DE0 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				84A01A08250C38C700C1D7F1 /* LCFramework.framework */,
-				848A4FB8250C365D005249C5 /* LCFramework.framework */,
-				846A7F78250BDD79007EED25 /* LCFramework.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		84FD5A692503C6FF007D9DE0 /* Context */ = {
+		84FD5A692503C6FF007D9DE0 /* Stub */ = {
 			isa = PBXGroup;
 			children = (
 				8457C4EA2501472F00F3E37E /* Fake */,
 			);
-			path = Context;
+			path = Stub;
 			sourceTree = "<group>";
 		};
 		84FD5A6A2503C733007D9DE0 /* Manager */ = {
@@ -340,7 +319,6 @@
 				8457C4AA250135FA00F3E37E /* Sources */,
 				8457C4AB250135FA00F3E37E /* Frameworks */,
 				8457C4AC250135FA00F3E37E /* Resources */,
-				84A01A0B250C38C800C1D7F1 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -348,6 +326,7 @@
 			);
 			name = Pokedex;
 			packageProductDependencies = (
+				84EA36752525831400E04180 /* LCLib */,
 			);
 			productName = Pokedex;
 			productReference = 8457C4AE250135FA00F3E37E /* Pokedex.app */;
@@ -422,6 +401,7 @@
 			);
 			mainGroup = 8457C4A5250135FA00F3E37E;
 			packageReferences = (
+				84EA36742525831400E04180 /* XCRemoteSwiftPackageReference "LCLib" */,
 			);
 			productRefGroup = 8457C4AF250135FA00F3E37E /* Products */;
 			projectDirPath = "";
@@ -944,6 +924,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		84EA36742525831400E04180 /* XCRemoteSwiftPackageReference "LCLib" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/luccasim/LCLib.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		84EA36752525831400E04180 /* LCLib */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 84EA36742525831400E04180 /* XCRemoteSwiftPackageReference "LCLib" */;
+			productName = LCLib;
+		};
+/* End XCSwiftPackageProductDependency section */
 
 /* Begin XCVersionGroup section */
 		8457C4B5250135FA00F3E37E /* Pokedex.xcdatamodeld */ = {
