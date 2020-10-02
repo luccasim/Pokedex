@@ -2,12 +2,12 @@
   "object": {
     "pins": [
       {
-        "package": "MyLibrary",
-        "repositoryURL": "https://github.com/luccasim/MyLibrary.git",
+        "package": "LCLib",
+        "repositoryURL": "https://github.com/luccasim/LCLib.git",
         "state": {
-          "branch": "master",
-          "revision": "dec662d146b218d33f58eae4e3e0e0d7fa11cb52",
-          "version": null
+          "branch": null,
+          "revision": "76cdbd939cd8d38fb674353476ee2c65cb28e5c2",
+          "version": "1.1.0"
         }
       }
     ]

@@ -18,6 +18,8 @@ protocol PokemonDetailProtocol {
     var color: Color {get}
     var isLoaded : Bool {get}
     var couldSwap :Bool {get}
+    var infoTitle: String {get}
+    var statsTitle: String {get}
     
     var chartStats: [ChartView.ChartData] {get}
     
@@ -84,6 +86,14 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     
     var pokemonAppearAnimationDuration: TimeInterval {
         return 0.5
+    }
+    
+    var infoTitle: String {
+        return NSLocalizedString("Description", comment: "The pokemon text description.")
+    }
+    
+    var statsTitle: String {
+        return NSLocalizedString("Stats", comment: "Pokemon stats.")
     }
     
     var name : String {

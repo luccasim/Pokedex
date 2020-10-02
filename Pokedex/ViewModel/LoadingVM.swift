@@ -22,7 +22,7 @@ protocol PokemonLoadingViewModelProtocol {
 final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     
     @Published var isLoaded = false
-    @Published var message: String = "Loading..."
+    @Published var message: String
     
     private var manager : PokemonManagerProtocol
     private let configM = ConfigManager.self
@@ -33,13 +33,14 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     init(Manager:PokemonManagerProtocol=DataManager.shared) {
         
         self.manager = Manager
+        self.message = NSLocalizedString("Loading", comment: "Message when app load pokemon models.")
         Translator.shared.set(NewLang: "fr")
     }
     
     private func finish() {
         DispatchQueue.main.asyncAfter(deadline: .now() + configM.loadingTime) {
             self.isLoaded = true
-            self.message = "Press to Continue"
+            self.message = NSLocalizedString("Enter", comment: "Press to Continue")
             Translator.shared.select(Lang: "fr")
             self.manager.loadTranslation()
         }

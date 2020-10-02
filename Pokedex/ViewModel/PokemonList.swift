@@ -39,7 +39,7 @@ final class PokemonList : ObservableObject, PokemonListProtocol {
     }
     
     var title: String {
-        return "Pokedex"
+        return NSLocalizedString("List Name", comment: "Name appear on the list pokemon")
     }
     
     func fetchPokemon() {

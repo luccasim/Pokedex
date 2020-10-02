@@ -106,11 +106,11 @@ struct DisplayView : View {
                 
             if size.height > 647 {
 
-                InfoGroup(title: "Infos", info: self.details.infos, height: 80)
+                InfoGroup(title: self.details.infoTitle, info: self.details.infos, height: 80)
                     .frame(width: size.width * 0.9, height: 180, alignment: .center)
                     .padding(.top, -10)
                 
-                ChartView(title: "Stats", data: self.details.chartStats, color: self.details.color, height: 20)
+                ChartView(title: self.details.statsTitle, data: self.details.chartStats, color: self.details.color, height: 20)
                     .padding(.horizontal, 20)
                     .padding(.top, -10)
                 
@@ -119,12 +119,12 @@ struct DisplayView : View {
                 ZStack {
                     
                     Group {
-                        InfoGroup(title: "Infos", info: self.details.infos, height: 100)
+                        InfoGroup(title: self.details.infoTitle, info: self.details.infos, height: 100)
                             .opacity(self.showStats ? 0 : 1)
                             .padding(.horizontal, 10)
                     }
                     
-                    ChartView(title: "Stats", data: self.details.chartStats, color: self.details.color, height: 20)
+                    ChartView(title: self.details.statsTitle, data: self.details.chartStats, color: self.details.color, height: 20)
                         .padding([.leading,.trailing], 20)
                         .opacity(self.showStats ? 1 : 0)
                     
