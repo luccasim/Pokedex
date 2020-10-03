@@ -38,9 +38,9 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     @Published var image: UIImage = UIImage()
     @Published var chartStats: [ChartView.ChartData] = []
     
-    private var pokemonManager : PokemonManagerProtocol
+    private var pokemonManager : DataManagerInterface
     
-    init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=DataManager.shared, Image:UIImage?=nil) {
+    init(Pokemon:Pokemon, Manager:DataManagerInterface=DataManager.shared, Image:UIImage?=nil) {
         self.pokemonManager = Manager
         self.pokemon = Pokemon
         self.image = Image ?? UIImage()

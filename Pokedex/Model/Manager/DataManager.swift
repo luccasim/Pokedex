@@ -11,7 +11,7 @@ import UIKit
 import LCFramework
 import Combine
 
-protocol PokemonManagerProtocol {
+protocol DataManagerInterface {
         
     func add(Pokemon:Pokemon)
     func save()
@@ -25,13 +25,15 @@ protocol PokemonManagerProtocol {
     func first(Id:Int) -> Pokemon?
 }
 
-final class DataManager : PokemonManagerProtocol {
+final class DataManager : DataManagerInterface {
         
     static var shared = DataManager()
     private var store = PersistanceStore.shared.pokemonStore
+    private let localized : LocalizableManager
     
-    init() {
+    init(Localized:LocalizableManager?=nil) {
         store.trace = true
+        self.localized = Localized ?? LocalizableManager.shared
     }
     
     func fetchToList() -> [Pokemon] {
@@ -72,8 +74,7 @@ final class DataManager : PokemonManagerProtocol {
     
     func loadTranslation() {
         
-        let translator = Translator.shared
-        let predicate = NSPredicate(format: "lang == %@", "fr")
+        let predicate = NSPredicate(format: "lang == %@", localized.deviceLang)
         let res = PersistanceStore.shared.translationStore.fetch(Predicate: predicate)
         
         switch res {
@@ -82,8 +83,9 @@ final class DataManager : PokemonManagerProtocol {
             mos.forEach { (tmo) in
                 
                 if let key = tmo.key, let text = tmo.text, let lang = tmo.lang {
-                    translator.set(Key: key, NewText: text, ForLang: lang)
+                    localized.setTranslation(Key: key, Value: text, Lang: lang)
                 }
+                
             }
             
         default: break

@@ -31,9 +31,9 @@ final class PokemonList : ObservableObject, PokemonListProtocol {
     
     @Published var pokemons: [Pokemon]
     
-    private var manager : PokemonManagerProtocol
+    private var manager : DataManagerInterface
     
-    init(Manager:PokemonManagerProtocol = DataManager.shared) {
+    init(Manager:DataManagerInterface = DataManager.shared) {
         self.manager = Manager
         self.pokemons = []
     }

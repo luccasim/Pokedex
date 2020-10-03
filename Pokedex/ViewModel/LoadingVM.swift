@@ -24,24 +24,23 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     @Published var isLoaded = false
     @Published var message: String
     
-    private var manager : PokemonManagerProtocol
+    private var manager : DataManagerInterface
     private let configM = ConfigManager.self
     private let pokeapiWS = PokeAPI()
     
     private var cancellable = Set<AnyCancellable>()
     
-    init(Manager:PokemonManagerProtocol=DataManager.shared) {
+    init(Manager:DataManagerInterface?=nil) {
         
-        self.manager = Manager
+        self.manager = Manager ?? DataManager.shared
         self.message = NSLocalizedString("Loading", comment: "Message when app load pokemon models.")
-        Translator.shared.set(NewLang: "fr")
+        
     }
     
     private func finish() {
         DispatchQueue.main.asyncAfter(deadline: .now() + configM.loadingTime) {
             self.isLoaded = true
             self.message = NSLocalizedString("Enter", comment: "Press to Continue")
-            Translator.shared.select(Lang: "fr")
             self.manager.loadTranslation()
         }
     }
