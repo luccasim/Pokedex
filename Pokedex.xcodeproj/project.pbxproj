@@ -34,6 +34,8 @@
 		8474CD7F2518441800553655 /* TranslationMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CD7E2518441800553655 /* TranslationMO.swift */; };
 		84C062D32526D53300D6A1F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84C062D52526D53300D6A1F5 /* Localizable.strings */; };
 		84C062F12528EE1700D6A1F5 /* LocalizableManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C062F02528EE1700D6A1F5 /* LocalizableManager.swift */; };
+		84C062FE252915BB00D6A1F5 /* Settings.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 84C062FD252915BB00D6A1F5 /* Settings.bundle */; };
+		84C063022529173500D6A1F5 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C063012529173500D6A1F5 /* SettingsManager.swift */; };
 		84CCB74D25119F8700F3EB9F /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCB74C25119F8700F3EB9F /* Type.swift */; };
 		84EA36762525831400E04180 /* LCLib in Frameworks */ = {isa = PBXBuildFile; productRef = 84EA36752525831400E04180 /* LCLib */; };
 		84EA36C425258BC400E04180 /* LCPokeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EA36C325258BC400E04180 /* LCPokeAPI.framework */; };
@@ -112,6 +114,8 @@
 		84C062F02528EE1700D6A1F5 /* LocalizableManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalizableManager.swift; sourceTree = "<group>"; };
 		84C062F825290DAE00D6A1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		84C062F925290DAE00D6A1F5 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		84C062FD252915BB00D6A1F5 /* Settings.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = Settings.bundle; sourceTree = "<group>"; };
+		84C063012529173500D6A1F5 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		84CCB74C25119F8700F3EB9F /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		84EA36C325258BC400E04180 /* LCPokeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCPokeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FD5A482501823B007D9DE0 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
@@ -148,10 +152,11 @@
 		8457C4A5250135FA00F3E37E = {
 			isa = PBXGroup;
 			children = (
+				84C062FC2529138F00D6A1F5 /* Settings */,
+				847091F6251C87EC00DF6164 /* Configurations */,
 				8457C4B0250135FA00F3E37E /* Pokedex */,
 				8457C4CA250135FD00F3E37E /* PokedexTests */,
 				8457C4D5250135FD00F3E37E /* PokedexUITests */,
-				847091F6251C87EC00DF6164 /* Configurations */,
 				8457C4AF250135FA00F3E37E /* Products */,
 				84FD5A612502E9B1007D9DE0 /* Frameworks */,
 			);
@@ -279,6 +284,14 @@
 			path = Configurations;
 			sourceTree = "<group>";
 		};
+		84C062FC2529138F00D6A1F5 /* Settings */ = {
+			isa = PBXGroup;
+			children = (
+				84C062FD252915BB00D6A1F5 /* Settings.bundle */,
+			);
+			path = Settings;
+			sourceTree = "<group>";
+		};
 		84FD5A47250181BE007D9DE0 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -312,6 +325,7 @@
 				8457C4E6250136CA00F3E37E /* DataManager.swift */,
 				8474CD702516F93800553655 /* ConfigManager.swift */,
 				84C062F02528EE1700D6A1F5 /* LocalizableManager.swift */,
+				84C063012529173500D6A1F5 /* SettingsManager.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -433,6 +447,7 @@
 				8457C4C1250135FD00F3E37E /* LaunchScreen.storyboard in Resources */,
 				8457C4BE250135FD00F3E37E /* Preview Assets.xcassets in Resources */,
 				8457C4BB250135FD00F3E37E /* Assets.xcassets in Resources */,
+				84C062FE252915BB00D6A1F5 /* Settings.bundle in Resources */,
 				8474CD442516EFA500553655 /* Prod.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -478,6 +493,7 @@
 				84FD5A6E2503DC62007D9DE0 /* PersistanceStore.swift in Sources */,
 				8457C4EE250148BA00F3E37E /* ListView.swift in Sources */,
 				84CCB74D25119F8700F3EB9F /* Type.swift in Sources */,
+				84C063022529173500D6A1F5 /* SettingsManager.swift in Sources */,
 				844682FF250EF402007C413E /* LoadingVM.swift in Sources */,
 				8457C4B4250135FA00F3E37E /* SceneDelegate.swift in Sources */,
 				8428B0B62505480D00B785CE /* PokemonDetail.swift in Sources */,

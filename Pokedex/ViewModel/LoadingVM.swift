@@ -35,6 +35,9 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
         self.manager = Manager ?? DataManager.shared
         self.message = NSLocalizedString("Loading", comment: "Message when app load pokemon models.")
         
+        if SettingManager.shared.shouldResetData {
+            self.manager.resetData()
+        }
     }
     
     private func finish() {

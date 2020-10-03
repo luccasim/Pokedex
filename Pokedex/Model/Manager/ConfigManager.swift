@@ -8,7 +8,6 @@
 
 import Foundation
 
-
 final class ConfigManager {
     
     static func infoPlist(Key: String) -> String? {

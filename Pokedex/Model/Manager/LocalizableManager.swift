@@ -25,7 +25,7 @@ final class LocalizableManager{
         let lang = Locale.current.languageCode ?? "en"
         trans.set(NewLang: lang)
         trans.select(Lang: lang)
-        print("[LocalizeManager] : Device Lang = \(lang)")
+        print("[LocalizableManager] : Device Lang = \(lang)")
         self.translator = trans
     }
 }
@@ -39,7 +39,6 @@ extension LocalizableManager : LocalizableInterface {
     var deviceLang : String {
         return Locale.current.languageCode ?? "en"
     }
-    
 }
 
 extension String {
@@ -47,5 +46,4 @@ extension String {
     var translate : String {
         return LocalizableManager.shared.translator.translate(Key: self) ?? self
     }
-    
 }
