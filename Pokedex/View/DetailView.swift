@@ -53,7 +53,7 @@ struct DetailView: View {
                     RoundedRectangle(cornerRadius: 40)
                         .foregroundColor(.white)
                         .frame(width: geo.size.width, height: geo.size.height)
-                        .overlay(DisplayView(details: self.viewModel, size: geo.size))
+                        .overlay(DisplayView(size: geo.size).environmentObject(self.viewModel))
                         .offset(CGSize(width: 0, height: geo.size.width * 0.5))
                         .gesture(swipe)
                 }
@@ -70,7 +70,7 @@ struct DetailView: View {
 
 struct DisplayView : View {
     
-    @ObservedObject var details : PokemonDetail
+    @EnvironmentObject var details : PokemonDetail
     let size : CGSize
     
     @State private var showStats = false
