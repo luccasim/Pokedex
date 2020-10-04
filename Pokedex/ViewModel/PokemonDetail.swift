@@ -82,7 +82,7 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
                             self?.audio?.play()
                         }
                     }
-                default: break
+                default:break
                 }
             }
     }

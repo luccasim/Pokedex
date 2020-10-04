@@ -9,11 +9,27 @@
 import Foundation
 import Combine
 import UIKit
+import LCFramework
+import AVFoundation
 
-class FakePokemonManager  {
+final class FakePokemonManager : DataManagerInterface {
     
-    func loadTranslation() {
+    var imageLoader = DataLoader<UIImage>(Session: .shared, Convert: {UIImage(data: $0)})
+    var audioLoader = DataLoader<AVAudioPlayer>(Session: .shared, Convert: {try? AVAudioPlayer(data: $0)})
+    
+    func resetData() {}
+    
+    func retrievePokemon(Rang: [Int]) -> [PokemonMO] {return []}
+    
+    func contain(Id: Int) -> Bool {
+        true
     }
+    
+    func first(Id: Int) -> Pokemon? {
+        Pokemon.Fake
+    }
+    
+    func loadTranslation() {}
     
     func install(PokemonIds: [Int]) -> Future<Bool, Never> {
         return Future <Bool,Never> { promise in

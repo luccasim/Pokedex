@@ -33,8 +33,8 @@ final class PokemonList : ObservableObject, PokemonListProtocol {
     
     private var manager : DataManagerInterface
     
-    init(Manager:DataManagerInterface = DataManager.shared) {
-        self.manager = Manager
+    init(Manager:DataManagerInterface?=nil) {
+        self.manager = Manager ?? DataManager.shared
         self.pokemons = []
     }
     

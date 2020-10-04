@@ -12,7 +12,7 @@ import SwiftUI
 struct ListView: View {
     
     @ObservedObject var viewModel = PokemonList()
-    @State var isPresented = false
+    @State private var isPresented = false
         
     var body: some View {
         
@@ -62,10 +62,11 @@ struct PokemonListCellView : View {
 struct PokemonListView_Previews: PreviewProvider {
     
     static var previews: some View {
+        let vm = PokemonList(Manager: FakePokemonManager())
         Group {
             PokemonListCellView(Pokemon: Pokemon.Fake)
                 .previewLayout(.fixed(width: 350, height: 45))
-            ListView()
+            ListView(viewModel: vm)
         }
     }
 }

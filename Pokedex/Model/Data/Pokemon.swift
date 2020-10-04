@@ -31,10 +31,10 @@ struct Pokemon : Identifiable {
 extension Pokemon {
     
     static var Fake : Pokemon {
-        return Pokemon(id: 0,
+        return Pokemon(id: 1,
                        name: "Bulbizarre",
-                       icon: URL(fileURLWithPath: "bulbazor"),
-                       sprite: URL(fileURLWithPath: "bulbazor"),
+                       icon: Bundle.main.url(forResource: "salameche.png", withExtension: nil)!,
+                       sprite: Bundle.main.url(forResource: "salameche.png", withExtension: nil)!,
                        desc: "He love Senzu",
                        type1: .plante,
                        type2: .vol,
