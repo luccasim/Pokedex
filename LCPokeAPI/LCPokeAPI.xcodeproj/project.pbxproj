@@ -7,6 +7,11 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		84C063242529582300D6A1F5 /* Gen6.json in Resources */ = {isa = PBXBuildFile; fileRef = 84C063232529582300D6A1F5 /* Gen6.json */; };
+		84C06333252963F700D6A1F5 /* Pokemon.json in Resources */ = {isa = PBXBuildFile; fileRef = 84EA36AC252588C600E04180 /* Pokemon.json */; };
+		84C063362529641700D6A1F5 /* Species.json in Resources */ = {isa = PBXBuildFile; fileRef = 84EA36AD252588C600E04180 /* Species.json */; };
+		84C063392529641A00D6A1F5 /* Types.json in Resources */ = {isa = PBXBuildFile; fileRef = 84EA36AE252588C600E04180 /* Types.json */; };
+		84C063472529667E00D6A1F5 /* Gen7.json in Resources */ = {isa = PBXBuildFile; fileRef = 84C063462529667E00D6A1F5 /* Gen7.json */; };
 		84EA36912525888200E04180 /* LCPokeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EA36872525888100E04180 /* LCPokeAPI.framework */; };
 		84EA36962525888200E04180 /* LCPokeAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA36952525888200E04180 /* LCPokeAPITests.swift */; };
 		84EA36982525888200E04180 /* LCPokeAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 84EA368A2525888100E04180 /* LCPokeAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -24,6 +29,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		84C063232529582300D6A1F5 /* Gen6.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Gen6.json; sourceTree = "<group>"; };
+		84C063462529667E00D6A1F5 /* Gen7.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Gen7.json; sourceTree = "<group>"; };
 		84EA36872525888100E04180 /* LCPokeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCPokeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84EA368A2525888100E04180 /* LCPokeAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCPokeAPI.h; sourceTree = "<group>"; };
 		84EA368B2525888100E04180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -97,6 +104,8 @@
 			isa = PBXGroup;
 			children = (
 				84EA36AC252588C600E04180 /* Pokemon.json */,
+				84C063232529582300D6A1F5 /* Gen6.json */,
+				84C063462529667E00D6A1F5 /* Gen7.json */,
 				84EA36AD252588C600E04180 /* Species.json */,
 				84EA36AE252588C600E04180 /* Types.json */,
 			);
@@ -194,6 +203,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84C063242529582300D6A1F5 /* Gen6.json in Resources */,
+				84C063472529667E00D6A1F5 /* Gen7.json in Resources */,
+				84C06333252963F700D6A1F5 /* Pokemon.json in Resources */,
+				84C063362529641700D6A1F5 /* Species.json in Resources */,
+				84C063392529641A00D6A1F5 /* Types.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -372,7 +386,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.LCPokeAPI";
+				PRODUCT_BUNDLE_IDENTIFIER = fr.devios.LCPokeAPI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;
@@ -396,7 +410,7 @@
 					"@executable_path/Frameworks",
 					"@loader_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.LCPokeAPI";
+				PRODUCT_BUNDLE_IDENTIFIER = fr.devios.LCPokeAPI;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_VERSION = 5.0;

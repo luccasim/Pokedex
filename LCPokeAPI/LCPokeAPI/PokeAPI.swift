@@ -112,8 +112,36 @@ public extension PokeAPI {
         
         public struct Sprite : Codable {
             
-            public let back_default, front_default : String
+            public let back_default : String?
+            public let front_default : String
             public let other : Other
+            public let versions : Versions
+            
+            public struct Versions : Codable {
+                public let generation7 : Generation
+                
+                enum CodingKeys : String, CodingKey {
+                    case generation7 = "generation-vii"
+                }
+                
+                public struct Generation : Codable {
+                    public let icon : Icon
+                    public let usul : UsUl
+                    
+                    enum CodingKeys : String, CodingKey {
+                        case icon = "icons"
+                        case usul = "ultra-sun-ultra-moon"
+                    }
+                    
+                    public struct Icon : Codable {
+                        public let front_default : String?
+                    }
+                    
+                    public struct UsUl : Codable {
+                        public let front_default : String?
+                    }
+                }
+            }
             
             public struct Other : Codable {
                 public let dream : Dream
@@ -128,7 +156,7 @@ public extension PokeAPI {
                     public let front_default, front_female : String?
                 }
                 public struct Official : Codable {
-                    public let front_default : String
+                    public let front_default : String?
                 }
             }
         }

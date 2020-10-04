@@ -63,7 +63,10 @@ public class PokemonMO : NSManagedObject {
         
         self.id = Int16(Reponse.id)
         self.icon = URL(string: Reponse.sprites.front_default)
-        self.sprite = URL(string: Reponse.sprites.other.official.front_default)
+        
+        if let url = Reponse.sprites.other.official.front_default ?? Reponse.sprites.versions.generation7.usul.front_default {
+            self.sprite = URL(string: url)
+        }
         
         self.type1 = (Reponse.types.count > 0) ? Reponse.types[0].type.url : nil
         self.type2 = (Reponse.types.count > 1) ? Reponse.types[1].type.url : nil
