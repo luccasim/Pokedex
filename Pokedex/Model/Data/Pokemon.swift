@@ -21,6 +21,7 @@ struct Pokemon : Identifiable {
     var isInstalled = false
     
     let stats : Stats
+    var audio : URL?
     
     struct Stats  {
         let hp, atk, def, atkS, defS, speed : Int

@@ -6,6 +6,7 @@
 //  Copyright © 2020 Devios. All rights reserved.
 //
 
+import AVFoundation
 import Foundation
 import Combine
 import LCFramework
@@ -41,6 +42,7 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     }
     
     private func finish() {
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + configM.loadingTime) {
             self.isLoaded = true
             self.message = NSLocalizedString("Enter", comment: "Press to Continue")

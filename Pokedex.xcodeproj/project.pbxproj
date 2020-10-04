@@ -38,6 +38,7 @@
 		84C063022529173500D6A1F5 /* SettingsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84C063012529173500D6A1F5 /* SettingsManager.swift */; };
 		84C0637C2529793C00D6A1F5 /* LCPokeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84C0637B2529793C00D6A1F5 /* LCPokeAPI.framework */; };
 		84C0637D2529793C00D6A1F5 /* LCPokeAPI.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 84C0637B2529793C00D6A1F5 /* LCPokeAPI.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		84C06382252983F200D6A1F5 /* 001.wav in Resources */ = {isa = PBXBuildFile; fileRef = 84C06381252983F200D6A1F5 /* 001.wav */; };
 		84CCB74D25119F8700F3EB9F /* Type.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84CCB74C25119F8700F3EB9F /* Type.swift */; };
 		84EA36762525831400E04180 /* LCLib in Frameworks */ = {isa = PBXBuildFile; productRef = 84EA36752525831400E04180 /* LCLib */; };
 		84FD5A492501823B007D9DE0 /* KeyboardResponder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84FD5A482501823B007D9DE0 /* KeyboardResponder.swift */; };
@@ -118,6 +119,7 @@
 		84C063012529173500D6A1F5 /* SettingsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsManager.swift; sourceTree = "<group>"; };
 		84C0631C2529551600D6A1F5 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		84C0637B2529793C00D6A1F5 /* LCPokeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCPokeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84C06381252983F200D6A1F5 /* 001.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 001.wav; sourceTree = "<group>"; };
 		84CCB74C25119F8700F3EB9F /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		84EA36C325258BC400E04180 /* LCPokeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCPokeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FD5A482501823B007D9DE0 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
@@ -180,6 +182,7 @@
 			children = (
 				8457C4B1250135FA00F3E37E /* AppDelegate.swift */,
 				8457C4B3250135FA00F3E37E /* SceneDelegate.swift */,
+				84C06381252983F200D6A1F5 /* 001.wav */,
 				8457C4BA250135FD00F3E37E /* Assets.xcassets */,
 				8457C4BF250135FD00F3E37E /* LaunchScreen.storyboard */,
 				8457C4C2250135FD00F3E37E /* Info.plist */,
@@ -455,6 +458,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				84C06382252983F200D6A1F5 /* 001.wav in Resources */,
 				84C062D32526D53300D6A1F5 /* Localizable.strings in Resources */,
 				8457C4C1250135FD00F3E37E /* LaunchScreen.storyboard in Resources */,
 				8457C4BE250135FD00F3E37E /* Preview Assets.xcassets in Resources */,

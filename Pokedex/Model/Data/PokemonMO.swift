@@ -36,7 +36,23 @@ public class PokemonMO : NSManagedObject {
             speed: Int(self.speed)
         )
         
-        return Pokemon(id: id, name: name, icon: icon, sprite: url, desc: desc, type1: type1, type2:type2, stats: stat)
+        return Pokemon(
+            id: id,
+            name: name,
+            icon: icon,
+            sprite: url,
+            desc: desc,
+            type1: type1,
+            type2:type2,
+            stats: stat,
+            audio:self.audioUrl
+        )
+    }
+    
+    var audioUrl : URL? {
+        guard let name = self.baseName?.capitalized else {return nil}
+        let id = String(format: "%03d", Int(self.id))
+        return URL(string:"https://raw.githubusercontent.com/luccasim/-media/main/pokemon/Gen1/\(id)%20-%20\(name).wav")
     }
     
     var idType1 : Int? {
@@ -63,6 +79,7 @@ public class PokemonMO : NSManagedObject {
         
         self.id = Int16(Reponse.id)
         self.icon = URL(string: Reponse.sprites.front_default)
+        self.baseName = Reponse.name
         
         if let url = Reponse.sprites.other.official.front_default ?? Reponse.sprites.versions.generation7.usul.front_default {
             self.sprite = URL(string: url)

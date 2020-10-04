@@ -6,6 +6,7 @@
 //  Copyright © 2020 Devios. All rights reserved.
 //
 
+import AVFoundation
 import Foundation
 import SwiftUI
 import Combine
@@ -38,16 +39,19 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     @Published var image: UIImage = UIImage()
     @Published var chartStats: [ChartView.ChartData] = []
     
-    private var pokemonManager : DataManagerInterface
+    private var dataManager : DataManagerInterface
     
-    init(Pokemon:Pokemon, Manager:DataManagerInterface=DataManager.shared, Image:UIImage?=nil) {
-        self.pokemonManager = Manager
-        self.pokemon = Pokemon
+    init(Pokemon:Pokemon, Manager:DataManagerInterface?=nil, Image:UIImage?=nil) {
+        
+        self.dataManager = Manager ?? DataManager.shared
         self.image = Image ?? UIImage()
+        self.pokemon = Pokemon
         self.chartStats = self.pokemonStats
+        
     }
     
     var couldSwap : Bool = true
+    weak var audio : AVAudioPlayer?
     
     func loadImage() {
         
@@ -56,8 +60,17 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
         self.couldSwap = false
         
         let animationDuration = self.pokemonAppearAnimationDuration
+        
+        if let url = self.pokemon.audio {
+            dataManager.audioLoader.load(Url: url) { [weak self] res in
+                switch res {
+                case .success(let av): self?.audio = av
+                default: break
+                }
+            }
+        }
 
-            ImageLoader.shared.load(Url: self.pokemon.sprite) { [weak self] (res) in
+        dataManager.imageLoader.load(Url: self.pokemon.sprite) { [weak self] (res) in
                 switch res {
                 case .success(let img) :
                     DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
@@ -66,6 +79,7 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
                             self?.image = img
                             self?.chartStats = self?.pokemonStats ?? []
                             self?.couldSwap = true
+                            self?.audio?.play()
                         }
                     }
                 default: break
@@ -109,14 +123,14 @@ final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     }
     
     func swipePrevious() {
-        if let previous = self.pokemonManager.first(Id: pokemon.id - 1) {
+        if let previous = self.dataManager.first(Id: pokemon.id - 1) {
             self.pokemon = previous
             self.loadImage()
         }
     }
     
     func swipeNext() {
-        if let next = self.pokemonManager.first(Id: pokemon.id + 1) {
+        if let next = self.dataManager.first(Id: pokemon.id + 1) {
             self.pokemon = next
             self.loadImage()
         }

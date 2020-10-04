@@ -3,6 +3,7 @@
     <entity name="PokemonMO" representedClassName=".PokemonMO" syncable="YES" codeGenerationType="category">
         <attribute name="attack" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="attSpe" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="baseName" optional="YES" attributeType="String"/>
         <attribute name="defense" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="defSpe" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="desc" optional="YES" attributeType="String"/>
@@ -25,7 +26,7 @@
         <relationship name="pokemon" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="PokemonMO" inverseName="translations" inverseEntity="PokemonMO"/>
     </entity>
     <elements>
-        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="268"/>
+        <element name="PokemonMO" positionX="-46.953125" positionY="-142.046875" width="128" height="283"/>
         <element name="TranslationMO" positionX="-235.51953125" positionY="-31.46484375" width="128" height="118"/>
     </elements>
 </model>

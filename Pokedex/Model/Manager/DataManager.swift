@@ -7,11 +7,15 @@
 //
 
 import Foundation
+import AVFoundation
 import UIKit
 import LCFramework
 import Combine
 
 protocol DataManagerInterface {
+    
+    var imageLoader : DataLoader<UIImage> {get}
+    var audioLoader : DataLoader<AVAudioPlayer> {get}
         
     func add(Pokemon:Pokemon)
     func save()
@@ -31,6 +35,9 @@ final class DataManager : DataManagerInterface {
     static var shared = DataManager()
     private var store = PersistanceStore.shared.pokemonStore
     private let localized : LocalizableManager
+    
+    let audioLoader = DataLoader<AVAudioPlayer>(Session: URLSession.shared, Convert: {try? AVAudioPlayer(data: $0)})
+    let imageLoader = DataLoader<UIImage>(Session: URLSession.shared, Convert: {UIImage(data: $0)})
     
     init(Localized:LocalizableManager?=nil) {
         store.trace = true
