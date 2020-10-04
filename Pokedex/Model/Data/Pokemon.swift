@@ -25,7 +25,6 @@ struct Pokemon : Identifiable {
     struct Stats  {
         let hp, atk, def, atkS, defS, speed : Int
     }
-    
 }
 
 extension Pokemon {

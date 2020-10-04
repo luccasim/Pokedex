@@ -9,8 +9,5 @@
 // Configuration settings file format documentation can be found at:
 // https://help.apple.com/xcode/#/dev745c5c974
 
-// Generations
-Pokemon_Low_Rang = 1
-Pokemon_High_Rang = 150
-
-Loading_Time_Animation = 4
+loading_time = 4
+//generation = III

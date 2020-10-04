@@ -9,7 +9,10 @@
 import Foundation
 
 protocol SettingInterface {
+    
     var shouldResetData : Bool {get}
+    var generation : String? {get}
+    
 }
 
 final class SettingManager {
@@ -19,6 +22,7 @@ final class SettingManager {
     
     struct SettingKey {
         static let reset = "reset_setting"
+        static let generation = "generation_setting"
     }
 }
 
@@ -32,4 +36,8 @@ extension SettingManager : SettingInterface {
         return false
     }
     
+    var generation: String? {
+        return manager.string(forKey: SettingKey.generation)
+    }
+
 }

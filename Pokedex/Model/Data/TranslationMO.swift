@@ -8,7 +8,6 @@
 
 import Foundation
 import CoreData
-import LCPokeAPI
 
 public class TranslationMO : NSManagedObject {
     

@@ -25,7 +25,7 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
     @Published var message: String
     
     private var manager : DataManagerInterface
-    private let configM = ConfigManager.self
+    private let configM = ConfigManager.shared
     private let pokeapiWS = PokeAPI()
     
     private var cancellable = Set<AnyCancellable>()
@@ -34,8 +34,8 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
         
         self.manager = Manager ?? DataManager.shared
         self.message = NSLocalizedString("Loading", comment: "Message when app load pokemon models.")
-        
-        if SettingManager.shared.shouldResetData {
+                
+        if ConfigManager.shared.resetDatabase {
             self.manager.resetData()
         }
     }
@@ -50,7 +50,7 @@ final class LoadingVM : ObservableObject, PokemonLoadingViewModelProtocol {
             
     func loadPokemonData() {
         
-        let mosToInstall = self.manager.retrievePokemon(Rang: self.configM.pokemonRang).filter({!$0.isInstalled}).sorted(by: {$0.id < $1.id})
+        let mosToInstall = self.manager.retrievePokemon(Rang: configM.generationRang).filter({!$0.isInstalled}).sorted(by: {$0.id < $1.id})
         
         guard !mosToInstall.isEmpty else {
                 self.finish()

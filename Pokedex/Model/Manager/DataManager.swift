@@ -23,6 +23,7 @@ protocol DataManagerInterface {
     func fetchToList() -> [Pokemon]
     func contain(Id:Int) -> Bool
     func first(Id:Int) -> Pokemon?
+    
 }
 
 final class DataManager : DataManagerInterface {
@@ -37,8 +38,10 @@ final class DataManager : DataManagerInterface {
     }
     
     func fetchToList() -> [Pokemon] {
-                    
-        let results = self.store.fetch()
+        
+        let rang = ConfigManager.shared.generationRang
+        let predicate = NSPredicate(format: "id >= \(rang.first!) && id <= \(rang.last!)")
+        let results = self.store.fetch(Predicate: predicate)
         
         switch results {
         case .success(let mo):
@@ -62,7 +65,7 @@ final class DataManager : DataManagerInterface {
     }
     
     func contain(Id: Int) -> Bool {
-        return ConfigManager.pokemonRang.contains(Id)
+        return ConfigManager.shared.generationRang.contains(Id)
     }
     
     func first(Id: Int) -> Pokemon? {

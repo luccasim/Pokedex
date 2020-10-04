@@ -8,30 +8,59 @@
 
 import Foundation
 
+protocol ConfigInterface {
+    
+    var generationRang : [Int] {get}
+    var loadingTime : Double {get}
+    var resetDatabase : Bool {get}
+    
+}
+
 final class ConfigManager {
     
-    static func infoPlist(Key: String) -> String? {
-        return Bundle.main.infoDictionary?[Key] as? String
+    static let shared  = ConfigManager()
+    private let infosDict = Bundle.main.infoDictionary!
+    
+    private let settings = SettingManager.shared
+    
+    struct Keys {
+        static let generation = "Generation"
+        static let loadingTime = "LoadingTime"
+        static let resetDatabase = "Reset"
     }
     
-    static var pokemonRang : [Int] {
-        guard let rang = (Bundle.main.infoDictionary?["PokemonRang"] as? [String]) else {
-            return []
-        }
+    func trace(_ str:String) {
+        print("[ConfigManager] : \(str)")
+    }
+    
+    enum Generation : String {
+        case I, II, III, IV, V, VI, VII
         
-        let low = Int(rang[0]) ?? 0
-        let high = Int(rang[1]) ?? 0
-        trace("\(low)...\(high) Pokemon(s)")
-        return (low...high).map{$0}
-    }
-    
-    static var loadingTime : Double {
-        let loadingTime = Double(infoPlist(Key: "LoadingTimeAnimation") ?? "2") ?? 2.0
-        trace("Loading Time Animation \(loadingTime) second(s)")
-        return loadingTime
+        var rang : [Int] {
+            switch self {
+            case .I:    return (1...151).map({$0})
+            case .II:   return (152...251).map({$0})
+            case .III:  return (252...386).map({$0})
+            case .IV:   return (387...494).map({$0})
+            case .V:    return (495...649).map({$0})
+            case .VI:   return (650...721).map({$0})
+            case .VII:  return (722...809).map({$0})
+            }
+        }
     }
 }
 
-private func trace(_ str:String) {
-    print("[Configuration] : \(str)")
+extension ConfigManager : ConfigInterface {
+    
+    var generationRang: [Int] {
+        return (infosDict[Keys.generation] as? String).flatMap({Generation(rawValue: $0)?.rang}) ?? settings.generation.flatMap({Generation(rawValue: $0)?.rang}) ?? Generation.I.rang
+    }
+    
+    var loadingTime: Double {
+        return self.infosDict[Keys.loadingTime] as? Double ?? 2.0
+    }
+    
+    var resetDatabase: Bool {
+        return self.infosDict[Keys.resetDatabase] as? Bool ?? settings.shouldResetData
+    }
 }

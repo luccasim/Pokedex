@@ -152,6 +152,7 @@
 		8457C4A5250135FA00F3E37E = {
 			isa = PBXGroup;
 			children = (
+				84C063052529241500D6A1F5 /* Localizable */,
 				84C062FC2529138F00D6A1F5 /* Settings */,
 				847091F6251C87EC00DF6164 /* Configurations */,
 				8457C4B0250135FA00F3E37E /* Pokedex */,
@@ -176,7 +177,6 @@
 			isa = PBXGroup;
 			children = (
 				8457C4B1250135FA00F3E37E /* AppDelegate.swift */,
-				84C062D52526D53300D6A1F5 /* Localizable.strings */,
 				8457C4B3250135FA00F3E37E /* SceneDelegate.swift */,
 				8457C4BA250135FD00F3E37E /* Assets.xcassets */,
 				8457C4BF250135FD00F3E37E /* LaunchScreen.storyboard */,
@@ -292,6 +292,14 @@
 			path = Settings;
 			sourceTree = "<group>";
 		};
+		84C063052529241500D6A1F5 /* Localizable */ = {
+			isa = PBXGroup;
+			children = (
+				84C062D52526D53300D6A1F5 /* Localizable.strings */,
+			);
+			path = Localizable;
+			sourceTree = "<group>";
+		};
 		84FD5A47250181BE007D9DE0 /* Service */ = {
 			isa = PBXGroup;
 			children = (
@@ -323,8 +331,8 @@
 			isa = PBXGroup;
 			children = (
 				8457C4E6250136CA00F3E37E /* DataManager.swift */,
-				8474CD702516F93800553655 /* ConfigManager.swift */,
 				84C062F02528EE1700D6A1F5 /* LocalizableManager.swift */,
+				8474CD702516F93800553655 /* ConfigManager.swift */,
 				84C063012529173500D6A1F5 /* SettingsManager.swift */,
 			);
 			path = Manager;
@@ -621,7 +629,6 @@
 		};
 		8457C4DA250135FD00F3E37E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 8474CD432516EFA500553655 /* Prod.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
