@@ -22,6 +22,8 @@
 				<string>Generation III</string>
 				<string>Generation IV</string>
 				<string>Generation V</string>
+				<string>Generation VI</string>
+				<string>Generation VII</string>
 			</array>
 			<key>Values</key>
 			<array>
@@ -30,6 +32,8 @@
 				<string>III</string>
 				<string>IV</string>
 				<string>V</string>
+				<string>VI</string>
+				<string>VII</string>
 			</array>
 			<key>Title</key>
 			<string>Generation</string>
