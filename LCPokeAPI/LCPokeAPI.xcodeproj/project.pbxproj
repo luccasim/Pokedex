@@ -1,0 +1,492 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 50;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		84C063242529582300D6A1F5 /* Gen6.json in Resources */ = {isa = PBXBuildFile; fileRef = 84C063232529582300D6A1F5 /* Gen6.json */; };
+		84C06333252963F700D6A1F5 /* Pokemon.json in Resources */ = {isa = PBXBuildFile; fileRef = 84EA36AC252588C600E04180 /* Pokemon.json */; };
+		84C063362529641700D6A1F5 /* Species.json in Resources */ = {isa = PBXBuildFile; fileRef = 84EA36AD252588C600E04180 /* Species.json */; };
+		84C063392529641A00D6A1F5 /* Types.json in Resources */ = {isa = PBXBuildFile; fileRef = 84EA36AE252588C600E04180 /* Types.json */; };
+		84C063472529667E00D6A1F5 /* Gen7.json in Resources */ = {isa = PBXBuildFile; fileRef = 84C063462529667E00D6A1F5 /* Gen7.json */; };
+		84EA36912525888200E04180 /* LCPokeAPI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 84EA36872525888100E04180 /* LCPokeAPI.framework */; };
+		84EA36962525888200E04180 /* LCPokeAPITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA36952525888200E04180 /* LCPokeAPITests.swift */; };
+		84EA36982525888200E04180 /* LCPokeAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = 84EA368A2525888100E04180 /* LCPokeAPI.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		84EA36A4252588AA00E04180 /* PokeAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84EA36A3252588AA00E04180 /* PokeAPI.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		84EA36922525888200E04180 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 84EA367E2525888100E04180 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 84EA36862525888100E04180;
+			remoteInfo = LCPokeAPI;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		84C063232529582300D6A1F5 /* Gen6.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Gen6.json; sourceTree = "<group>"; };
+		84C063462529667E00D6A1F5 /* Gen7.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Gen7.json; sourceTree = "<group>"; };
+		84EA36872525888100E04180 /* LCPokeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = LCPokeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		84EA368A2525888100E04180 /* LCPokeAPI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = LCPokeAPI.h; sourceTree = "<group>"; };
+		84EA368B2525888100E04180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84EA36902525888200E04180 /* LCPokeAPITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LCPokeAPITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		84EA36952525888200E04180 /* LCPokeAPITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LCPokeAPITests.swift; sourceTree = "<group>"; };
+		84EA36972525888200E04180 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		84EA36A3252588AA00E04180 /* PokeAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokeAPI.swift; sourceTree = "<group>"; };
+		84EA36AC252588C600E04180 /* Pokemon.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Pokemon.json; sourceTree = "<group>"; };
+		84EA36AD252588C600E04180 /* Species.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Species.json; sourceTree = "<group>"; };
+		84EA36AE252588C600E04180 /* Types.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = Types.json; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		84EA36842525888100E04180 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84EA368D2525888200E04180 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EA36912525888200E04180 /* LCPokeAPI.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		84EA367D2525888100E04180 = {
+			isa = PBXGroup;
+			children = (
+				84EA36892525888100E04180 /* LCPokeAPI */,
+				84EA36942525888200E04180 /* LCPokeAPITests */,
+				84EA36882525888100E04180 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		84EA36882525888100E04180 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				84EA36872525888100E04180 /* LCPokeAPI.framework */,
+				84EA36902525888200E04180 /* LCPokeAPITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		84EA36892525888100E04180 /* LCPokeAPI */ = {
+			isa = PBXGroup;
+			children = (
+				84EA368A2525888100E04180 /* LCPokeAPI.h */,
+				84EA368B2525888100E04180 /* Info.plist */,
+				84EA36A3252588AA00E04180 /* PokeAPI.swift */,
+				84EA36AF252588C600E04180 /* Reponses */,
+			);
+			path = LCPokeAPI;
+			sourceTree = "<group>";
+		};
+		84EA36942525888200E04180 /* LCPokeAPITests */ = {
+			isa = PBXGroup;
+			children = (
+				84EA36952525888200E04180 /* LCPokeAPITests.swift */,
+				84EA36972525888200E04180 /* Info.plist */,
+			);
+			path = LCPokeAPITests;
+			sourceTree = "<group>";
+		};
+		84EA36AF252588C600E04180 /* Reponses */ = {
+			isa = PBXGroup;
+			children = (
+				84EA36AC252588C600E04180 /* Pokemon.json */,
+				84C063232529582300D6A1F5 /* Gen6.json */,
+				84C063462529667E00D6A1F5 /* Gen7.json */,
+				84EA36AD252588C600E04180 /* Species.json */,
+				84EA36AE252588C600E04180 /* Types.json */,
+			);
+			path = Reponses;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		84EA36822525888100E04180 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EA36982525888200E04180 /* LCPokeAPI.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		84EA36862525888100E04180 /* LCPokeAPI */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84EA369B2525888200E04180 /* Build configuration list for PBXNativeTarget "LCPokeAPI" */;
+			buildPhases = (
+				84EA36822525888100E04180 /* Headers */,
+				84EA36832525888100E04180 /* Sources */,
+				84EA36842525888100E04180 /* Frameworks */,
+				84EA36852525888100E04180 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = LCPokeAPI;
+			productName = LCPokeAPI;
+			productReference = 84EA36872525888100E04180 /* LCPokeAPI.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		84EA368F2525888200E04180 /* LCPokeAPITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 84EA369E2525888200E04180 /* Build configuration list for PBXNativeTarget "LCPokeAPITests" */;
+			buildPhases = (
+				84EA368C2525888200E04180 /* Sources */,
+				84EA368D2525888200E04180 /* Frameworks */,
+				84EA368E2525888200E04180 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				84EA36932525888200E04180 /* PBXTargetDependency */,
+			);
+			name = LCPokeAPITests;
+			productName = LCPokeAPITests;
+			productReference = 84EA36902525888200E04180 /* LCPokeAPITests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		84EA367E2525888100E04180 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1200;
+				LastUpgradeCheck = 1200;
+				TargetAttributes = {
+					84EA36862525888100E04180 = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
+					84EA368F2525888200E04180 = {
+						CreatedOnToolsVersion = 12.0.1;
+					};
+				};
+			};
+			buildConfigurationList = 84EA36812525888100E04180 /* Build configuration list for PBXProject "LCPokeAPI" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 84EA367D2525888100E04180;
+			productRefGroup = 84EA36882525888100E04180 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				84EA36862525888100E04180 /* LCPokeAPI */,
+				84EA368F2525888200E04180 /* LCPokeAPITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		84EA36852525888100E04180 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84C063242529582300D6A1F5 /* Gen6.json in Resources */,
+				84C063472529667E00D6A1F5 /* Gen7.json in Resources */,
+				84C06333252963F700D6A1F5 /* Pokemon.json in Resources */,
+				84C063362529641700D6A1F5 /* Species.json in Resources */,
+				84C063392529641A00D6A1F5 /* Types.json in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84EA368E2525888200E04180 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		84EA36832525888100E04180 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EA36A4252588AA00E04180 /* PokeAPI.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		84EA368C2525888200E04180 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				84EA36962525888200E04180 /* LCPokeAPITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		84EA36932525888200E04180 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 84EA36862525888100E04180 /* LCPokeAPI */;
+			targetProxy = 84EA36922525888200E04180 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		84EA36992525888200E04180 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		84EA369A2525888200E04180 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 14.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+		84EA369C2525888200E04180 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 32DX3M943S;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LCPokeAPI/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.devios.LCPokeAPI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84EA369D2525888200E04180 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 32DX3M943S;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = LCPokeAPI/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = fr.devios.LCPokeAPI;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SKIP_INSTALL = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		84EA369F2525888200E04180 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 32DX3M943S;
+				INFOPLIST_FILE = LCPokeAPITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.LCPokeAPITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		84EA36A02525888200E04180 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 32DX3M943S;
+				INFOPLIST_FILE = LCPokeAPITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.LCPokeAPITests";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		84EA36812525888100E04180 /* Build configuration list for PBXProject "LCPokeAPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84EA36992525888200E04180 /* Debug */,
+				84EA369A2525888200E04180 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84EA369B2525888200E04180 /* Build configuration list for PBXNativeTarget "LCPokeAPI" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84EA369C2525888200E04180 /* Debug */,
+				84EA369D2525888200E04180 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		84EA369E2525888200E04180 /* Build configuration list for PBXNativeTarget "LCPokeAPITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				84EA369F2525888200E04180 /* Debug */,
+				84EA36A02525888200E04180 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 84EA367E2525888100E04180 /* Project object */;
+}

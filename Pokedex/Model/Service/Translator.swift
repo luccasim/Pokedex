@@ -14,9 +14,7 @@ final class Translator {
     typealias Lang = [String:Text]
     
     init() {self.translator["en"] = [:]}
-    
-    static let shared = Translator()
-    
+        
     private var translator : Lang = [:]
     private var selectedLang = "en"
     
@@ -52,10 +50,3 @@ final class Translator {
     }
 }
 
-extension String {
-    
-    var translate : String {
-        return Translator.shared.translate(Key: self) ?? self
-    }
-    
-}

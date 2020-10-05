@@ -10,45 +10,50 @@ import Foundation
 import SwiftUI
 import Combine
 
-protocol PokemonDetailVMProtocol {
+protocol PokemonDetailProtocol {
     
     var name: String {get}
     var infos: String {get}
     var image: UIImage {get}
+    var border: Color {get}
+    
+    func loadImage()
     
 }
 
-final class PokemonDetailViewModel : PokemonDetailVMProtocol, ObservableObject {
+final class PokemonDetail : PokemonDetailProtocol, ObservableObject {
     
-    @Published private var pokemon : Pokemon?
+    @Published private var pokemon : Pokemon
     private var pokemonManager : PokemonManagerProtocol
     
-    init(Manager:PokemonManagerProtocol=PokemonManager.shared) {
+    init(Pokemon:Pokemon, Manager:PokemonManagerProtocol=DataManager.shared, Image:UIImage?=nil) {
         self.pokemonManager = Manager
+        self.pokemon = Pokemon
+        self.image = Image ?? UIImage()
     }
     
     @Published var image: UIImage = UIImage()
-    private var cancelLoad : AnyCancellable?
     
-    func set(Pokemon:Pokemon) {
-        self.pokemon = Pokemon
-        self.loadImage(Pokemon: Pokemon)
-    }
-    
-    func loadImage(Pokemon:Pokemon) {
-        self.cancelLoad = self.pokemonManager.getImage(Pokemon: Pokemon)
-            .receive(on: RunLoop.main)
-            .sink { (img) in
-                self.image = img
+    func loadImage() {
+        ImageLoader.shared.load(Url: self.pokemon.sprite) { [weak self] (res) in
+            switch res {
+            case .success(let img) : DispatchQueue.main.async {
+                self?.image = img
+            }
+            default: break
+            }
         }
     }
     
     var name : String {
-        return self.pokemon?.name.translate ?? "404"
+        return self.pokemon.name.translate
     }
     
     var infos : String {
-        return self.pokemon?.desc.translate ?? "404"
+        return self.pokemon.desc.translate
     }
     
+    var border: Color {
+        return pokemon.type1.color
+    }
 }

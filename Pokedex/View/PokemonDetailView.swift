@@ -1,5 +1,5 @@
 //
-//  PokemonDetailView.swift
+//  DetailView.swift
 //  Pokedex
 //
 //  Created by owee on 06/09/2020.
@@ -8,14 +8,14 @@
 
 import SwiftUI
 
-struct PokemonDetailView: View {
+struct DetailView: View {
     
-    @ObservedObject var viewModel = PokemonDetailViewModel()
+    @ObservedObject var viewModel : PokemonDetailViewModel
     var model : Pokemon
     
     init(model:Pokemon) {
         self.model = model
-        self.viewModel.set(Pokemon: model)
+        self.viewModel = PokemonDetailViewModel(Pokemon: model)
     }
     
     var body: some View {
@@ -32,14 +32,11 @@ struct PokemonDetailView: View {
                     .resizable()
                     .scaledToFit()
                     .frame(width: 320, height: 320)
-                    .border(Color.green, width: 2)
+                    .border(self.viewModel.border, width: 2)
                     .padding(.bottom, 15)
                 
-                HStack {
-                    TypeText(text: "Type 1", color: .green)
-                    Spacer()
-                    TypeText(text: "Type 2", color: .purple)
-                }
+                TypeGroup(pokemon: model)
+
                 .padding([.leading, .trailing], 30)
                 
                 Text(self.viewModel.infos)
@@ -47,33 +44,45 @@ struct PokemonDetailView: View {
                     .padding(.top, 20)
                 Spacer()
             }
-            .navigationBarHidden(true)
+            .navigationBarHidden(false)
             .edgesIgnoringSafeArea(.top)
+            .onAppear() {
+                self.viewModel.loadImage()
+            }
         }
     }
 }
 
-struct TypeText : View {
+struct TypeGroup : View {
     
-    let text : String
-    let color : Color
+    var pokemon : Pokemon
     
     var body: some View {
-        Text(self.text)
-            .frame(width: 100, height: 30, alignment: .center)
-            .background(self.color)
-            .font(.body)
-            .cornerRadius(10)
-            .overlay(
-                RoundedRectangle(cornerRadius: 10).stroke(Color.black, lineWidth: 2))
+        HStack {
+            self.body(withType: pokemon.type1)
+            Spacer()
+            self.body(withType: pokemon.type2)
+        }
+    }
+    
+    func body(withType type: Type) -> some View {
+        Group {
+            if type.isSet {
+                ZStack {
+                    RoundedRectangle(cornerRadius: 10).fill(type.color)
+                    RoundedRectangle(cornerRadius: 10).stroke(lineWidth: 1)
+                    Text(type.text)
+                }
+            }
+        }
+        .frame(width: 100, height: 30, alignment: .center)
     }
 }
-
 
 struct PokemonDetailView_Previews: PreviewProvider {
     static var previews: some View {
         NavigationView {
-            PokemonDetailView(model: FakePokemonManager().fetchToList()[1])
+            DetailView(model: Pokemon.Fake)
             .navigationBarHidden(true)
             .navigationBarTitle("Bulbazor")
         }

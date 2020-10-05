@@ -2,7 +2,7 @@
 <Workspace
    version = "1.0">
    <FileRef
-      location = "group:../LCFramework/LCFramework.xcodeproj">
+      location = "group:LCPokeAPI/LCPokeAPI.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:Pokedex.xcodeproj">
