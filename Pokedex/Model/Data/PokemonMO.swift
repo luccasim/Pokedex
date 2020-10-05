@@ -48,11 +48,26 @@ public class PokemonMO : NSManagedObject {
             audio:self.audioUrl
         )
     }
+
+    private func Gen(id:Int) -> String? {
+        switch id {
+        case 1...151:       return "1"
+        case 152...251:     return "2"
+        case 252...386:     return "3"
+        case 387...494:     return "4"
+        case 495...649:     return "5"
+        case 650...721:     return "6"
+        case 722...809:     return "7"
+        default: return nil
+        }
+    }
     
     var audioUrl : URL? {
         guard let name = self.baseName?.capitalized else {return nil}
+        guard let gen = self.Gen(id: Int(self.id)) else {return nil}
         let id = String(format: "%03d", Int(self.id))
-        return URL(string:"https://raw.githubusercontent.com/luccasim/-media/main/pokemon/Gen1/\(id)%20-%20\(name).wav")
+
+        return URL(string:"https://raw.githubusercontent.com/luccasim/media/main/pokemon/Gen\(gen)/\(id)%20-%20\(name).wav")
     }
     
     var idType1 : Int? {

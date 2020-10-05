@@ -29,7 +29,6 @@
 		8457C4E92501392B00F3E37E /* PokemonList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C4E82501392B00F3E37E /* PokemonList.swift */; };
 		8457C4EC2501475E00F3E37E /* FakePokemonManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C4EB2501475E00F3E37E /* FakePokemonManager.swift */; };
 		8457C4EE250148BA00F3E37E /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C4ED250148BA00F3E37E /* ListView.swift */; };
-		8474CD442516EFA500553655 /* Prod.xcconfig in Resources */ = {isa = PBXBuildFile; fileRef = 8474CD432516EFA500553655 /* Prod.xcconfig */; };
 		8474CD712516F93800553655 /* ConfigManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CD702516F93800553655 /* ConfigManager.swift */; };
 		8474CD7F2518441800553655 /* TranslationMO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8474CD7E2518441800553655 /* TranslationMO.swift */; };
 		84C062D32526D53300D6A1F5 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 84C062D52526D53300D6A1F5 /* Localizable.strings */; };
@@ -105,7 +104,6 @@
 		8457C4E82501392B00F3E37E /* PokemonList.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PokemonList.swift; sourceTree = "<group>"; };
 		8457C4EB2501475E00F3E37E /* FakePokemonManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakePokemonManager.swift; sourceTree = "<group>"; };
 		8457C4ED250148BA00F3E37E /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
-		8474CD432516EFA500553655 /* Prod.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Prod.xcconfig; sourceTree = "<group>"; };
 		8474CD702516F93800553655 /* ConfigManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfigManager.swift; sourceTree = "<group>"; };
 		8474CD7E2518441800553655 /* TranslationMO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslationMO.swift; sourceTree = "<group>"; };
 		84C0629E2526CADD00D6A1F5 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
@@ -120,6 +118,7 @@
 		84C0631C2529551600D6A1F5 /* Dev.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Dev.xcconfig; sourceTree = "<group>"; };
 		84C0637B2529793C00D6A1F5 /* LCPokeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCPokeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84C06381252983F200D6A1F5 /* 001.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; path = 001.wav; sourceTree = "<group>"; };
+		84C06397252A3AE200D6A1F5 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		84CCB74C25119F8700F3EB9F /* Type.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Type.swift; sourceTree = "<group>"; };
 		84EA36C325258BC400E04180 /* LCPokeAPI.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = LCPokeAPI.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		84FD5A482501823B007D9DE0 /* KeyboardResponder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyboardResponder.swift; sourceTree = "<group>"; };
@@ -156,6 +155,7 @@
 		8457C4A5250135FA00F3E37E = {
 			isa = PBXGroup;
 			children = (
+				84C06397252A3AE200D6A1F5 /* README.md */,
 				84C063052529241500D6A1F5 /* Localizable */,
 				84C062FC2529138F00D6A1F5 /* Settings */,
 				847091F6251C87EC00DF6164 /* Configurations */,
@@ -284,7 +284,6 @@
 		847091F6251C87EC00DF6164 /* Configurations */ = {
 			isa = PBXGroup;
 			children = (
-				8474CD432516EFA500553655 /* Prod.xcconfig */,
 				84C0631C2529551600D6A1F5 /* Dev.xcconfig */,
 			);
 			path = Configurations;
@@ -464,7 +463,6 @@
 				8457C4BE250135FD00F3E37E /* Preview Assets.xcassets in Resources */,
 				8457C4BB250135FD00F3E37E /* Assets.xcassets in Resources */,
 				84C062FE252915BB00D6A1F5 /* Settings.bundle in Resources */,
-				8474CD442516EFA500553655 /* Prod.xcconfig in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -707,7 +705,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.Pokedex";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -727,7 +725,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.Pokedex";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
@@ -895,7 +893,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = "fr.test-devios.Pokedex";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Dev;
 		};
