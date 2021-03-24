@@ -16,7 +16,6 @@
 		844682FF250EF402007C413E /* LoadingVM.swift in Sources */ = {isa = PBXBuildFile; fileRef = 844682FE250EF402007C413E /* LoadingVM.swift */; };
 		84468301250EFC39007C413E /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468300250EFC39007C413E /* LoadingView.swift */; };
 		84468303250FAC02007C413E /* Translator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468302250FAC02007C413E /* Translator.swift */; };
-		84468307250FB910007C413E /* TranslatorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84468306250FB910007C413E /* TranslatorTests.swift */; };
 		8457C4B2250135FA00F3E37E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C4B1250135FA00F3E37E /* AppDelegate.swift */; };
 		8457C4B4250135FA00F3E37E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8457C4B3250135FA00F3E37E /* SceneDelegate.swift */; };
 		8457C4B7250135FA00F3E37E /* Pokedex.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 8457C4B5250135FA00F3E37E /* Pokedex.xcdatamodeld */; };
@@ -85,7 +84,6 @@
 		844682FE250EF402007C413E /* LoadingVM.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingVM.swift; sourceTree = "<group>"; };
 		84468300250EFC39007C413E /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		84468302250FAC02007C413E /* Translator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Translator.swift; sourceTree = "<group>"; };
-		84468306250FB910007C413E /* TranslatorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TranslatorTests.swift; sourceTree = "<group>"; };
 		8457C4AE250135FA00F3E37E /* Pokedex.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Pokedex.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8457C4B1250135FA00F3E37E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8457C4B3250135FA00F3E37E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -206,7 +204,6 @@
 		8457C4CA250135FD00F3E37E /* PokedexTests */ = {
 			isa = PBXGroup;
 			children = (
-				84468306250FB910007C413E /* TranslatorTests.swift */,
 				8457C4CD250135FD00F3E37E /* Info.plist */,
 			);
 			path = PokedexTests;
@@ -518,7 +515,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				84468307250FB910007C413E /* TranslatorTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
